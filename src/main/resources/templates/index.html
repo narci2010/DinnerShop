@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html ng-app xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link
+            th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link
+            th:href="@{/css/index.css}" rel="stylesheet"/>
+    <link rel="stylesheet" media="screen" th:href="@{/fonts/font-awesome/font-awesome.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/css/bootstrap-dialog.css}"/>
+
+    <title>Title</title>
+</head>
+<body>
+<div id="nav"></div>
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>Order your dinner test Application</h1>
+                    <hr class="small">
+                    <span class="subheading">Develop by Tomasz Zielichowski</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+
+    <div class="row">
+
+    </div>
+
+    <div class="row">
+        <section class="content">
+            <div class="col-md-6 ">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <!--In the future implement filters for different categories -->
+                        <!--                        <div class="pull-right">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-success btn-filter" data-target="meat">Meat
+                                                        </button>
+                                                        <button type="button" class="btn btn-warning btn-filter" data-target="vegetables">
+                                                            Vegetables
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-filter" data-target="mix">
+                                                            Mix
+                                                        </button>
+                                                        <button type="button" class="btn btn-default btn-filter" data-target="all">All
+                                                        </button>
+                                                    </div>
+                                                </div>-->
+                        <div class="table-container">
+                            <table class="table table-filter">
+                                <tbody ng-controller="Products" id="productsTableBody">
+                                <tr ng-repeat="product in products" data-status="meat">
+                                    <td>
+                                        <div class="ckbox">
+                                            <input type="checkbox" id="{{product.id}}">
+                                            <label for="{{product.id}}"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a class="star">
+                                            <i class="glyphicon glyphicon-star"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="media">
+                                            <a href='#a' class="pull-left">
+                                                <img class="img-responsive image-size"
+                                                     ng-src="data:image/JPEG;base64,{{product.image}}">
+                                            </a>
+                                            <div class="media-body">
+                                                <h4 class="title">
+                                                    {{product.description}}
+                                                    <!--
+                                                                                                        <span class="pull-right meat">(Meat)</span>
+                                                    -->
+                                                </h4>
+                                                <p class="summary">Price : {{product.price}}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="text-info">
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                    </tr>
+                    </thead>
+                    <tbody id="shoppingCartTable">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.0.8/angular.min.js"
+        th:src="@{/webjars/angularjs/1.0.8/angular.min.js}"></script>
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.js"
+        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/nav.js}" type="text/javascript"></script>
+<script th:src="@{/js/products.js}"></script>
+<script th:src="@{/js/shoppingCart.js}"></script>
+<script th:src="@{/js/bootstrap-dialog.js}"></script>
+
+<script type="text/javascript">
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function (e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+</script>
+<script type="text/javascript">
+
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#productsTableBody').on('click', '.star', function () {
+            $(this).toggleClass('star-checked');
+        });
+
+        $('#productsTableBody').on('click', '.ckbox input', function () {
+            $(this).parents('tr').toggleClass('selected');
+
+            if ($(this).parents('tr').hasClass('selected')) {
+                editShoppingCart(this.id, "/addToCart");
+            }
+            else {
+                editShoppingCart(this.id, "/removeItem");
+            }
+
+        });
+
+
+        $('.btn-filter').on('click', function () {
+            var $target = $(this).data('target');
+            if ($target != 'all') {
+                $('.table tr').css('display', 'none');
+                $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
+            } else {
+                $('.table tr').css('display', 'none').fadeIn('slow');
+            }
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    //keep box checked after page restart
+    $(document).ready(function () {
+
+        shoppingCart(addCheckSignatureToCheckbox);
+        shoppingCart(updateTable);
+        shoppingCart(updateNavbarBasketItems);
+        userMoney(updateNavbarUserMoney);
+
+    })
+
+
+</script>
+
+</body>
+</html>
