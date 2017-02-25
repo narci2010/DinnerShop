@@ -23,17 +23,13 @@ public class ShoppingCartService {
     @Autowired
     AuthenticationFacade authenticationFacade;
 
-
     public boolean addToShoppingCart(Product product) {
-
         if (userHaveEnoughMoney(product)) {
             shoppingCart.addProduct(product);
             return true;
         }
         return false;
-
     }
-
 
     public boolean removeFromShoppingCart(Product product) {
         if (shoppingCart.hasProduct(product)) {
@@ -46,6 +42,14 @@ public class ShoppingCartService {
 
     public List<Product> getProducts() {
         return shoppingCart.getProducts();
+    }
+
+    public Double getTotal() {
+        return shoppingCart.getTotal();
+    }
+
+    public void clear(){
+        shoppingCart.clear();
     }
 
     private boolean userHaveEnoughMoney(Product product) {

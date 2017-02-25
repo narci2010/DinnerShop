@@ -1,10 +1,14 @@
 package com.dinner.controller;
+
 import com.dinner.facade.ShoppingCartFacade;
 import com.dinner.model.business.Product;
+import com.dinner.model.security.AuthenticationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -18,6 +22,9 @@ public class CartManagementController {
     @Autowired
     ShoppingCartFacade shoppingCartFacade;
 
+    @Autowired
+    AuthenticationFacade authenticationFacade;
+
     @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
     public boolean addToShoppingCart(@RequestParam(value = "productId") Long productId) {
         return shoppingCartFacade.addToShoppingCart(productId);
@@ -28,8 +35,18 @@ public class CartManagementController {
         return shoppingCartFacade.removeFromShoppingCart(productId);
     }
 
-    @RequestMapping(value ="/shoppingCart", method = RequestMethod.GET)
-    public List<Product> getProductsInShoppingCart(){
+    @RequestMapping(value = "/shoppingCart", method = RequestMethod.GET)
+    public List<Product> getProductsInShoppingCart() {
         return shoppingCartFacade.getProducts();
+    }
+
+    @RequestMapping(value = "/totalPrice")
+    public Double getTotalPrice() {
+        return shoppingCartFacade.getTotalPrice();
+    }
+
+    @RequestMapping(value = "/userMoney")
+    public Double userMoney() {
+        return authenticationFacade.getAuthentication().getAccount().getMoney();
     }
 }

@@ -6,46 +6,19 @@ function shoppingCart(callback) {
     $.get("/shoppingCart").success(function (shoppingCartProducts) {
         callback(shoppingCartProducts);
     });
-};
-
-function updateNavbarBasketItems(shoppingCartProducts) {
-    $('#shoppingCartProducts').empty();
-    $('#shoppingCartProducts').append("<a href='#a'><i class='fa fa-shopping-cart '> " + shoppingCartProducts.length + " ITEM(S)</i></a>")
 }
 
-function updateNavbarUserMoney(money) {
-    $('#userMoney').empty();
-    $('#userMoney').append("<a href='#a'>" + money + "<i class='fa fa-usd'>  </i></a>")
-}
-
-//Test for now!!!
 function userMoney(callback) {
     $.get("/userMoney").success(function (data) {
-        console.log('user have money : ' + data);
         callback(data);
 
     });
-};
-
-
-function updateTable(shoppingCartProducts) {
-    $('#shoppingCartTable').empty();
-
-    $.each(shoppingCartProducts, function (index, product) {
-        $('#shoppingCartTable').append("<tr> <td>" + product.id + "</td>" +
-            "<td>" + product.description + "</td>" +
-            "<td> <img class='img-responsive image-size' src='data:image/JPEG;base64," + product.image + "'> </td> </tr>");
-    });
 }
 
-function addCheckSignatureToCheckbox(cart) {
-    $(cart).each(function () {
-        $('#productsTableBody').find('input#' + this.id).attr("checked", "checked").parents('tr').addClass('selected');
-    });
-}
-
-function clearAppropriateCheckbox(id) {
-    $('#productsTableBody').find('input#' + id).prop("checked", false).parents('tr').toggleClass('selected');
+function getCurrentTotalPrice(callback) {
+    $.get('/totalPrice').success(function (totalPrice) {
+        callback(totalPrice);
+    })
 
 }
 
@@ -70,9 +43,53 @@ function editShoppingCart(id, url) {
                 });
 
             }
+            //Always call those functions
             shoppingCart(updateNavbarBasketItems);
             userMoney(updateNavbarUserMoney);
+            getCurrentTotalPrice(updateTotalPricePanel);
 
         }
     });
 }
+
+function updateTotalPricePanel(totalPrice) {
+    $('.current-total-price').empty();
+    $('.current-total-price').append(totalPrice +"<i class='fa fa-usd'>  </i>");
+}
+
+
+function updateNavbarBasketItems(shoppingCartProducts) {
+    $('#shoppingCartProducts').empty();
+    $('#shoppingCartProducts').append("<a href='#a'><i class='fa fa-shopping-cart '> " + shoppingCartProducts.length + " ITEM(S)</i></a>")
+}
+
+function updateNavbarUserMoney(money) {
+    $('#userMoney').empty();
+    $('#userMoney').append("<a href='#a'>" + money + "<i class='fa fa-usd'>  </i></a>")
+}
+
+
+
+function updateTable(shoppingCartProducts) {
+    $('#shoppingCartTable').empty();
+
+    $.each(shoppingCartProducts, function (index, product) {
+        $('#shoppingCartTable').append(
+            "<tr> <td>" + product.id + "</td>" +
+            "<td>" + product.description + "</td>" +
+            "<td> <img class='img-responsive image-size' src='data:image/JPEG;base64," + product.image + "'> </td> </tr>");
+    });
+}
+
+function addCheckSignatureToCheckbox(cart) {
+    $(cart).each(function () {
+        $('#productsTableBody').find('input#' + this.id).attr("checked", "checked").parents('tr').addClass('selected');
+    });
+}
+
+function clearAppropriateCheckbox(id) {
+    $('#productsTableBody').find('input#' + id).prop("checked", false).parents('tr').toggleClass('selected');
+
+}
+
+

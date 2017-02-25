@@ -1,11 +1,10 @@
 package com.dinner.controller;
 
-import com.dinner.model.security.AuthenticatedUser;
-import com.dinner.model.security.AuthenticationFacade;
+import com.dinner.facade.PurchaseFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by Tomek on 23-Jan-17.
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
     @Autowired
-    AuthenticationFacade authenticationFacade;
+    PurchaseFacade purchaseFacade;
 
     @RequestMapping(value = "/")
     public String index() {
@@ -26,9 +25,10 @@ public class MainController {
         return "nav";
     }
 
-    @RequestMapping(value = "/userMoney")
-    @ResponseBody
-    public Double userMoney() {
-        return authenticationFacade.getAuthentication().getAccount().getMoney();
+    @RequestMapping(value = "/purchase", method = RequestMethod.POST)
+    public String purchase() {
+        purchaseFacade.purchaseProducts();
+
+        return "/confirmation";
     }
 }
