@@ -3,18 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Confirmation Page</title>
-    <script src="https://use.fontawesome.com/473fc32ffa.js"></script>
 
-    <link
-            th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
-    <link
-            th:href="@{/css/main.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/confirmation.css}" rel="stylesheet"/>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet"/>
+
     <link rel="stylesheet" media="screen" th:href="@{/fonts/font-awesome/font-awesome.min.css}"/>
     <link rel="stylesheet" media="screen" th:href="@{/css/bootstrap-dialog.css}"/>
 
-    <link
-            href="../static/css/main.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 </head>
 <body>
@@ -74,8 +71,14 @@
         </div>
     </div>
 </section>
-<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.js"
-        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" type="text/javascript"></script>
+<!-- start contact -->
+<section id="contact">
+
+</section>
+<!-- end contact -->
+<script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/contact.js}" type="text/javascript"></script>
 <script th:src="@{/js/nav.js}" type="text/javascript"></script>
 
 </body>

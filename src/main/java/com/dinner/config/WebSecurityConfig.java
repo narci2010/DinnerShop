@@ -19,16 +19,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/resources/**", "/register","/h2").permitAll()
+                .antMatchers("/resources/**", "/register", "/contact").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .failureUrl("/login-error")
                 .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout").invalidateHttpSession(true)
-                .permitAll();
+                .permitAll()
+                ;
 
 
         //Let in to h2 console, should be removed in production mode
@@ -39,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth,
                                 UserDetailsService userDetailsService,
-                                PasswordEncoder passwordEncoder) throws Exception{
+                                PasswordEncoder passwordEncoder) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 
     }

@@ -1,0 +1,91 @@
+
+.form-group input[type="checkbox"] {
+    display: none;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span {
+    width: 20px;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label span:first-child {
+    display: none;
+}
+.form-group input[type="checkbox"] + .btn-group > label span:last-child {
+    display: inline-block;
+}
+
+.form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+    display: inline-block;
+}
+.form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+    display: none;
+}
+/*    --------------------------------------------------
+	:: General
+	-------------------------------------------------- */
+
+header {
+    background:url('/images/schabowy.jpg');
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #353535;
+}
+
+.content .content-footer p {
+    color: #6d6d6d;
+    font-size: 12px;
+    text-align: center;
+}
+.content .content-footer p a {
+    color: inherit;
+    font-weight: bold;
+}
+
+/*	--------------------------------------------------
+	:: Table Filter
+	-------------------------------------------------- */
+.panel {
+    border: 1px solid #ddd;
+    background-color: #fcfcfc;
+}
+.panel .btn-group {
+    margin: 15px 0 30px;
+}
+.panel .btn-group .btn {
+    transition: background-color .3s ease;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+.panel-yellow > .panel-heading {
+    border-color: #f0ad4e;
+    color: white;
+    background-color: #f0ad4e;
+}
+.panel-yellow > a {
+    color: #f0ad4e;
+}
+.panel-yellow > a:hover {
+    color: #df8a13;
+}
+
+.panel-green {
+    border-color: #5cb85c;
+}
+.panel-green > .panel-heading {
+    border-color: #5cb85c;
+    color: white;
+    background-color: #5cb85c;
+}
+.panel-green > form {
+    color: #5cb85c;
+}
+.panel-green > form:hover {
+    color: #3d8b3d;
+}
+.huge {
+    font-size: 40px;
+}

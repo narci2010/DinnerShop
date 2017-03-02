@@ -76,6 +76,7 @@
 			<artifactId>bootstrap</artifactId>
 			<version>3.3.5</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.webjars/angularjs -->
 		<dependency>
 			<groupId>org.webjars</groupId>

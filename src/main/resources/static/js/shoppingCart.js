@@ -83,12 +83,15 @@ function updateTable(shoppingCartProducts) {
 
 function addCheckSignatureToCheckbox(cart) {
     $(cart).each(function () {
-        $('#productsTableBody').find('input#' + this.id).attr("checked", "checked").parents('tr').addClass('selected');
+        console.log($('#productsTableBody').find('input#' + this.id));
+
+        $('#productsTableBody').find('input#' + this.id).attr("checked", "checked").parent('div').addClass('selected');
     });
 }
 
 function clearAppropriateCheckbox(id) {
-    $('#productsTableBody').find('input#' + id).prop("checked", false).parents('tr').toggleClass('selected');
+    console.log($('#productsTableBody').find('input#' + id));
+    $('#productsTableBody').find('input#' + id).prop("checked", false).parent('div').toggleClass('selected');
 
 }
 

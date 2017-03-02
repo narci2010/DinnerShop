@@ -3,6 +3,7 @@ package com.dinner.controller;
 import com.dinner.facade.PurchaseFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,10 +26,19 @@ public class MainController {
         return "nav";
     }
 
+    @RequestMapping(value = "/contact")
+    public String contact() {
+        return "contact";
+    }
+    @RequestMapping(value = "/login-error")
+    public String loginError(Model model){
+        model.addAttribute("loginError",true);
+        return "login";
+    }
+
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     public String purchase() {
         purchaseFacade.purchaseProducts();
-
         return "/confirmation";
     }
 }
