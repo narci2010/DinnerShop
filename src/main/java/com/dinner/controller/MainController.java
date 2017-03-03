@@ -30,9 +30,10 @@ public class MainController {
     public String contact() {
         return "contact";
     }
+
     @RequestMapping(value = "/login-error")
-    public String loginError(Model model){
-        model.addAttribute("loginError",true);
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
         return "login";
     }
 

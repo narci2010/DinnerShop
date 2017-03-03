@@ -35,12 +35,10 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@ModelAttribute DinnerUser registerUser) {
-        try {
-            dinnerUserService.registerNewUserAccount(registerUser);
-        } catch (EmailExistException e) {
-            System.out.println(e.getMessage());
-        }
+    public String register(@ModelAttribute DinnerUser registerUser) throws EmailExistException {
+
+        dinnerUserService.registerNewUserAccount(registerUser);
+
         return "redirect:/";
     }
 }

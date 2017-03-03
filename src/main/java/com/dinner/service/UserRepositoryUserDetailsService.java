@@ -36,7 +36,7 @@ public class UserRepositoryUserDetailsService implements DinnerUserService {
         }
 
         User user = new User();
-        Account account = new Account(20.00);
+        Account account = new Account(200.00);
         user.setFirstName(serviceUser.getFirstName());
         user.setLastName(serviceUser.getLastName());
         user.setPassword(passwordEncoder.encode(serviceUser.getPassword()));
