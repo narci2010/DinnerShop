@@ -26,8 +26,9 @@ public class Account {
 
     @Transient
     public boolean withdraw(Double cash) {
-        if (cash > this.money)
+        if (cash > this.money) {
             return false;
+        }
         this.money -= cash;
         return true;
     }

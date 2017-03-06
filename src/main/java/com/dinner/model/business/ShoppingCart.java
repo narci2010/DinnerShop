@@ -19,27 +19,27 @@ public class ShoppingCart {
 
     private List<Product> products = new ArrayList<>();
 
-    public synchronized Double getTotal() {
+    public Double getTotal() {
         return products.stream().mapToDouble(Product::getPrice).sum();
     }
 
-    public synchronized void addProduct(Product product) {
+    public void addProduct(Product product) {
         products.add(product);
     }
 
-    public synchronized void removeProduct(Product product) {
+    public void removeProduct(Product product) {
         products.remove(product);
     }
 
-    public synchronized List<Product> getProducts() {
+    public List<Product> getProducts() {
         return Collections.unmodifiableList(products);
     }
 
-    public synchronized void clear() {
+    public void clear() {
         products.clear();
     }
 
-    public synchronized boolean hasProduct(Product product) {
+    public boolean hasProduct(Product product) {
         return products.contains(product);
     }
 

@@ -23,12 +23,6 @@ public class UserRepositoryIntegrationTest {
     @Test
     public void findAllUsersTest(){
         List<User> users = userRepository.findAll();
-
-        System.out.println(users.get(0).getFirstName());
-        System.out.println(users.get(0).getLastName());
-        System.out.println(users.get(0).getAccount().getMoney());
-        System.out.println(users.get(0).getEmail());
-
         Assert.assertTrue(users.size()>0);
     }
     @Test

@@ -20,7 +20,7 @@ public class AuthenticationController {
     DinnerUserService dinnerUserService;
 
     @RequestMapping(value = "/login")
-    public String login(Model model) {
+    public String login() {
         return "login";
     }
 
@@ -36,9 +36,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@ModelAttribute DinnerUser registerUser) throws EmailExistException {
-
         dinnerUserService.registerNewUserAccount(registerUser);
-
         return "redirect:/";
     }
 }
