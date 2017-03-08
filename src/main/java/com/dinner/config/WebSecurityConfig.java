@@ -31,11 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout").invalidateHttpSession(true)
                 .permitAll()
                 ;
-
-
-        //Let in to h2 console, should be removed in production mode
-     /*   http.csrf().disable();
-        http.headers().frameOptions().disable();*/
     }
 
     @Autowired
