@@ -1,4 +1,4 @@
-package com.dinner.service;
+package com.dinner.service.implementations;
 
 import com.dinner.model.business.Account;
 import com.dinner.model.business.User;
@@ -6,6 +6,7 @@ import com.dinner.model.security.AuthenticatedUser;
 import com.dinner.model.security.DinnerUser;
 import com.dinner.repository.UserRepository;
 import com.dinner.service.exception.EmailExistException;
+import com.dinner.service.interfaces.DinnerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,27 +36,14 @@ public class UserRepositoryUserDetailsService implements DinnerUserService {
             throw new EmailExistException("There is an account whit that email address: " + serviceUser.getEmail());
         }
 
-        User user = new User();
-        Account account = new Account(200.00);
-        user.setFirstName(serviceUser.getFirstName());
-        user.setLastName(serviceUser.getLastName());
-        user.setPassword(passwordEncoder.encode(serviceUser.getPassword()));
-        user.setEmail(serviceUser.getEmail());
-        user.setAccount(account);
+        User user = createNewUser(serviceUser);
 
         if (userRepository.save(user) != null) {
-            AuthenticatedUser authenticatedUser = new AuthenticatedUser(user);
-            Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(authenticatedUser,
-                            null,
-                            new ArrayList<GrantedAuthority>());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return authenticatedUser;
+            return createAuthenticatedUser(user);
         }
 
         return null;
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
@@ -64,6 +52,27 @@ public class UserRepositoryUserDetailsService implements DinnerUserService {
         }
         throw new UsernameNotFoundException("Could not find user " + username);
 
+    }
+
+    private AuthenticatedUser createAuthenticatedUser(User user) {
+        AuthenticatedUser authenticatedUser = new AuthenticatedUser(user);
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(authenticatedUser,
+                        null,
+                        new ArrayList<GrantedAuthority>());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return authenticatedUser;
+    }
+
+    private User createNewUser(DinnerUser serviceUser) {
+        User user = new User();
+        Account account = new Account(200.00);
+        user.setFirstName(serviceUser.getFirstName());
+        user.setLastName(serviceUser.getLastName());
+        user.setPassword(passwordEncoder.encode(serviceUser.getPassword()));
+        user.setEmail(serviceUser.getEmail());
+        user.setAccount(account);
+        return user;
     }
 
     private boolean emailExist(String email) {

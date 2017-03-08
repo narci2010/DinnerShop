@@ -1,11 +1,10 @@
 package com.dinner.controller;
 
 import com.dinner.model.security.DinnerUser;
-import com.dinner.service.DinnerUserService;
+import com.dinner.service.interfaces.DinnerUserService;
 import com.dinner.service.exception.EmailExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AuthenticationController {
 
     @Autowired
-    DinnerUserService dinnerUserService;
+    private DinnerUserService dinnerUserService;
 
     @RequestMapping(value = "/login")
     public String login() {

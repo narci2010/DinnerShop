@@ -1,12 +1,11 @@
 package com.dinner.model.business;
 
-import com.dinner.facade.PurchaseFacade;
+import com.dinner.facade.interfaces.PurchaseFacade;
 import com.dinner.repository.OrderedProductsRepository;
 import com.dinner.repository.ProductsRepository;
 import com.dinner.repository.UserOrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,16 +22,16 @@ import java.util.stream.Collectors;
 public class OrderDetails {
 
     @Autowired
-    PurchaseFacade purchaseFacade;
+    private PurchaseFacade purchaseFacade;
 
     @Autowired
-    UserOrdersRepository userOrdersRepository;
+    private UserOrdersRepository userOrdersRepository;
 
     @Autowired
-    OrderedProductsRepository orderedProductsRepository;
+    private OrderedProductsRepository orderedProductsRepository;
 
     @Autowired
-    ProductsRepository productsRepository;
+    private ProductsRepository productsRepository;
 
     private UserOrder userOrder;
 

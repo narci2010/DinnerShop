@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class ProductController {
     @Autowired
-    ProductsRepository productsRepository;
+    private ProductsRepository productsRepository;
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public List<Product> products() {
         return productsRepository.findAll();

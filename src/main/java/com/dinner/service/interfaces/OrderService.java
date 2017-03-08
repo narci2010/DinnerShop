@@ -1,4 +1,4 @@
-package com.dinner.service;
+package com.dinner.service.interfaces;
 
 import org.springframework.stereotype.Service;
 

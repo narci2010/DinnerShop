@@ -1,6 +1,6 @@
 package com.dinner.controller;
 
-import com.dinner.facade.ShoppingCartFacade;
+import com.dinner.facade.interfaces.ShoppingCartFacade;
 import com.dinner.model.business.Product;
 import com.dinner.model.security.AuthenticationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ import java.util.List;
 @Scope("request")
 public class CartManagementController {
     @Autowired
-    ShoppingCartFacade shoppingCartFacade;
+    private ShoppingCartFacade shoppingCartFacade;
 
     @Autowired
-    AuthenticationFacade authenticationFacade;
+    private AuthenticationFacade authenticationFacade;
 
     @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
     public boolean addToShoppingCart(@RequestParam(value = "productId") Long productId) {

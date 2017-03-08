@@ -5,7 +5,7 @@ import com.dinner.model.business.Product;
 import com.dinner.model.business.ShoppingCart;
 import com.dinner.model.security.AuthenticatedUser;
 import com.dinner.model.security.AuthenticationFacade;
-import com.dinner.service.ShoppingCartService;
+import com.dinner.service.implementations.ShoppingCartService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.dinner.service;
+package com.dinner.service.interfaces;
 
 import com.dinner.model.security.AuthenticatedUser;
 import com.dinner.model.security.DinnerUser;

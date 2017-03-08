@@ -1,4 +1,4 @@
-package com.dinner.facade;
+package com.dinner.facade.interfaces;
 
 import com.dinner.model.business.Product;
 

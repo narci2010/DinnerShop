@@ -1,4 +1,4 @@
-package com.dinner.service;
+package com.dinner.service.implementations;
 
 import com.dinner.model.business.OrderedProducts;
 import com.dinner.model.business.Product;
@@ -7,6 +7,7 @@ import com.dinner.model.business.UserOrder;
 import com.dinner.model.security.AuthenticationFacade;
 import com.dinner.repository.OrderedProductsRepository;
 import com.dinner.repository.UserOrdersRepository;
+import com.dinner.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;

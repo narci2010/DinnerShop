@@ -1,8 +1,9 @@
-package com.dinner.facade;
+package com.dinner.facade.implementations;
 
-import com.dinner.service.AccountService;
-import com.dinner.service.DinnerAccountService;
-import com.dinner.service.OrderService;
+import com.dinner.facade.interfaces.PurchaseFacade;
+import com.dinner.facade.interfaces.ShoppingCartFacade;
+import com.dinner.service.interfaces.AccountService;
+import com.dinner.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -11,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DinnerPurchaseFacade implements PurchaseFacade {
 
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    ShoppingCartFacade shoppingCartFacade;
+    private ShoppingCartFacade shoppingCartFacade;
 
     private Long lastOrderId;
 

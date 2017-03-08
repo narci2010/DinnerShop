@@ -1,8 +1,9 @@
-package com.dinner.facade;
+package com.dinner.facade.implementations;
 
+import com.dinner.facade.interfaces.ShoppingCartFacade;
 import com.dinner.model.business.Product;
 import com.dinner.repository.ProductsRepository;
-import com.dinner.service.ShoppingCartService;
+import com.dinner.service.implementations.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -12,10 +13,10 @@ import java.util.List;
  */
 public class ShoppingCartFacadeOnShoppingCartService implements ShoppingCartFacade {
     @Autowired
-    ProductsRepository productRepository;
+    private ProductsRepository productRepository;
 
     @Autowired
-    ShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public boolean addToShoppingCart(Long productId) {

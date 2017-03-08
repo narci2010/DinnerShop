@@ -1,6 +1,6 @@
 package com.dinner.controller;
 
-import com.dinner.facade.PurchaseFacade;
+import com.dinner.facade.interfaces.PurchaseFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 
     @Autowired
-    PurchaseFacade purchaseFacade;
+    private PurchaseFacade purchaseFacade;
 
     @RequestMapping(value = "/")
     public String index() {
@@ -40,6 +40,6 @@ public class MainController {
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
     public String purchase() {
         purchaseFacade.purchaseProducts();
-        return "/confirmation";
+        return "confirm";
     }
 }

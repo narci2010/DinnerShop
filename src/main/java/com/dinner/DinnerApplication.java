@@ -1,21 +1,20 @@
 package com.dinner;
 
-import com.dinner.facade.DinnerPurchaseFacade;
-import com.dinner.facade.PurchaseFacade;
-import com.dinner.facade.ShoppingCartFacade;
-import com.dinner.facade.ShoppingCartFacadeOnShoppingCartService;
-import com.dinner.model.business.ShoppingCart;
-import com.dinner.model.security.AuthenticatedUser;
+import com.dinner.facade.implementations.DinnerPurchaseFacade;
+import com.dinner.facade.interfaces.PurchaseFacade;
+import com.dinner.facade.interfaces.ShoppingCartFacade;
+import com.dinner.facade.implementations.ShoppingCartFacadeOnShoppingCartService;
 import com.dinner.model.security.AuthenticationFacade;
 import com.dinner.model.security.AuthenticationFacadeImpl;
-import com.dinner.service.*;
+import com.dinner.service.implementations.DinnerAccountService;
+import com.dinner.service.implementations.DinnerOrderService;
+import com.dinner.service.implementations.ShoppingCartService;
+import com.dinner.service.interfaces.AccountService;
+import com.dinner.service.interfaces.OrderService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

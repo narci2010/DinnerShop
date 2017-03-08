@@ -1,4 +1,4 @@
-package com.dinner.service;
+package com.dinner.service.implementations;
 
 import com.dinner.model.business.Product;
 import com.dinner.model.business.ShoppingCart;
@@ -18,10 +18,10 @@ import java.util.List;
 public class ShoppingCartService {
 
     @Autowired
-    ShoppingCart shoppingCart;
+    private ShoppingCart shoppingCart;
 
     @Autowired
-    AuthenticationFacade authenticationFacade;
+    private AuthenticationFacade authenticationFacade;
 
     public boolean addToShoppingCart(Product product) {
         if (userHaveEnoughMoney(product)) {
