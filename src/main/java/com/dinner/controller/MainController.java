@@ -42,4 +42,9 @@ public class MainController {
         purchaseFacade.purchaseProducts();
         return "confirm";
     }
+    @RequestMapping("/_ah/health")
+    public String healthy() {
+        // Message body required though ignored
+        return "Still surviving.";
+    }
 }
