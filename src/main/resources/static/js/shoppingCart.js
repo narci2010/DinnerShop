@@ -38,7 +38,7 @@ function editShoppingCart(id, url) {
             else if (data == false) {
                 clearAppropriateCheckbox(id);
                 BootstrapDialog.show({
-                    message: 'Sorry, you do not have enough money from this product',
+                    message: 'Sorry, you do not have enough money for this product',
                     type: BootstrapDialog.TYPE_WARNING
                 });
 
