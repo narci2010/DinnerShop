@@ -1,6 +1,6 @@
 package com.dinner.controller;
 
-import com.dinner.model.security.DinnerUser;
+import com.dinner.model.domain.user.DinnerUserDTO;
 import com.dinner.service.interfaces.DinnerUserService;
 import com.dinner.service.exception.EmailExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(@ModelAttribute DinnerUser registerUser) throws EmailExistException {
+    public String register(@ModelAttribute DinnerUserDTO registerUser) throws EmailExistException {
         dinnerUserService.registerNewUserAccount(registerUser);
         return "redirect:/";
     }

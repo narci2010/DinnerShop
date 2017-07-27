@@ -1,9 +1,9 @@
 package com.dinner.service.implementations;
 
-import com.dinner.model.business.OrderedProducts;
-import com.dinner.model.business.Product;
-import com.dinner.model.business.ShoppingCart;
-import com.dinner.model.business.UserOrder;
+import com.dinner.model.domain.OrderedProducts;
+import com.dinner.model.domain.Product;
+import com.dinner.model.domain.ShoppingCart;
+import com.dinner.model.domain.UserOrder;
 import com.dinner.model.security.AuthenticationFacade;
 import com.dinner.repository.OrderedProductsRepository;
 import com.dinner.repository.UserOrdersRepository;
@@ -38,7 +38,7 @@ public class DinnerOrderService implements OrderService {
 
     private UserOrder addOrder() {
         UserOrder userOrder = new UserOrder();
-        userOrder.setUserId(authenticationFacade.getAuthentication().getId());
+//        userOrder.setUserId(authenticationFacade.getAuthentication().getId());
         userOrder.setAmount(BigDecimal.valueOf(shoppingCart.getTotal()));
         userOrder.setDateCreated(new Timestamp(new Date().getTime()));
         userOrdersRepository.save(userOrder);

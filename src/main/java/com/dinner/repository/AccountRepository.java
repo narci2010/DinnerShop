@@ -1,6 +1,6 @@
 package com.dinner.repository;
 
-import com.dinner.model.business.Account;
+import com.dinner.model.domain.user.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

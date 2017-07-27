@@ -1,6 +1,6 @@
 package com.dinner.repository;
 
-import com.dinner.model.business.UserOrder;
+import com.dinner.model.domain.UserOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

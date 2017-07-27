@@ -1,7 +1,7 @@
 package com.dinner.controller;
 
 import com.dinner.facade.interfaces.ShoppingCartFacade;
-import com.dinner.model.business.Product;
+import com.dinner.model.domain.Product;
 import com.dinner.model.security.AuthenticationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -47,6 +47,9 @@ public class CartManagementController {
 
     @RequestMapping(value = "/userMoney")
     public Double userMoney() {
+/*
         return authenticationFacade.getAuthentication().getAccount().getMoney();
+*/
+        return 200.00;
     }
 }

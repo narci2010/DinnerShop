@@ -1,4 +1,4 @@
-package com.dinner.model.security;
+package com.dinner.model.domain.user;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by Tomek on 05-Feb-17.
  */
 @Data
-public class DinnerUser {
+public class DinnerUserDTO {
     private String email;
     private String firstName;
     private String lastName;

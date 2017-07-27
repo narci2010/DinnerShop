@@ -1,4 +1,4 @@
-package com.dinner.model.business;
+package com.dinner.model.domain.user;
 
 import lombok.Data;
 
@@ -9,7 +9,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Accounts")
-@Data
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +23,6 @@ public class Account {
     }
 
 
-    @Transient
     public boolean withdraw(Double cash) {
         if (cash > this.money) {
             return false;
@@ -33,7 +31,6 @@ public class Account {
         return true;
     }
 
-    @Transient
     public void returnCash(Double cash) {
         this.money += cash;
     }

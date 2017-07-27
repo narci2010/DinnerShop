@@ -1,5 +1,6 @@
 package com.dinner.model.security;
 
+import com.dinner.model.domain.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationFacadeImpl implements AuthenticationFacade {
     @Override
-    public AuthenticatedUser getAuthentication() {
-        return (AuthenticatedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public User getAuthentication() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

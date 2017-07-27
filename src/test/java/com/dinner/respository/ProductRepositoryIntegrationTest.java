@@ -1,6 +1,6 @@
 package com.dinner.respository;
 
-import com.dinner.model.business.Product;
+import com.dinner.model.domain.Product;
 import com.dinner.repository.ProductsRepository;
 import org.junit.Assert;
 import org.junit.Test;

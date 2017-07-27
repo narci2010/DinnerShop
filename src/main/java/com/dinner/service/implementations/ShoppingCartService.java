@@ -1,8 +1,8 @@
 package com.dinner.service.implementations;
 
-import com.dinner.model.business.Product;
-import com.dinner.model.business.ShoppingCart;
-import com.dinner.model.security.AuthenticatedUser;
+import com.dinner.model.domain.Product;
+import com.dinner.model.domain.ShoppingCart;
+import com.dinner.model.domain.user.User;
 import com.dinner.model.security.AuthenticationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -34,7 +34,7 @@ public class ShoppingCartService {
     public boolean removeFromShoppingCart(Product product) {
         if (shoppingCart.hasProduct(product)) {
             shoppingCart.removeProduct(product);
-            getCurrentlyLogInUser().getAccount().returnCash(product.getPrice());
+            //getCurrentlyLogInUser().getAccount().returnCash(product.getPrice());
             return true;
         }
         return false;
@@ -53,10 +53,11 @@ public class ShoppingCartService {
     }
 
     private boolean userHaveEnoughMoney(Product product) {
-        return getCurrentlyLogInUser().getAccount().withdraw(product.getPrice());
+//        return getCurrentlyLogInUser().getAccount().withdraw(product.getPrice());
+        return true;
     }
 
-    private AuthenticatedUser getCurrentlyLogInUser() {
+    private User getCurrentlyLogInUser() {
         return authenticationFacade.getAuthentication();
     }
 

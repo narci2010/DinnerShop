@@ -1,6 +1,6 @@
 package com.dinner.respository;
 
-import com.dinner.model.business.User;
+import com.dinner.model.domain.user.User;
 import com.dinner.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,10 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
-/**
- * Created by Tomek on 29-Jan-17.
- */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserRepositoryIntegrationTest {
@@ -27,7 +26,8 @@ public class UserRepositoryIntegrationTest {
     }
     @Test
     public void findByEmailTest(){
-        User user = userRepository.findByEmail("to@zie.pl");
-        Assert.assertTrue(user.getEmail().equals("to@zie.pl"));
+        Optional<User> userOptional = userRepository.findByEmail("to@zie.pl");
+        User user = userOptional.get();
+        Assert.assertTrue(user.getUsername().equals("to@zie.pl"));
     }
 }

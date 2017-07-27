@@ -1,7 +1,7 @@
 package com.dinner.facade.implementations;
 
 import com.dinner.facade.interfaces.ShoppingCartFacade;
-import com.dinner.model.business.Product;
+import com.dinner.model.domain.Product;
 import com.dinner.repository.ProductsRepository;
 import com.dinner.service.implementations.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;

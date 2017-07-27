@@ -1,4 +1,4 @@
-package com.dinner.model.business;
+package com.dinner.model.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

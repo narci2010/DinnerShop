@@ -1,7 +1,8 @@
+/*
 package com.dinner.model.security;
 
-import com.dinner.model.business.Account;
-import com.dinner.model.business.User;
+import com.dinner.model.domain.user.Account;
+import com.dinner.model.domain.user.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -9,9 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+*/
 /**
  * Created by Tomek on 05-Feb-17.
- */
+ *//*
+
 public class AuthenticatedUser implements UserDetails {
     private String email;
     private String password;
@@ -65,3 +68,4 @@ public class AuthenticatedUser implements UserDetails {
     }
 
 }
+*/

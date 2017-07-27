@@ -1,6 +1,5 @@
-package com.dinner.model.business;
+package com.dinner.model.domain;
 
-import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;

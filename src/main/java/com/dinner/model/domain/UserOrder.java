@@ -1,13 +1,11 @@
-package com.dinner.model.business;
+package com.dinner.model.domain;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * Created by Tomek on 29-Jan-17.

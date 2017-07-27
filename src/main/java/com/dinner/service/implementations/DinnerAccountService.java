@@ -18,6 +18,6 @@ public class DinnerAccountService implements AccountService {
 
     @Override
     public void updateUserAccount() {
-        accountRepository.save(authenticationFacade.getAuthentication().getAccount());
+//        accountRepository.save(authenticationFacade.getAuthentication().getAccount());
     }
 }

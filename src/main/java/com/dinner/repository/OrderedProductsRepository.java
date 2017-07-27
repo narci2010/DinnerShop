@@ -1,11 +1,8 @@
 package com.dinner.repository;
 
-import com.dinner.model.business.OrderedProducts;
-import com.dinner.model.business.OrderedProductsPK;
-import com.dinner.model.business.Product;
+import com.dinner.model.domain.OrderedProducts;
+import com.dinner.model.domain.OrderedProductsPK;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

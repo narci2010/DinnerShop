@@ -1,7 +1,7 @@
 package com.dinner.model.buissness;
 
-import com.dinner.model.business.Product;
-import com.dinner.model.business.ShoppingCart;
+import com.dinner.model.domain.Product;
+import com.dinner.model.domain.ShoppingCart;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.dinner.controller;
 
-import com.dinner.model.business.Product;
+import com.dinner.model.domain.Product;
 import com.dinner.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

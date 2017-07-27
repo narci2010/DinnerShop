@@ -1,4 +1,4 @@
-package com.dinner.model.business;
+package com.dinner.model.domain;
 
 import com.dinner.facade.interfaces.PurchaseFacade;
 import com.dinner.repository.OrderedProductsRepository;
