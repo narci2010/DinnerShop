@@ -18,10 +18,9 @@ public class UserOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private BigDecimal amount;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateCreated;
     private Long userId;
-
 
 
 }
