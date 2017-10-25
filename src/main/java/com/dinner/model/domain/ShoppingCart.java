@@ -1,12 +1,11 @@
 package com.dinner.model.domain;
 
+import com.dinner.model.domain.product.Product;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -16,30 +15,30 @@ import java.util.List;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ShoppingCart {
 
-    private List<Product> products = new ArrayList<>();
+    private Map<Product, Integer> products = new HashMap<>();
 
-    public Double getTotal() {
-        return products.stream().mapToDouble(Product::getPrice).sum();
-    }
+//    public Double getTotal() {
+//        return products.stream().mapToDouble(Product::getPrice).sum();
+//    }
 
-    public void addProduct(Product product) {
-        products.add(product);
+    public void addProduct(Product product, Integer quantity) {
+        products.put(product, quantity);
     }
 
     public void removeProduct(Product product) {
         products.remove(product);
     }
 
-    public List<Product> getProducts() {
-        return Collections.unmodifiableList(products);
+    public Map<Product, Integer> getProducts() {
+        return Collections.unmodifiableMap(products);
     }
 
     public void clear() {
         products.clear();
     }
 
-    public boolean hasProduct(Product product) {
-        return products.contains(product);
-    }
+//    public boolean hasProduct(Product product) {
+//        return products.contains(product);
+//    }
 
 }

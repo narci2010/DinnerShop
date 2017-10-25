@@ -1,10 +1,10 @@
-package com.dinner.service.implementations;
+package com.dinner.service.application.implementations;
 
 import com.dinner.model.domain.user.DinnerUserDTO;
 import com.dinner.model.domain.user.User;
 import com.dinner.repository.UserRepository;
 import com.dinner.service.exception.EmailExistException;
-import com.dinner.service.interfaces.DinnerUserService;
+import com.dinner.service.application.interfaces.DinnerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

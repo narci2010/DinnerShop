@@ -1,6 +1,6 @@
 package com.dinner.facade.interfaces;
 
-import com.dinner.model.domain.Product;
+import com.dinner.model.domain.product.Product;
 
 import java.util.List;
 

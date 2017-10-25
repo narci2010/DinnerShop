@@ -1,6 +1,6 @@
-package com.dinner.service.implementations;
+package com.dinner.service.application.implementations;
 
-import com.dinner.model.domain.Product;
+import com.dinner.model.domain.product.Product;
 import com.dinner.model.domain.ShoppingCart;
 import com.dinner.model.domain.user.User;
 import com.dinner.model.security.AuthenticationFacade;
@@ -25,28 +25,28 @@ public class ShoppingCartService {
 
     public boolean addToShoppingCart(Product product) {
         if (userHaveEnoughMoney(product)) {
-            shoppingCart.addProduct(product);
+//            shoppingCart.addProduct(product);
             return true;
         }
         return false;
     }
 
     public boolean removeFromShoppingCart(Product product) {
-        if (shoppingCart.hasProduct(product)) {
+/*        if (shoppingCart.hasProduct(product)) {
             shoppingCart.removeProduct(product);
             //getCurrentlyLogInUser().getAccount().returnCash(product.getPrice());
             return true;
-        }
+        }*/
         return false;
     }
 
-    public List<Product> getProducts() {
+/*    public List<Product> getProducts() {
         return shoppingCart.getProducts();
     }
 
     public Double getTotal() {
         return shoppingCart.getTotal();
-    }
+    }*/
 
     public void clear(){
         shoppingCart.clear();

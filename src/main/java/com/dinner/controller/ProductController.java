@@ -1,12 +1,18 @@
 package com.dinner.controller;
 
-import com.dinner.model.domain.Product;
+import com.dinner.model.domain.product.Product;
+import com.dinner.model.domain.transfer.JsonExporter;
+import com.dinner.model.value.objects.ProductListWrapper;
 import com.dinner.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -14,10 +20,30 @@ import java.util.List;
  */
 @RestController
 public class ProductController {
+    private final ProductsRepository productsRepository;
+
     @Autowired
-    private ProductsRepository productsRepository;
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public List<Product> products() {
-        return productsRepository.findAll();
+    public ProductController(ProductsRepository productsRepository) {
+        this.productsRepository = productsRepository;
     }
+
+/*    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public List<Product> products() {
+
+        return productsRepository.findAll();
+    }*/
+
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public void products(HttpServletResponse res) throws IOException {
+
+        List<Product> all = productsRepository.findAll();
+        ProductListWrapper productListWrapper = new ProductListWrapper(all);
+
+        PrintWriter printWriter = res.getWriter();
+        printWriter.println(productListWrapper.export(new JsonExporter()));
+        printWriter.close();
+
+
+    }
+
 }

@@ -1,8 +1,8 @@
-package com.dinner.service.implementations;
+package com.dinner.service.application.implementations;
 
 import com.dinner.model.security.AuthenticationFacade;
 import com.dinner.repository.AccountRepository;
-import com.dinner.service.interfaces.AccountService;
+import com.dinner.service.application.interfaces.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

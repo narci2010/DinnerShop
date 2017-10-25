@@ -1,45 +1,51 @@
-/*
 package com.dinner.serivce;
 
-import com.dinner.model.domain.product.Product;
+
 import com.dinner.model.domain.ShoppingCart;
+import com.dinner.model.domain.order.Order;
+import com.dinner.model.domain.product.Product;
 import com.dinner.model.domain.user.Account;
 import com.dinner.model.domain.user.User;
-import com.dinner.model.security.AuthenticatedUser;
 import com.dinner.model.security.AuthenticationFacade;
+import com.dinner.model.value.objects.Money;
 import com.dinner.service.application.implementations.ShoppingCartService;
-import org.junit.Assert;
+import com.dinner.service.application.interfaces.OrderService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.mockito.Mockito.when;
 
-*/
-/**
- * Created by Tomek on 04-Feb-17.
- *//*
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@Transactional
+public class DinnerOrderServiceTest {
 
+    @Autowired
+    private OrderService orderService;
 
-public class ShoppingCartServiceTest {
+    private Product product;
+
     @InjectMocks
     ShoppingCartService shoppingCartService;
     @Mock
     User user;
     @Mock
     Account account;
-    @Mock
-    ShoppingCart shoppingCart;
-
     @Mock
     AuthenticationFacade authenticationFacade;
     @Mock
@@ -51,43 +57,29 @@ public class ShoppingCartServiceTest {
     @Mock
     Principal principal;
 
-
-
-    private Product product;
+    @Mock
+    ShoppingCart shoppingCart;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        product = new Product("desc", 20.00, new byte[1]);
-        when(user.getAccount()).thenReturn(account);
+        product = new Product("desc", new Money(20.00,"PLN"), new byte[1]);
+//        when(user.getAccount()).thenReturn(account);
         when(authenticationFacade.getAuthentication()).thenReturn(user);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(user);
         SecurityContextHolder.setContext(securityContext);
+        Map<Product, Integer> map = new HashMap<>();
+        map.put(product,1);
+        when(shoppingCart.getProducts()).thenReturn(map);
+
+        shoppingCart.addProduct(product,1);
     }
 
     @Test
-    public void addToCartTestWithoutMoney() {
-        when(user.getAccount().withdraw(product.getPrice())).thenReturn(false);
-        boolean response = shoppingCartService.addToShoppingCart(product);
-        Assert.assertFalse(response);
-    }
-    @Test
-    public void addToCartTestEnoughMoney(){
-        when(user.getAccount().withdraw(product.getPrice())).thenReturn(true);
-        boolean response = shoppingCartService.addToShoppingCart(product);
-        Assert.assertTrue(response);
-
+    public void shouldPlaceOrder(){
+        Order order = orderService.placeOrder(shoppingCart);
+        System.out.println(order);
     }
 
-    @Test
-    public void getListOfProducts(){
-        List<Product> products = new ArrayList<>(2);
-        products.add(new Product());
-        products.add(new Product());
-        when(shoppingCart.getProducts()).thenReturn(products);
-        Assert.assertEquals(2,shoppingCartService.getProducts().size());
-
-    }
 }
-*/

@@ -1,6 +1,7 @@
-package com.dinner.model.domain;
+package com.dinner.model.domain.order;
 
 import com.dinner.facade.interfaces.PurchaseFacade;
+import com.dinner.model.domain.product.Product;
 import com.dinner.repository.OrderedProductsRepository;
 import com.dinner.repository.ProductsRepository;
 import com.dinner.repository.UserOrdersRepository;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,16 +35,16 @@ public class OrderDetails {
     @Autowired
     private ProductsRepository productsRepository;
 
-    private UserOrder userOrder;
+    private Order order;
 
-    @PostConstruct
+/*    @PostConstruct
     private void init() {
-        userOrder = userOrdersRepository.getOne(purchaseFacade.getLastOrderId());
+        order = userOrdersRepository.getOne(purchaseFacade.getLastOrderId());
     }
 
     public List<Product> getOrderedProduct() {
         List<Product> products =
-                orderedProductsRepository.findAllOrderedProductsByUserOrderId(userOrder.getId())
+                orderedProductsRepository.findAllOrderedProductsByUserOrderId(order.getId())
                         .stream()
                         .map(orderedProducts -> productsRepository.getOne(orderedProducts.getProductId()))
                         .collect(Collectors.toList());
@@ -51,11 +53,11 @@ public class OrderDetails {
     }
 
     public Double getAmount() {
-        return userOrder.getAmount().doubleValue();
+        return order.getAmount().doubleValue();
     }
 
 
-    public Date getOrderDate() {
-        return userOrder.getDateCreated();
-    }
+    public LocalDateTime getOrderDate() {
+        return order.getDateCreated();
+    }*/
 }

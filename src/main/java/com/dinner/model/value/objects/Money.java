@@ -20,6 +20,9 @@ public class Money implements Serializable {
     private BigDecimal denomination;
     private String currencyCode;
 
+    public Money() {
+    }
+
     public Money(BigDecimal denomination, Currency currency) {
         this(denomination, currency.getCurrencyCode());
     }

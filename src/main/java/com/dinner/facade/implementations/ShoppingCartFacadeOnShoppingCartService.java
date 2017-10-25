@@ -1,11 +1,12 @@
 package com.dinner.facade.implementations;
 
 import com.dinner.facade.interfaces.ShoppingCartFacade;
-import com.dinner.model.domain.Product;
+import com.dinner.model.domain.product.Product;
 import com.dinner.repository.ProductsRepository;
-import com.dinner.service.implementations.ShoppingCartService;
+import com.dinner.service.application.implementations.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,12 +31,12 @@ public class ShoppingCartFacadeOnShoppingCartService implements ShoppingCartFaca
 
     @Override
     public List<Product> getProducts() {
-        return shoppingCartService.getProducts();
+        return new ArrayList<>();
     }
 
     @Override
     public Double getTotalPrice() {
-        return shoppingCartService.getTotal();
+        return Double.valueOf(10);
     }
 
     @Override

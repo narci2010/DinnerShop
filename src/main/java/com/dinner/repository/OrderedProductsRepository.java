@@ -1,7 +1,7 @@
 package com.dinner.repository;
 
-import com.dinner.model.domain.OrderedProducts;
-import com.dinner.model.domain.OrderedProductsPK;
+import com.dinner.model.domain.order.OrderedProducts;
+import com.dinner.model.domain.order.OrderedProductsPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface OrderedProductsRepository extends JpaRepository<OrderedProducts, OrderedProductsPK> {
 
-    List<OrderedProducts> findAllOrderedProductsByUserOrderId(Long id);
+//    List<OrderedProducts> findAllOrderedProductsByUserOrderId(Long id);
 }

@@ -1,4 +1,4 @@
-package com.dinner.service.interfaces;
+package com.dinner.service.application.interfaces;
 
 import com.dinner.model.domain.user.DinnerUserDTO;
 import com.dinner.model.domain.user.User;

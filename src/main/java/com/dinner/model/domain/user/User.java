@@ -1,5 +1,6 @@
 package com.dinner.model.domain.user;
 
+import com.dinner.model.domain.order.Order;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,6 @@ public class User implements UserDetails {
     private String password;
     private Boolean enabled;
     private Boolean tokenExpired;
-
 
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
