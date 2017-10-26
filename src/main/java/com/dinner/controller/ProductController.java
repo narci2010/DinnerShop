@@ -1,11 +1,9 @@
 package com.dinner.controller;
 
 import com.dinner.model.domain.product.Product;
-import com.dinner.model.domain.transfer.JsonExporter;
 import com.dinner.model.value.objects.ProductListWrapper;
 import com.dinner.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,14 +32,18 @@ public class ProductController {
     }*/
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public void products(HttpServletResponse res) throws IOException {
+    public void products(HttpServletResponse res) {
+
 
         List<Product> all = productsRepository.findAll();
         ProductListWrapper productListWrapper = new ProductListWrapper(all);
 
-        PrintWriter printWriter = res.getWriter();
-        printWriter.println(productListWrapper.export(new JsonExporter()));
-        printWriter.close();
+        try (PrintWriter printWriter = res.getWriter()) {
+            printWriter.println(productListWrapper.export(productListWrapper.new JsonListExporter()));
+        } catch (IOException e) {
+            //TODO logger
+            System.out.println(e.getMessage());
+        }
 
 
     }

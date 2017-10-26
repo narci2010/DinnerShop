@@ -26,8 +26,8 @@ public class UserRepositoryIntegrationTest {
     }
     @Test
     public void findByEmailTest(){
-        Optional<User> userOptional = userRepository.findByEmail("to@zie.pl");
+        Optional<User> userOptional = userRepository.findByEmail("t@z.pl");
         User user = userOptional.get();
-        Assert.assertTrue(user.getUsername().equals("to@zie.pl"));
+        Assert.assertTrue(user.getUsername().equals("t@z.pl"));
     }
 }

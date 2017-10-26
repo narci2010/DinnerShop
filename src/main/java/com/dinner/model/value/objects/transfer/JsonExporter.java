@@ -1,4 +1,4 @@
-package com.dinner.model.domain.transfer;
+package com.dinner.model.value.objects.transfer;
 
 import org.springframework.stereotype.Component;
 
@@ -17,4 +17,5 @@ public class JsonExporter implements Exporter {
         toExport += "}";
         return toExport;
     }
+
 }
