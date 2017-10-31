@@ -18,15 +18,11 @@ public class ShoppingCart {
 
     private Map<Product, Integer> products = new HashMap<>();
 
- /*   public Double getTotal() {
-
-        Money money = new Money(0.00,"PLN");
-
-
-        products.entrySet().stream().map(productIntegerEntry -> productIntegerEntry.getKey())
-                .forEach(product ->         money.add(product.getPrice()).multiplyBy());
-        return products.stream().mapToDouble(Product::getPrice).sum();
-    }*/
+    public Money getTotal() {
+        Money money = new Money(0.00, "PLN");
+        products.entrySet().forEach(entry -> money.add(entry.getKey().getPrice().multiplyBy(entry.getValue())));
+        return money;
+    }
 
     public void addProduct(Product product, Integer quantity) {
         products.put(product, quantity);
