@@ -1,12 +1,9 @@
 package com.dinner.model.domain.product;
 
-import com.dinner.model.value.objects.transfer.Exportable;
-import com.dinner.model.value.objects.transfer.Exporter;
 import com.dinner.model.value.objects.Money;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  * Created by Tomek on 28-Jan-17.
@@ -14,22 +11,22 @@ import javax.xml.bind.DatatypeConverter;
 @Entity
 @Table(name = "Products")
 @EqualsAndHashCode
-public class Product implements Exportable {
+public class Product  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String description;
+    private  String description;
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "denomination", column = @Column(name = "price")),
             @AttributeOverride(name = "currencyCode", column = @Column(name = "currency"))
     })
-    private Money price;
+    private  Money price;
     @Lob
-    private byte[] image;
+    private  byte[] image;
 
 
-    public Product() {
+    protected Product() {
     }
 
     public Product(String description, Money price, byte[] image) {
@@ -46,16 +43,5 @@ public class Product implements Exportable {
                 ", price=" + price +
                 ", image=" + image +
                 '}';
-    }
-
-
-    @Override
-    public String export(Exporter exporter) {
-        exporter.addFieldToExport("id", id.toString());
-        exporter.addFieldToExport("description", description);
-        exporter.addFieldToExport("price", price.toString());
-        exporter.addFieldToExport("image",  DatatypeConverter.printBase64Binary(image));
-
-        return exporter.toString();
     }
 }

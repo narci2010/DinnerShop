@@ -2,6 +2,10 @@ package com.dinner.model.value.objects;
 
 import static org.junit.Assert.*;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -49,12 +53,13 @@ public class MoneyTest {
 
     @Test
     public void shouldReturnLessThan() {
-        Money money = new Money(2,"PLN");
+        Money money = new Money(2, "PLN");
         assertTrue(money.lessThan(testMoney));
     }
+
     @Test
     public void shouldReturnGtThan() {
-        Money money = new Money(2,"PLN");
+        Money money = new Money(2, "PLN");
         assertTrue(testMoney.greaterThan(money));
     }
 
