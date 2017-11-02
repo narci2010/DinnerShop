@@ -1,6 +1,7 @@
 package com.dinner.model.domain.user;
 
 import com.dinner.model.domain.order.Order;
+import com.dinner.model.value.objects.Money;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,9 +13,10 @@ import java.util.Collection;
 /**
  * Created by Tomek on 29-Jan-17.
  */
+
 @Entity
 @Table(name = "Users")
-public class User implements UserDetails {
+public class User implements UserDetails, Payable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -41,11 +43,26 @@ public class User implements UserDetails {
         password = userDTO.getPassword();
         enabled = true;
         tokenExpired = true;
-        this.person = new Person(userDTO.getFirstName(),userDTO.getLastName(),new Account(200.00));
+        this.person = new Person(userDTO.getFirstName(), userDTO.getLastName(), new Account(new Money(200.00, "PLN")));
         this.roles.add(new Role("ROLE_USER"));
     }
 
-    public User() {
+    protected User() {
+
+    }
+
+    @Override
+    public boolean withdraw(Money money) {
+        return person.account.withdraw(money);
+    }
+
+    @Override
+    public void returnMoney(Money money) {
+        person.account.returnMoney(money);
+    }
+
+    public Money displayUserMoney() {
+        return Money.ZERO.add(person.account.money);
     }
 
     @Override

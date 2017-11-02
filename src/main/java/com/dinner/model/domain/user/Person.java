@@ -16,7 +16,7 @@ public class Person {
     private String lastName;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Account account;
+    protected Account account;
 
     public Person(String firstName, String lastName, Account account) {
         this.firstName = firstName;

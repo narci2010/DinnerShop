@@ -20,12 +20,24 @@ public class ShoppingCart {
 
     public Money getTotal() {
         Money money = new Money(0.00, "PLN");
-        products.entrySet().forEach(entry -> money.add(entry.getKey().getPrice().multiplyBy(entry.getValue())));
+        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
+            money = money.add(entry.getKey().getPrice().multiplyBy(entry.getValue()));
+        }
+
         return money;
     }
 
     public void addProduct(Product product, Integer quantity) {
-        products.put(product, quantity);
+        Optional<Map.Entry<Product, Integer>> existingProduct = products.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(product))
+                .findAny();
+        if (existingProduct.isPresent()) {
+            products.replace(existingProduct.get().getKey(), existingProduct.get().getValue(), existingProduct.get().getValue() + quantity);
+        } else {
+            products.put(product, quantity);
+
+        }
+
     }
 
     public void removeProduct(Product product) {
@@ -40,8 +52,12 @@ public class ShoppingCart {
         products.clear();
     }
 
-//    public boolean hasProduct(Product product) {
-//        return products.contains(product);
-//    }
+    public boolean hasProduct(Product product) {
+        return products.containsKey(product);
+    }
 
+    public Money productPriceInShoppingCart(Product product) {
+        Integer integer = products.get(product);
+        return product.getPrice().multiplyBy(integer);
+    }
 }

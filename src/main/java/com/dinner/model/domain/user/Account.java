@@ -1,5 +1,6 @@
 package com.dinner.model.domain.user;
 
+import com.dinner.model.value.objects.Money;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,26 +14,35 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Double money;
 
-    public Account() {
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "denomination", column = @Column(name = "money")),
+            @AttributeOverride(name = "currencyCode", column = @Column(name = "currency"))
+    })
+    protected Money money;
+
+    protected Account() {
     }
 
-    public Account(Double money) {
+    public Account(Money money) {
         this.money = money;
     }
 
 
-    public boolean withdraw(Double cash) {
-        if (cash > this.money) {
+    protected boolean withdraw(Money cash) {
+
+        if (cash.greaterThan(this.money)) {
             return false;
         }
-        this.money -= cash;
+        this.money = this.money.subtract(cash);
         return true;
     }
 
-    public void returnCash(Double cash) {
-        this.money += cash;
+    protected void returnMoney(Money money) {
+        this.money = this.money.add(money);
+
     }
 
 }

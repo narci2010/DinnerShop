@@ -2,8 +2,6 @@ package com.dinner;
 
 import com.dinner.facade.implementations.DinnerPurchaseFacade;
 import com.dinner.facade.interfaces.PurchaseFacade;
-import com.dinner.facade.interfaces.ShoppingCartFacade;
-import com.dinner.facade.implementations.ShoppingCartFacadeOnShoppingCartService;
 import com.dinner.model.security.AuthenticationFacade;
 import com.dinner.model.security.AuthenticationFacadeImpl;
 import com.dinner.service.application.implementations.DinnerAccountService;
@@ -20,11 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class DinnerApplication {
-    @Bean
-    public ShoppingCartFacade shoppingCartFacade() {
-        return new ShoppingCartFacadeOnShoppingCartService();
-    }
-
     @Bean
     public ShoppingCartService shoppingCartService() {
         return new ShoppingCartService();

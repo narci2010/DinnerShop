@@ -4,11 +4,14 @@ import com.dinner.model.domain.product.Product;
 import com.dinner.model.domain.ShoppingCart;
 import com.dinner.model.domain.user.User;
 import com.dinner.model.security.AuthenticationFacade;
+import com.dinner.model.value.objects.Money;
+import com.dinner.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tomek on 04-Feb-17.
@@ -23,38 +26,45 @@ public class ShoppingCartService {
     @Autowired
     private AuthenticationFacade authenticationFacade;
 
-    public boolean addToShoppingCart(Product product) {
-        if (userHaveEnoughMoney(product)) {
-//            shoppingCart.addProduct(product);
+    @Autowired
+    private ProductsRepository productsRepository;
+
+    public boolean addToShoppingCart(Long productId, Integer quantity) {
+        Product product = productsRepository.getOne(productId);
+        if (userCanAfford(product, quantity)) {
+            shoppingCart.addProduct(product, quantity);
             return true;
         }
         return false;
     }
 
-    public boolean removeFromShoppingCart(Product product) {
-/*        if (shoppingCart.hasProduct(product)) {
+    public boolean removeFromShoppingCart(Long productId) {
+        Product product = productsRepository.getOne(productId);
+
+        if (shoppingCart.hasProduct(product)) {
+            Money price = shoppingCart.productPriceInShoppingCart(product);
             shoppingCart.removeProduct(product);
-            //getCurrentlyLogInUser().getAccount().returnCash(product.getPrice());
+            getCurrentlyLogInUser().returnMoney(price);
             return true;
-        }*/
+        }
         return false;
     }
 
-/*    public List<Product> getProducts() {
+    public Map<Product, Integer> getProducts() {
         return shoppingCart.getProducts();
     }
 
-    public Double getTotal() {
+    public Money getTotal() {
         return shoppingCart.getTotal();
-    }*/
+    }
 
-    public void clear(){
+    public void clear() {
         shoppingCart.clear();
     }
 
-    private boolean userHaveEnoughMoney(Product product) {
-//        return getCurrentlyLogInUser().getAccount().withdraw(product.getPrice());
-        return true;
+    private boolean userCanAfford(Product product, Integer quantity) {
+        Money price = product.getPrice().multiplyBy(quantity);
+        return getCurrentlyLogInUser().withdraw(price);
     }
 
     private User getCurrentlyLogInUser() {
