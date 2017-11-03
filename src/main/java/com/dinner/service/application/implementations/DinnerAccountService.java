@@ -2,6 +2,7 @@ package com.dinner.service.application.implementations;
 
 import com.dinner.model.security.AuthenticationFacade;
 import com.dinner.repository.AccountRepository;
+import com.dinner.repository.UserRepository;
 import com.dinner.service.application.interfaces.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DinnerAccountService implements AccountService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private AuthenticationFacade authenticationFacade;
 
     @Override
     public void updateUserAccount() {
-//        accountRepository.save(authenticationFacade.getAuthentication().getAccount());
+        userRepository.save(authenticationFacade.getAuthentication());
     }
 }

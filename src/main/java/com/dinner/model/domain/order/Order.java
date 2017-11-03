@@ -4,6 +4,7 @@ import com.dinner.model.domain.product.Product;
 import com.dinner.model.domain.user.User;
 import com.dinner.model.value.objects.Money;
 import lombok.Data;
+import lombok.Getter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,6 +25,7 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
     private Long id;
 
     @Embedded

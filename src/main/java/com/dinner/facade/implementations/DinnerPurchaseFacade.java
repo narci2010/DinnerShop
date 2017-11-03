@@ -2,6 +2,7 @@ package com.dinner.facade.implementations;
 
 import com.dinner.facade.interfaces.PurchaseFacade;
 import com.dinner.model.domain.ShoppingCart;
+import com.dinner.model.domain.order.Order;
 import com.dinner.service.application.implementations.ShoppingCartService;
 import com.dinner.service.application.interfaces.AccountService;
 import com.dinner.service.application.interfaces.OrderService;
@@ -25,6 +26,7 @@ public class DinnerPurchaseFacade implements PurchaseFacade {
     public void purchaseProducts() {
         //TODO mock
         orderService.placeOrder(new ShoppingCart());
+
         accountService.updateUserAccount();
         shoppingCartService.clear();
 
