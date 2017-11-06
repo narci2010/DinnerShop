@@ -3,6 +3,7 @@ package com.dinner.controller;
 import com.dinner.facade.interfaces.PurchaseFacade;
 import com.dinner.model.domain.ShoppingCart;
 import com.dinner.model.domain.order.Order;
+import com.dinner.model.transfer.ShoppingCartDTO;
 import com.dinner.repository.UserOrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,8 +48,9 @@ public class MainController {
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public String purchase(@RequestBody ShoppingCart shoppingCart) {
-        purchaseFacade.purchaseProducts();
+    public String purchase(@ModelAttribute ShoppingCartDTO shoppingCart) {
+//        purchaseFacade.purchaseProducts();
+        System.out.println(shoppingCart);
         return "confirm";
     }
 

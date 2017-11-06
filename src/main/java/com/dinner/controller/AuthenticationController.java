@@ -1,6 +1,6 @@
 package com.dinner.controller;
 
-import com.dinner.model.domain.user.DinnerUserDTO;
+import com.dinner.model.transfer.DinnerUserDTO;
 import com.dinner.service.application.interfaces.DinnerUserService;
 import com.dinner.service.exception.EmailExistException;
 import org.springframework.beans.factory.annotation.Autowired;

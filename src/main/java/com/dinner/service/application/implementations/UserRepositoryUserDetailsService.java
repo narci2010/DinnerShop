@@ -1,6 +1,6 @@
 package com.dinner.service.application.implementations;
 
-import com.dinner.model.domain.user.DinnerUserDTO;
+import com.dinner.model.transfer.DinnerUserDTO;
 import com.dinner.model.domain.user.User;
 import com.dinner.repository.UserRepository;
 import com.dinner.service.exception.EmailExistException;

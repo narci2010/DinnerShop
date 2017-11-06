@@ -1,8 +1,7 @@
 package com.dinner.model.domain.user;
 
-import com.dinner.model.domain.order.Order;
+import com.dinner.model.transfer.DinnerUserDTO;
 import com.dinner.model.value.objects.Money;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

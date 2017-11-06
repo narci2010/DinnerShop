@@ -1,6 +1,6 @@
 package com.dinner.service.application.interfaces;
 
-import com.dinner.model.domain.user.DinnerUserDTO;
+import com.dinner.model.transfer.DinnerUserDTO;
 import com.dinner.model.domain.user.User;
 import com.dinner.service.exception.EmailExistException;
 import org.springframework.security.core.userdetails.UserDetailsService;

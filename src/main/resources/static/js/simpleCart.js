@@ -1029,11 +1029,11 @@
 						var counter = x+1,
 							options_list = [],
 							send;
-						data['item_name_' + counter]		= item.get('name');
-						data['item_quantity_' + counter]	= item.quantity();
-						data['item_price_' + counter]		= item.price();
-						data['item_currency_ ' + counter]	= simpleCart.currency().code;
-						data['item_tax_rate' + counter]		= item.get('taxRate') || simpleCart.taxRate();
+						data['itemName' + counter]		= item.get('name');
+						data['itemQuantity' + counter]	= item.quantity();
+						data['itemPrice' + counter]		= item.price();
+						data['itemCurrency ' + counter]	= simpleCart.currency().code;
+						data['itemTaxRate' + counter]		= item.get('taxRate') || simpleCart.taxRate();
 
 						// create array of extra options
 						simpleCart.each(item.options(), function (val,x,attr) {
@@ -1150,12 +1150,12 @@
 
 					// add items to data
 					simpleCart.each(function (item,x) {
-						var counter = x+1,
+						var counter = x,
 							options_list = [],
 							send;
-						data['item_name_' + counter]		= item.get('name');
-						data['item_quantity_' + counter]	= item.quantity();
-						data['item_price_' + counter]		= item.price();
+						data['items['+counter+'].name']		= item.get('name');
+						data['items['+ counter+'].quantity']	= item.quantity();
+						data['items['+ counter+'].price']		= item.price();
 
 						// create array of extra options
 						simpleCart.each(item.options(), function (val,x,attr) {

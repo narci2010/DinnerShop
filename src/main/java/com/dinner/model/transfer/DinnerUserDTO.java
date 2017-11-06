@@ -1,4 +1,4 @@
-package com.dinner.model.domain.user;
+package com.dinner.model.transfer;
 
 import lombok.Data;
 

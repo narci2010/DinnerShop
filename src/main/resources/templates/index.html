@@ -32,9 +32,10 @@
 <div class="simpleCart_shelfItem">
     <h2 class="item_name"> Awesome T-shirt </h2>
     <input type="text" value="1" class="item_Quantity">
-    <span class="item_price">$35.99</span>
+    <span class="item_price">35.99</span>
     <a class="item_add" href="javascript:;"> Add to Cart </a>
 </div>
+<a href="javascript:;" class="simpleCart_checkout">checkout</a>
 
 <div id="cartData" class="clearfix">
     <div class="left"><strong>Items: </strong><span class="simpleCart_quantity"></span></div>
@@ -144,11 +145,19 @@
 
 <script th:src="@{/js/simpleCart.js}"></script>
 <script>
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
     simpleCart({
         checkout: {
-            type: "PayPal" ,
-            email: "you@yours.com"
-        }
+            type: "SendForm" ,
+            url: "/order",
+            extra_data: {
+                _csrf: token,
+                _csrf_header: header
+            }
+        },
+        currency: "PLN"
     });
 </script>
 
@@ -163,7 +172,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+
         $('#productsTableBody').on('click', '.star', function () {
+
             $(this).toggleClass('star-checked');
         });
 
