@@ -53,7 +53,7 @@
                         <div class="clearfix" ng-show="$index % 3 == 0"></div>
 
                         <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
+                            <div class="thumbnail simpleCart_shelfItem">
                                 <img class="img-responsive"
                                      ng-src="data:image/JPEG;base64,{{product.image}}">
                                 <div class="caption">
@@ -62,11 +62,11 @@
                                         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
                                         nostrud
                                         exercitation ullamco laboris nisi ut aliquip </p>
-                                    <h4 class="pull-right"><strong>{{product.price}} $</strong></h4>
+                                    <h4 class="pull-right item_price"><strong>{{product.price.denomination}} $</strong></h4>
                                 </div>
 
                                 <div class="form-group ckbox">
-                                    <input type="checkbox"  id="{{product.id}}"/>
+                                    <input type="checkbox" class="item_id"  id="{{product.id}}"/>
                                     <div class="btn-group">
                                         <label for="{{product.id}}" class="btn btn-success">
                                             <span class="glyphicon glyphicon-ok"></span>
@@ -77,6 +77,8 @@
                                         </label>
                                     </div>
                                 </div>
+                                <a class="item_add" href="javascript:;"> Add to Cart </a>
+
                             </div>
                         </div>
                     </div>
