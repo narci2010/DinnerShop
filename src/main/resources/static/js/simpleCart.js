@@ -43,7 +43,7 @@
 
 				// local variables for internal use
 				item_id					= 0,
-				item_id_namespace		= "SCI-",
+				item_id_namespace		= "",
 				sc_items				= {},
 				namespace				= space || "simpleCart",
 				selectorFunctions		= {},
@@ -1153,7 +1153,8 @@
 						var counter = x,
 							options_list = [],
 							send;
-						data['items['+counter+'].name']		= item.get('name');
+                        data['items['+counter+'].id']		= item.get('id');
+                        data['items['+counter+'].name']		= item.get('name');
 						data['items['+ counter+'].quantity']	= item.quantity();
 						data['items['+ counter+'].price']		= item.price();
 

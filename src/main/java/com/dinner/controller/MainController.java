@@ -49,7 +49,7 @@ public class MainController {
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String purchase(@ModelAttribute ShoppingCartDTO shoppingCart) {
-//        purchaseFacade.purchaseProducts();
+        purchaseFacade.purchaseProducts();
         System.out.println(shoppingCart);
         return "confirm";
     }
