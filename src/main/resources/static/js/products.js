@@ -12,9 +12,7 @@ angular.module('app', [])
     .directive('updateCheckboxDirective', function() {
         return function(scope, element, attrs) {
             angular.element(element).css('color','blue');
-            if (scope.$last){
-                shoppingCart(addCheckSignatureToCheckbox);
-            }
+
         };
     });
 

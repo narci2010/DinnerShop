@@ -50,8 +50,8 @@
 				eventFunctions			= {},
 				baseEvents				= {},
 
-				// local references
-				localStorage			= window.localStorage,
+				// local references normally set window.localStorage
+				localStorage			= window.sessionStorage,
 				console					= window.console || { msgs: [], log: function (msg) { console.msgs.push(msg); } },
 
 				// used in views 
@@ -1698,6 +1698,7 @@
 					}
 					, items: function (selector) {
 						simpleCart.writeCart(selector);
+                        simpleCart.trigger("afterCreate");
 					}
 					, tax: function () {
 						return simpleCart.toCurrency(simpleCart.tax());

@@ -23,7 +23,7 @@ public class ProductRepositoryIntegrationTest {
     public void shouldReturnTrueOnJsonProductListValidation(){
 
         List<Product> products = productsRepository.findAll();
-
+        System.out.println(products);
 
 
 

@@ -11,8 +11,7 @@
     <link th:href="@{/css/navbar.css}" rel="stylesheet"/>
     <link rel="stylesheet" media="screen" th:href="@{/fonts/font-awesome/font-awesome.min.css}"/>
     <link rel="stylesheet" media="screen" th:href="@{/css/bootstrap-dialog.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/semantic/dist/semantic.min.css}" />
-
+    <link rel="stylesheet" type="text/css" th:href="@{/semantic/dist/semantic.min.css}"/>
 
 
     <title>Online shop</title>
@@ -29,18 +28,13 @@
     </div>
 </header>
 
-<div class="simpleCart_shelfItem">
-    <h2 class="item_name"> Awesome T-shirt </h2>
-    <input type="text" value="1" class="item_Quantity">
-    <span class="item_price">35.99</span>
-    <a class="item_add" href="javascript:;"> Add to Cart </a>
-</div>
-<a href="javascript:;" class="simpleCart_checkout">checkout</a>
 
-<div id="cartData" class="clearfix">
+<!--<div id="cartData" class="clearfix">
     <div class="left"><strong>Items: </strong><span class="simpleCart_quantity"></span></div>
     <div class="right"><strong>Total: </strong><span class="simpleCart_total"></span></div>
-</div>
+    <div class="simpleCart_items"></div>
+
+</div>-->
 
 <div class="container">
 
@@ -54,29 +48,19 @@
 
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail simpleCart_shelfItem">
-                                <img class="img-responsive"
+                                <img class="img-responsive item_image"
                                      ng-src="data:image/JPEG;base64,{{product.image}}">
                                 <div class="caption">
-                                    <h4>{{product.description}}</h4>
+                                    <h4 class="item_name">{{product.description}}</h4>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                         incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
                                         nostrud
                                         exercitation ullamco laboris nisi ut aliquip </p>
-                                    <h4 class="pull-right item_price"><strong>{{product.price.denomination}} $</strong></h4>
+                                    <h4 class="pull-right item_price"><strong>{{product.price.denomination}}
+                                        {{product.price.currencyCode}}</strong></h4>
                                 </div>
 
-                                <div class="form-group ckbox">
-                                    <input type="checkbox" class="item_id"  id="{{product.id}}"/>
-                                    <div class="btn-group">
-                                        <label for="{{product.id}}" class="btn btn-success">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                            <span> </span>
-                                        </label>
-                                        <label for="{{product.id}}" class="btn btn-default active">
-                                            Add to cart
-                                        </label>
-                                    </div>
-                                </div>
+
                                 <a class="item_add" href="javascript:;"> Add to Cart </a>
 
                             </div>
@@ -85,23 +69,9 @@
                 </div>
             </div>
 
-            <div id="basket" class="col-xs-12 col-sm-12 col-md-3 col-lg-3"  >
-                <table class="table table-hover">
-                    <thead>
-                    <tr class="text-info">
-                        <th>ID</th>
-                        <th>Description</th>
-                        <th>Image</th>
-                    </tr>
-                    </thead>
-                    <tbody id="shoppingCartTable">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div id="basket" class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="simpleCart_items"></div>
+
                 <div class="panel panel-green">
                     <div class="panel-heading">
                         <div class="row">
@@ -109,19 +79,18 @@
                                 <i class="fa fa-shopping-cart fa-4x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge current-total-price"> $</div>
-                                <div>Current total price !</div>
+                                <div class="simpleCart_total">Current total price !</div>
                             </div>
                         </div>
+
                     </div>
-                    <form th:action="@{/purchase}" method="post">
                         <div class="panel-footer">
-                            <button type="submit" class="btn btn-info pull-right♠">Place order ! <i
+                            <button type="submit" class="simpleCart_checkout btn btn-info pull-right♠">Place order ! <i
                                     class="fa fa-arrow-circle-right"></i></button>
                             <div class="clearfix"></div>
-                        </div>
-                    </form>
+                            <a href="javascript:;" class=" btn btn-info simpleCart_empty">Clear shopping cart </a>
 
+                        </div>
                 </div>
             </div>
         </section>
@@ -147,20 +116,48 @@
 
 <script th:src="@{/js/simpleCart.js}"></script>
 <script>
+
+    simpleCart.bind("afterCreate", function () {
+        $cart_table = $(".simpleCart_items table")
+        $cart_table.addClass("table").addClass("table-hover")
+    });
+
+
+
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
+
     simpleCart({
         checkout: {
-            type: "SendForm" ,
+            type: "SendForm",
             url: "/order",
             extra_data: {
                 _csrf: token,
                 _csrf_header: header
             }
         },
-        currency: "PLN"
+        currency: "PLN",
+
+
+        cartColumns: [
+            {
+                view: function (item, column) {
+                    return "<img src='" + item.get('image') + "' height=\"60\" width=\"60\">";
+                },
+                attr: 'image'
+            },
+            {attr: "price", label: "Price", view: 'currency'},
+
+            {attr: "quantity", label: "Qty"},
+
+            {attr: "total", label: "SubTotal", view: 'currency'},
+            {view: "remove", text: "Remove", label: false}
+
+        ],
+        cartStyle: "table"
     });
+
 </script>
 
 <script type="text/javascript">
@@ -172,47 +169,39 @@
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+
+    var money = null;
+    function assignToGlobalVariableUserMoney(userMoney) {
+        money = userMoney;
+    }
+
+    simpleCart.bind( 'beforeAdd' , function( item ){
+        var price =  item.get('price');
+        if(money.denomination >= price){
+            money.denomination = money.denomination - price;
+            updateNavbarUserMoney(money);
+        }else{
+            alert('Sorry, you do not have enough money for this product');
+            return false;
+        }
+        console.log(money);
+        return true;
+    });
 
 
-        $('#productsTableBody').on('click', '.star', function () {
-
-            $(this).toggleClass('star-checked');
-        });
-
-        $('#productsTableBody').on('click', '.ckbox input', function () {
-            $(this).parent('div').toggleClass('selected');
-
-            if ($(this).parent('div').hasClass('selected')) {
-                editShoppingCart(this.id, "/addToCart");
-            }
-            else {
-                editShoppingCart(this.id, "/removeItem");
-            }
-
-        });
-
-
-        $('.btn-filter').on('click', function () {
-            var $target = $(this).data('target');
-            if ($target != 'all') {
-                $('.table tr').css('display', 'none');
-                $('.table tr[data-status="' + $target + '"]').fadeIn('slow');
-            } else {
-                $('.table tr').css('display', 'none').fadeIn('slow');
-            }
-        });
+    simpleCart.bind( 'beforeRemove' , function( item ){
+         var totalCost = item.get('total');
+         money.denomination = money.denomination + totalCost;
+         updateNavbarUserMoney(money);
 
     });
-</script>
-<script type="text/javascript">
+
     $(document).ready(function () {
+        // clear shopping cart after page refresh
+        sessionStorage.clear();
 
-        shoppingCart(updateTable);
-        shoppingCart(updateNavbarBasketItems);
+        userMoney(assignToGlobalVariableUserMoney);
         userMoney(updateNavbarUserMoney);
-        getCurrentTotalPrice(updateTotalPricePanel);
-
 
 
         $('body').scrollspy({

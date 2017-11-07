@@ -61,7 +61,7 @@ public class User implements UserDetails, Payable {
     }
 
     public Money displayUserMoney() {
-        return Money.ZERO.add(person.account.money);
+        return person.account.money;
     }
 
     @Override
