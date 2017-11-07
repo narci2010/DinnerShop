@@ -28,14 +28,6 @@
     </div>
 </header>
 
-
-<!--<div id="cartData" class="clearfix">
-    <div class="left"><strong>Items: </strong><span class="simpleCart_quantity"></span></div>
-    <div class="right"><strong>Total: </strong><span class="simpleCart_total"></span></div>
-    <div class="simpleCart_items"></div>
-
-</div>-->
-
 <div class="container">
 
     <div class="row">
@@ -60,6 +52,7 @@
                                         {{product.price.currencyCode}}</strong></h4>
                                 </div>
 
+                                <div class="item_id hidden" >{{product.id}}</div>
 
                                 <a class="item_add" href="javascript:;"> Add to Cart </a>
 
@@ -143,7 +136,8 @@
         cartColumns: [
             {
                 view: function (item, column) {
-                    return "<img src='" + item.get('image') + "' height=\"60\" width=\"60\">";
+                    return "<img src='" + item.get('image') + "' height=\"60\" width=\"60\">"
+                        + "<div>"+ item.get('id') +" </div>";
                 },
                 attr: 'image'
             },

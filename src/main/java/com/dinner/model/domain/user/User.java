@@ -42,7 +42,7 @@ public class User implements UserDetails, Payable {
         password = userDTO.getPassword();
         enabled = true;
         tokenExpired = true;
-        this.person = new Person(userDTO.getFirstName(), userDTO.getLastName(), new Account(new Money(200.00, "PLN")));
+        this.person = new Person(userDTO.getFirstName(), userDTO.getLastName(), new Account(new Money(200.00, "EUR")));
         this.roles.add(new Role("ROLE_USER"));
     }
 
