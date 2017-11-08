@@ -74,6 +74,11 @@ public class Money implements Serializable {
         return denomination.compareTo(other.denomination) < 0;
     }
 
+    public boolean hasCompatibleCurrency(Money money){
+        checkCurrencyCompatibility(money);
+        return true;
+    }
+
     private void checkCurrencyCompatibility(Money money) {
         if (incompatibleCurrency(money)) {
             throw new IllegalArgumentException("Currency mismatch : " + currencyCode + " -> " + money.currencyCode);

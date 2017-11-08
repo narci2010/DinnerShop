@@ -63,4 +63,10 @@ public class MoneyTest {
         assertTrue(testMoney.greaterThan(money));
     }
 
+    @Test
+    public void shouldReturnCompatibleCurrency(){
+        Money money = new Money(0,"PLN");
+        assertTrue(testMoney.hasCompatibleCurrency(money));
+    }
+
 }

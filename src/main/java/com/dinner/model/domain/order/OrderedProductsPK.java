@@ -13,11 +13,9 @@ import java.io.Serializable;
 @Embeddable
 public class OrderedProductsPK implements Serializable {
     @ManyToOne
-    @JoinColumn(name = "user_order_id", insertable = false, updatable = false)
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
 
 

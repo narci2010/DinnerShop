@@ -34,7 +34,7 @@ public class User implements UserDetails, Payable {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     private Person person;
 
     public User(DinnerUserDTO userDTO) {
@@ -60,7 +60,7 @@ public class User implements UserDetails, Payable {
         person.account.returnMoney(money);
     }
 
-    public Money displayUserMoney() {
+    public Money getUserMoney() {
         return person.account.money;
     }
 

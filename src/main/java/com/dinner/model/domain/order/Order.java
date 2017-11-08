@@ -3,15 +3,11 @@ package com.dinner.model.domain.order;
 import com.dinner.model.domain.product.Product;
 import com.dinner.model.domain.user.User;
 import com.dinner.model.value.objects.Money;
-import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,17 +37,17 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.order")
     private Set<OrderedProducts> orderedProducts = new HashSet<>();
 
 
-    public Order(Date dateCreated, User user) {
-        this.totalCost = Money.ZERO;
+    public Order(Money totalCost, Date dateCreated, User user) {
+        this.totalCost = totalCost;
         this.dateCreated = dateCreated;
         this.user = user;
     }
 
     public void addProductToOrder(Product product, Integer quantity) {
-        orderedProducts.add(new OrderedProducts(product, quantity));
+        this.orderedProducts.add(new OrderedProducts(product, quantity, this));
     }
 }

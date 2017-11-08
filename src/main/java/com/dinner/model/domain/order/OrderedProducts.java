@@ -9,29 +9,26 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ORDERED_PRODUCTS")
+@AssociationOverrides({
+        @AssociationOverride(name = "pk.order",
+                joinColumns = @JoinColumn(name = "user_order_id")),
+        @AssociationOverride(name = "pk.product",
+                joinColumns = @JoinColumn(name = "product_id"))})
 public class OrderedProducts {
 
     @EmbeddedId
-    @AttributeOverrides({
-            @AttributeOverride(name = "userOrderId", column = @Column(name = "user_order_id", nullable = false)),
-            @AttributeOverride(name = "productId", column = @Column(name = "product_id", nullable = false))})
-    OrderedProductsPK orderedProductsPK;
+    OrderedProductsPK pk;
 
     private Integer quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_order_id", insertable = false, updatable = false)
-    private Order order;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
-    private Product product;
-
-    public OrderedProducts(Product product, Integer quantity) {
+    public OrderedProducts(Product product, Integer quantity, Order order) {
+        pk = new OrderedProductsPK();
+        pk.setOrder(order);
+        pk.setProduct(product);
         this.quantity = quantity;
-        this.product = product;
+
     }
 
-    public OrderedProducts() {
+    protected OrderedProducts() {
     }
 }

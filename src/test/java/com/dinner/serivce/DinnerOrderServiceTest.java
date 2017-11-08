@@ -8,12 +8,10 @@ import com.dinner.model.domain.user.Account;
 import com.dinner.model.domain.user.User;
 import com.dinner.model.security.AuthenticationFacade;
 import com.dinner.model.value.objects.Money;
-import com.dinner.service.application.implementations.ShoppingCartService;
 import com.dinner.service.application.interfaces.OrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +38,7 @@ public class DinnerOrderServiceTest {
 
     private Product product;
 
-    @InjectMocks
-    ShoppingCartService shoppingCartService;
+
     @Mock
     User user;
     @Mock
@@ -73,7 +70,7 @@ public class DinnerOrderServiceTest {
         map.put(product,1);
         when(shoppingCart.getProducts()).thenReturn(map);
 
-        shoppingCart.addProduct(product,1);
+//        shoppingCart.addProduct(product,1);
     }
 
     @Test

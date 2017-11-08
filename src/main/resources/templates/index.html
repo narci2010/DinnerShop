@@ -130,14 +130,13 @@
                 _csrf_header: header
             }
         },
-        currency: "PLN",
+        currency: "EUR",
 
 
         cartColumns: [
             {
                 view: function (item, column) {
-                    return "<img src='" + item.get('image') + "' height=\"60\" width=\"60\">"
-                        + "<div>"+ item.get('id') +" </div>";
+                    return "<img src='" + item.get('image') + "' height=\"60\" width=\"60\">";
                 },
                 attr: 'image'
             },

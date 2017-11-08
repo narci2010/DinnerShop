@@ -1,10 +1,9 @@
 package com.dinner.controller;
 
-import com.dinner.facade.interfaces.PurchaseFacade;
-import com.dinner.model.domain.ShoppingCart;
 import com.dinner.model.domain.order.Order;
 import com.dinner.model.transfer.ShoppingCartDTO;
 import com.dinner.repository.UserOrdersRepository;
+import com.dinner.service.application.implementations.DinnerOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +16,14 @@ import org.springframework.web.bind.annotation.*;
 public class MainController {
 
 
-    private final PurchaseFacade purchaseFacade;
     private final UserOrdersRepository ordersRepository;
 
+    private final DinnerOrderService dinnerOrderService;
+
     @Autowired
-    public MainController(PurchaseFacade purchaseFacade, UserOrdersRepository ordersRepository) {
-        this.purchaseFacade = purchaseFacade;
+    public MainController(UserOrdersRepository ordersRepository, DinnerOrderService dinnerOrderService) {
         this.ordersRepository = ordersRepository;
+        this.dinnerOrderService = dinnerOrderService;
     }
 
     @RequestMapping(value = "/")
@@ -49,8 +49,9 @@ public class MainController {
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public String purchase(@ModelAttribute ShoppingCartDTO shoppingCart) {
-        purchaseFacade.purchaseProducts();
+        Order order = dinnerOrderService.placeOrder(shoppingCart);
         System.out.println(shoppingCart);
+        System.out.println(order);
         return "confirm";
     }
 
