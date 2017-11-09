@@ -124,7 +124,9 @@
     simpleCart({
         checkout: {
             type: "SendForm",
-            url: "/order",
+            url: "/orders",
+//            success: "confirm.html" ,
+
             extra_data: {
                 _csrf: token,
                 _csrf_header: header

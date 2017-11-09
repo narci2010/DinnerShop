@@ -3,11 +3,13 @@ package com.dinner.model.domain.order;
 import com.dinner.model.domain.product.Product;
 import com.dinner.model.domain.user.User;
 import com.dinner.model.value.objects.Money;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +20,7 @@ import java.util.Set;
 @Entity
 @ToString
 @Table(name = "ORDERS")
-public class Order {
+public class Order implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
@@ -34,10 +36,11 @@ public class Order {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateCreated;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.order")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.order", fetch = FetchType.EAGER)
     private Set<OrderedProducts> orderedProducts = new HashSet<>();
 
 
@@ -50,4 +53,8 @@ public class Order {
     public void addProductToOrder(Product product, Integer quantity) {
         this.orderedProducts.add(new OrderedProducts(product, quantity, this));
     }
+
+    public Order() {
+    }
+
 }

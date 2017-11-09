@@ -1,9 +1,11 @@
 package com.dinner.model.domain.order;
 
 import com.dinner.model.domain.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
@@ -13,6 +15,7 @@ import java.io.Serializable;
 @Embeddable
 public class OrderedProductsPK implements Serializable {
     @ManyToOne
+    @JsonIgnore
     private Order order;
 
     @ManyToOne

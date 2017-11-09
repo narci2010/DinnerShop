@@ -31,4 +31,5 @@ public class OrderedProducts {
 
     protected OrderedProducts() {
     }
+
 }

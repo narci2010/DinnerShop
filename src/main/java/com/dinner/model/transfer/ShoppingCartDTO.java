@@ -13,5 +13,6 @@ public class ShoppingCartDTO {
     private BigDecimal tax;
     private BigDecimal taxRate;
     private Integer itemCount;
+    private BigDecimal totalPrice;
     private List<Item> items = new ArrayList<>();
 }

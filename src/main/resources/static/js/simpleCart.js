@@ -1143,6 +1143,7 @@
 							, tax		: simpleCart.tax()
 							, taxRate	: simpleCart.taxRate()
 							, itemCount : simpleCart.find({}).length
+							, totalPrice : simpleCart.total()
 						},
 						action = opts.url,
 						method = opts.method === "GET" ? "GET" : "POST";

@@ -29,17 +29,17 @@
                                 <i class="fa fa-comments fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge" th:text="${@orderDetails.getAmount()} + '$'"></div>
+                                <div class="huge" th:text="${lastOrder.totalPrice} + ${lastOrder.currency}"></div>
                                 <div>Your total amounts for today</div>
                             </div>
                         </div>
                     </div>
 
-                        <div class="panel-footer">
+<!--                        <div class="panel-footer">
                             <span class="pull-left">Order Date : </span>
                             <span class="pull-right" th:text="${#dates.format(@orderDetails.getOrderDate(), 'dd-mm-yyyy HH:mm:ss')}"></span>
                             <div class="clearfix"></div>
-                        </div>
+                        </div>-->
 
                 </div>
             </div>
@@ -50,12 +50,12 @@
 <section id="pricing-table">
     <div class="container">
         <div class="row">
-            <div class="pricing" th:each="product : ${@orderDetails.getOrderedProduct()}">
+            <div class="pricing" th:each="item : ${lastOrder.items}">
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <div class="pricing-table">
                         <div class="pricing-header">
-                            <p class="pricing-title" th:text="${product.description}"></p>
-                            <p class="pricing-rate" th:text="${product.price} + '$' "><sup>$</sup></p>
+                            <p class="pricing-title" th:text="${item.name} + ' X'+ ${item.quantity} "></p>
+                            <p class="pricing-rate" th:text="${item.price} + ' ' + ${lastOrder.currency}"></p>
                         </div>
 
                         <div class="pricing-list">
