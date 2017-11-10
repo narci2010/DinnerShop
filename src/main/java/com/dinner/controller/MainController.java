@@ -16,17 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MainController {
 
-
-    private final UserOrdersRepository ordersRepository;
-
-    private final DinnerOrderService dinnerOrderService;
-
-    @Autowired
-    public MainController(UserOrdersRepository ordersRepository, DinnerOrderService dinnerOrderService) {
-        this.ordersRepository = ordersRepository;
-        this.dinnerOrderService = dinnerOrderService;
-    }
-
     @RequestMapping(value = "/")
     public String index() {
         return "index";
@@ -47,29 +36,6 @@ public class MainController {
         model.addAttribute("loginError", true);
         return "login";
     }
-
-    @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public String purchase(@ModelAttribute ShoppingCartDTO shoppingCart, Model model) {
-        dinnerOrderService.placeOrder(shoppingCart);
-        model.addAttribute("lastOrder", shoppingCart);
-
-        return "confirm";
-    }
-
-    @RequestMapping(value = "/orders", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String getOrders(){
-        //Todo orders view
-        return "elo";
-    }
-
-    @RequestMapping(value = "/orders/{orderId}", method = RequestMethod.GET)
-    @ResponseBody
-    public Order getOrder(@PathVariable(name = "orderId") Long orderId) {
-        return ordersRepository.findOne(orderId);
-    }
-
 
     @RequestMapping("/_ah/health")
     public String healthy() {
