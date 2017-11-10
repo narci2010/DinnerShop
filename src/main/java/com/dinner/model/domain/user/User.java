@@ -56,8 +56,8 @@ public class User implements UserDetails, Payable {
     }
 
     @Override
-    public void returnMoney(Money money) {
-        person.account.returnMoney(money);
+    public void payment(Money money) {
+        person.account.payment(money);
     }
 
     public Money getUserMoney() {

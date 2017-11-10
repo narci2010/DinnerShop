@@ -40,7 +40,7 @@ public class Account {
         return true;
     }
 
-    protected void returnMoney(Money money) {
+    protected void payment(Money money) {
         this.money = this.money.add(money);
 
     }

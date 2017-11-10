@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @DomainFactory
 public class ShoppingCartFactory {
@@ -23,10 +24,13 @@ public class ShoppingCartFactory {
         Map<Product, Integer> productQuantity = new HashMap<>(shoppingCartDTO.getItemCount());
 
         for (Item item : shoppingCartDTO.getItems()) {
-            Product product = productsRepository.getOne(item.getId());
-            if(product.getPrice().hasCompatibleCurrency(moneyCurrencyCompatibilityHelperObject)) {
-                productQuantity.put(product, item.getQuantity());
-            }
+            Optional<Product> productOptional = Optional.ofNullable(productsRepository.getOne(item.getId()));
+
+            productOptional.ifPresent(product -> {
+                if (product.getPrice().hasCompatibleCurrency(moneyCurrencyCompatibilityHelperObject)) {
+                    productQuantity.put(product, item.getQuantity());
+                }
+            });
         }
         return new ShoppingCart(productQuantity, shoppingCartDTO.getCurrency());
 
