@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" xmlns:th="http://www.thymeleaf.org">
+<html ng-app="app" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -52,12 +52,15 @@
                                         {{product.price.currencyCode}}</strong></h4>
                                 </div>
 
-                                <div class="item_id hidden" >{{product.id}}</div>
+                                <div class="item_id hidden">{{product.id}}</div>
 
                                 <a class="item_add" href="javascript:;"> Add to Cart </a>
 
                             </div>
                         </div>
+                    </div>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <button class="ui secondary basic button"  type="button" id="add-product">Dodaj nowy produkt</button>
                     </div>
                 </div>
             </div>
@@ -77,16 +80,165 @@
                         </div>
 
                     </div>
-                        <div class="panel-footer">
-                            <button type="submit" class="simpleCart_checkout btn btn-info pull-right♠">Place order ! <i
-                                    class="fa fa-arrow-circle-right"></i></button>
-                            <div class="clearfix"></div>
-                            <a href="javascript:;" class=" btn btn-info simpleCart_empty">Clear shopping cart </a>
+                    <div class="panel-footer">
+                        <button type="submit" class="simpleCart_checkout btn btn-info pull-right♠">Place order ! <i
+                                class="fa fa-arrow-circle-right"></i></button>
+                        <div class="clearfix"></div>
+                        <a href="javascript:;" class=" btn btn-info simpleCart_empty">Clear shopping cart </a>
 
-                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+    </div>
+
+    <div class="ui modal" id="modal-product">
+        <form class="ui form" >
+            <h4 class="ui dividing header">New produkt</h4>
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Name">
+            </div>
+            <div class="inline field">
+                <label for="image_upload" class="ui bottom attached button">
+                    <i class="add icon"></i>
+                    <span th:remove="tag">Upload</span>
+                </label>
+                <input id="image_upload" type="file" name="files[]"
+                       style="display: none"
+                       th:attr="data-url=@{${baseUrl} + 'internal/poses/image/upload'}" accept="image/png,image/gif,image/jpeg,image/jpg">
+                <input type="hidden" id="image_id" />
+            </div>
+            <div class="field">
+                <label>Price</label>
+                <input type="number" name="price" placeholder="Price">
+            </div>
+            <div class="field">
+                <span>Currency</span>
+                <div class="ui selection dropdown">
+                    <input type="hidden" name="currency">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Select</div>
+                    <div class="menu" name="store-add-currency">
+                        <div class="item" value="ALL">Albania Lek (Lek)</div>
+                        <div class="item" value="AFN">Afghanistan Afghani (؋)</div>
+                        <div class="item" value="ARS">Argentina Peso ($)</div>
+                        <div class="item" value="AWG">Aruba Guilder (ƒ)</div>
+                        <div class="item" value="AUD">Australia Dollar ($)</div>
+                        <div class="item" value="AZN">Azerbaijan New Manat (ман)</div>
+                        <div class="item" value="BSD">Bahamas Dollar ($)</div>
+                        <div class="item" value="BBD">Barbados Dollar ($)</div>
+                        <div class="item" value="BYR">Belarus Ruble (p.)</div>
+                        <div class="item" value="BZD">Belize Dollar (BZ$)</div>
+                        <div class="item" value="BMD">Bermuda Dollar ($)</div>
+                        <div class="item" value="BOB">Bolivia Boliviano ($b)</div>
+                        <div class="item" value="BAM">Bosnia and Herzegovina Convertible Marka (KM)</div>
+                        <div class="item" value="BWP">Botswana Pula (P)</div>
+                        <div class="item" value="BGN">Bulgaria Lev (лв)</div>
+                        <div class="item" value="BGL">Bulgaria Lev (лв)</div>
+                        <div class="item" value="BRL">Brazil Real (R$)</div>
+                        <div class="item" value="BND">Brunei Darussalam Dollar ($)</div>
+                        <div class="item" value="KHR">Cambodia Riel (៛)</div>
+                        <div class="item" value="CAD">Canada Dollar ($)</div>
+                        <div class="item" value="KYD">Cayman Islands Dollar ($)</div>
+                        <div class="item" value="CLP">Chile Peso ($)</div>
+                        <div class="item" value="CNY">China Yuan Renminbi (¥)</div>
+                        <div class="item" value="COP">Colombia Peso ($)</div>
+                        <div class="item" value="CRC">Costa Rica Colon (₡)</div>
+                        <div class="item" value="HRK">Croatia Kuna (kn)</div>
+                        <div class="item" value="CUP">Cuba Peso (₱)</div>
+                        <div class="item" value="CZK">Czech Republic Koruna (Kč)</div>
+                        <div class="item" value="DKK">Denmark Krone (kr)</div>
+                        <div class="item" value="DOP">Dominican Republic Peso (RD$)</div>
+                        <div class="item" value="XCD">East Caribbean Dollar ($)</div>
+                        <div class="item" value="EGP">Egypt Pound (£)</div>
+                        <div class="item" value="SVC">El Salvador Colon ($)</div>
+                        <div class="item" value="EEK">Estonia Kroon (kr)</div>
+                        <div class="item" value="EUR">Euro Member Countries (€)</div>
+                        <div class="item" value="FKP">Falkland Islands (Malvinas) Pound (£)</div>
+                        <div class="item" value="FJD">Fiji Dollar ($)</div>
+                        <div class="item" value="GHC">Ghana Cedis (¢)</div>
+                        <div class="item" value="GIP">Gibraltar Pound (£)</div>
+                        <div class="item" value="GTQ">Guatemala Quetzal (Q)</div>
+                        <div class="item" value="GGP">Guernsey Pound (£)</div>
+                        <div class="item" value="GYD">Guyana Dollar ($)</div>
+                        <div class="item" value="HNL">Honduras Lempira (L)</div>
+                        <div class="item" value="HKD">Hong Kong Dollar ($)</div>
+                        <div class="item" value="HUF">Hungary Forint (Ft)</div>
+                        <div class="item" value="ISK">Iceland Krona (kr)</div>
+                        <div class="item" value="INR" selected="selected">Indian Rupee (₹)</div>
+                        <div class="item" value="IDR">Indonesia Rupiah (Rp)</div>
+                        <div class="item" value="IRR">Iran Rial (﷼)</div>
+                        <div class="item" value="IMP">Isle of Man Pound (£)</div>
+                        <div class="item" value="ILS">Israel Shekel (₪)</div>
+                        <div class="item" value="JMD">Jamaica Dollar (J$)</div>
+                        <div class="item" value="JPY">Japan Yen (¥)</div>
+                        <div class="item" value="JEP">Jersey Pound (£)</div>
+                        <div class="item" value="KZT">Kazakhstan Tenge (лв)</div>
+                        <div class="item" value="KPW">Korea (North) Won (₩)</div>
+                        <div class="item" value="KRW">Korea (South) Won (₩)</div>
+                        <div class="item" value="KGS">Kyrgyzstan Som (лв)</div>
+                        <div class="item" value="LAK">Laos Kip (₭)</div>
+                        <div class="item" value="LVL">Latvia Lat (Ls)</div>
+                        <div class="item" value="LBP">Lebanon Pound (£)</div>
+                        <div class="item" value="LRD">Liberia Dollar ($)</div>
+                        <div class="item" value="LTL">Lithuania Litas (Lt)</div>
+                        <div class="item" value="MKD">Macedonia Denar (ден)</div>
+                        <div class="item" value="MYR">Malaysia Ringgit (RM)</div>
+                        <div class="item" value="MUR">Mauritius Rupee (₨)</div>
+                        <div class="item" value="MXN">Mexico Peso ($)</div>
+                        <div class="item" value="MNT">Mongolia Tughrik (₮)</div>
+                        <div class="item" value="MZN">Mozambique Metical (MT)</div>
+                        <div class="item" value="NAD">Namibia Dollar ($)</div>
+                        <div class="item" value="NPR">Nepal Rupee (₨)</div>
+                        <div class="item" value="ANG">Netherlands Antilles Guilder (ƒ)</div>
+                        <div class="item" value="NZD">New Zealand Dollar ($)</div>
+                        <div class="item" value="NIO">Nicaragua Cordoba (C$)</div>
+                        <div class="item" value="NGN">Nigeria Naira (₦)</div>
+                        <div class="item" value="NOK">Norway Krone (kr)</div>
+                        <div class="item" value="OMR">Oman Rial (﷼)</div>
+                        <div class="item" value="PKR">Pakistan Rupee (₨)</div>
+                        <div class="item" value="PAB">Panama Balboa (B/.)</div>
+                        <div class="item" value="PYG">Paraguay Guarani (Gs)</div>
+                        <div class="item" value="PEN">Peru Nuevo Sol (S/.)</div>
+                        <div class="item" value="PHP">Philippines Peso (₱)</div>
+                        <div class="item" value="PLN">Poland Zloty (zł)</div>
+                        <div class="item" value="QAR">Qatar Riyal (﷼)</div>
+                        <div class="item" value="RON">Romania New Leu (lei)</div>
+                        <div class="item" value="RUB">Russia Ruble (руб)</div>
+                        <div class="item" value="SHP">Saint Helena Pound (£)</div>
+                        <div class="item" value="SAR">Saudi Arabia Riyal (﷼)</div>
+                        <div class="item" value="RSD">Serbia Dinar (Дин.)</div>
+                        <div class="item" value="SCR">Seychelles Rupee (₨)</div>
+                        <div class="item" value="SGD">Singapore Dollar ($)</div>
+                        <div class="item" value="SBD">Solomon Islands Dollar ($)</div>
+                        <div class="item" value="SOS">Somalia Shilling (S)</div>
+                        <div class="item" value="ZAR">South Africa Rand (R)</div>
+                        <div class="item" value="LKR">Sri Lanka Rupee (₨)</div>
+                        <div class="item" value="SEK">Sweden Krona (kr)</div>
+                        <div class="item" value="CHF">Switzerland Franc (CHF)</div>
+                        <div class="item" value="SRD">Suriname Dollar ($)</div>
+                        <div class="item" value="SYP">Syria Pound (£)</div>
+                        <div class="item" value="TWD">Taiwan New Dollar (NT$)</div>
+                        <div class="item" value="THB">Thailand Baht (฿)</div>
+                        <div class="item" value="TTD">Trinidad and Tobago Dollar (TT$)</div>
+                        <div class="item" value="TRY">Turkey Lira (TL)</div>
+                        <div class="item" value="TRL">Turkey Lira (₤)</div>
+                        <div class="item" value="TVD">Tuvalu Dollar ($)</div>
+                        <div class="item" value="UAH">Ukraine Hryvna (₴)</div>
+                        <div class="item" value="GBP">United Kingdom Pound (£)</div>
+                        <div class="item" value="USD">United States Dollar ($)</div>
+                        <div class="item" value="UYU">Uruguay Peso ($U)</div>
+                        <div class="item" value="UZS">Uzbekistan Som (лв)</div>
+                        <div class="item" value="VEF">Venezuela Bolivar Fuerte (Bs)</div>
+                        <div class="item" value="VND">Viet Nam Dong (₫)</div>
+                        <div class="item" value="YER">Yemen Rial (﷼)</div>
+                        <div class="item" value="ZWD">Zimbabwe Dollar (Z$)</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
     </div>
 
 </div>
@@ -114,7 +266,6 @@
         $cart_table = $(".simpleCart_items table")
         $cart_table.addClass("table").addClass("table-hover")
     });
-
 
 
     var token = $("meta[name='_csrf']").attr("content");
@@ -166,16 +317,17 @@
 <script type="text/javascript">
 
     var money = null;
+
     function assignToGlobalVariableUserMoney(userMoney) {
         money = userMoney;
     }
 
-    simpleCart.bind( 'beforeAdd' , function( item ){
-        var price =  item.get('price');
-        if(money.denomination >= price){
+    simpleCart.bind('beforeAdd', function (item) {
+        var price = item.get('price');
+        if (money.denomination >= price) {
             money.denomination = money.denomination - price;
             updateNavbarUserMoney(money);
-        }else{
+        } else {
             alert('Sorry, you do not have enough money for this product');
             return false;
         }
@@ -184,14 +336,19 @@
     });
 
 
-    simpleCart.bind( 'beforeRemove' , function( item ){
-         var totalCost = item.get('total');
-         money.denomination = money.denomination + totalCost;
-         updateNavbarUserMoney(money);
+    simpleCart.bind('beforeRemove', function (item) {
+        var totalCost = item.get('total');
+        money.denomination = money.denomination + totalCost;
+        updateNavbarUserMoney(money);
 
     });
 
     $(document).ready(function () {
+        $('.ui.modal').modal();
+        $('.ui.dropdown').dropdown();
+
+        $('#modal-product').modal('attach events', '#add-product', 'show').modal({});
+
         // clear shopping cart after page refresh
         sessionStorage.clear();
 

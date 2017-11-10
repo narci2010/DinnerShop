@@ -38,6 +38,7 @@ public class UserRepositoryUserDetailsService implements DinnerUserService {
 
         return null;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.findByEmail(username);
@@ -50,8 +51,8 @@ public class UserRepositoryUserDetailsService implements DinnerUserService {
 
 
     private boolean emailExist(String email) {
-        return userRepository.findByEmail(email) != null;
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        return byEmail.map(user -> user.getUsername().equals(email))
+                .orElse(false);
     }
-
-
 }

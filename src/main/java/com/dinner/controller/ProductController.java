@@ -1,11 +1,12 @@
 package com.dinner.controller;
 
+import com.dinner.factory.product.ProductFactory;
 import com.dinner.model.domain.product.Product;
+import com.dinner.model.transfer.ProductDTO;
 import com.dinner.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,9 +17,12 @@ import java.util.List;
 public class ProductController {
     private final ProductsRepository productsRepository;
 
+    private final ProductFactory productFactory;
+
     @Autowired
-    public ProductController(ProductsRepository productsRepository) {
+    public ProductController(ProductsRepository productsRepository, ProductFactory productFactory) {
         this.productsRepository = productsRepository;
+        this.productFactory = productFactory;
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
@@ -27,6 +31,11 @@ public class ProductController {
         return productsRepository.findAll();
     }
 
-
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addProduct(@ModelAttribute ProductDTO productDTO) {
+        Product product = productFactory.createProduct(productDTO);
+        productsRepository.save(product);
+    }
 
 }

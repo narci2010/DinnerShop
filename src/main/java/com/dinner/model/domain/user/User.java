@@ -98,4 +98,17 @@ public class User implements UserDetails, Payable {
     public boolean isEnabled() {
         return enabled;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", tokenExpired=" + tokenExpired +
+                ", roles=" + roles +
+                ", person=" + person +
+                '}';
+    }
 }
