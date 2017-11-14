@@ -6,14 +6,16 @@ import com.dinner.model.transfer.ProductDTO;
 import com.dinner.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by Tomek on 08-Feb-17.
  */
-@RestController
+@Controller
 public class ProductController {
     private final ProductsRepository productsRepository;
 
@@ -25,17 +27,19 @@ public class ProductController {
         this.productFactory = productFactory;
     }
 
+    @ResponseBody
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public List<Product> products() {
-
         return productsRepository.findAll();
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addProduct(@ModelAttribute ProductDTO productDTO) {
+    public String addProduct(@ModelAttribute ProductDTO productDTO) throws IOException {
         Product product = productFactory.createProduct(productDTO);
         productsRepository.save(product);
+
+        return "index";
     }
 
 }

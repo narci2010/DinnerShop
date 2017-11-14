@@ -60,7 +60,8 @@
                         </div>
                     </div>
                     <div sec:authorize="hasRole('ROLE_ADMIN')">
-                        <button class="ui secondary basic button"  type="button" id="add-product">Dodaj nowy produkt</button>
+                        <button class="ui secondary basic button" type="button" id="add-product">Dodaj nowy produkt
+                        </button>
                     </div>
                 </div>
             </div>
@@ -93,150 +94,148 @@
     </div>
 
     <div class="ui modal" id="modal-product">
-        <form class="ui form" >
+        <form class="ui form" th:action="@{/products}" method="post" enctype="multipart/form-data">
             <h4 class="ui dividing header">New produkt</h4>
             <div class="field">
                 <label>Name</label>
-                <input type="text" name="name" placeholder="Name">
+                <input type="text" name="description" placeholder="Name">
             </div>
-            <div class="inline field">
-                <label for="image_upload" class="ui bottom attached button">
-                    <i class="add icon"></i>
-                    <span th:remove="tag">Upload</span>
-                </label>
-                <input id="image_upload" type="file" name="files[]"
-                       style="display: none"
-                       th:attr="data-url=@{${baseUrl} + 'internal/poses/image/upload'}" accept="image/png,image/gif,image/jpeg,image/jpg">
-                <input type="hidden" id="image_id" />
+            <div class="field">
+                <label>Image</label>
+                <input name="image" type="file" class="" id="imgInp">
+                <img id="blah" src="#" alt="your image" height="300" />
+
             </div>
+
             <div class="field">
                 <label>Price</label>
                 <input type="number" name="price" placeholder="Price">
             </div>
             <div class="field">
                 <span>Currency</span>
-                <div class="ui selection dropdown">
+                <div class="ui selection dropdown" id="currencies">
                     <input type="hidden" name="currency">
                     <i class="dropdown icon"></i>
                     <div class="default text">Select</div>
                     <div class="menu" name="store-add-currency">
-                        <div class="item" value="ALL">Albania Lek (Lek)</div>
-                        <div class="item" value="AFN">Afghanistan Afghani (؋)</div>
-                        <div class="item" value="ARS">Argentina Peso ($)</div>
-                        <div class="item" value="AWG">Aruba Guilder (ƒ)</div>
-                        <div class="item" value="AUD">Australia Dollar ($)</div>
-                        <div class="item" value="AZN">Azerbaijan New Manat (ман)</div>
-                        <div class="item" value="BSD">Bahamas Dollar ($)</div>
-                        <div class="item" value="BBD">Barbados Dollar ($)</div>
-                        <div class="item" value="BYR">Belarus Ruble (p.)</div>
-                        <div class="item" value="BZD">Belize Dollar (BZ$)</div>
-                        <div class="item" value="BMD">Bermuda Dollar ($)</div>
-                        <div class="item" value="BOB">Bolivia Boliviano ($b)</div>
-                        <div class="item" value="BAM">Bosnia and Herzegovina Convertible Marka (KM)</div>
-                        <div class="item" value="BWP">Botswana Pula (P)</div>
-                        <div class="item" value="BGN">Bulgaria Lev (лв)</div>
-                        <div class="item" value="BGL">Bulgaria Lev (лв)</div>
-                        <div class="item" value="BRL">Brazil Real (R$)</div>
-                        <div class="item" value="BND">Brunei Darussalam Dollar ($)</div>
-                        <div class="item" value="KHR">Cambodia Riel (៛)</div>
-                        <div class="item" value="CAD">Canada Dollar ($)</div>
-                        <div class="item" value="KYD">Cayman Islands Dollar ($)</div>
-                        <div class="item" value="CLP">Chile Peso ($)</div>
-                        <div class="item" value="CNY">China Yuan Renminbi (¥)</div>
-                        <div class="item" value="COP">Colombia Peso ($)</div>
-                        <div class="item" value="CRC">Costa Rica Colon (₡)</div>
-                        <div class="item" value="HRK">Croatia Kuna (kn)</div>
-                        <div class="item" value="CUP">Cuba Peso (₱)</div>
-                        <div class="item" value="CZK">Czech Republic Koruna (Kč)</div>
-                        <div class="item" value="DKK">Denmark Krone (kr)</div>
-                        <div class="item" value="DOP">Dominican Republic Peso (RD$)</div>
-                        <div class="item" value="XCD">East Caribbean Dollar ($)</div>
-                        <div class="item" value="EGP">Egypt Pound (£)</div>
-                        <div class="item" value="SVC">El Salvador Colon ($)</div>
-                        <div class="item" value="EEK">Estonia Kroon (kr)</div>
-                        <div class="item" value="EUR">Euro Member Countries (€)</div>
-                        <div class="item" value="FKP">Falkland Islands (Malvinas) Pound (£)</div>
-                        <div class="item" value="FJD">Fiji Dollar ($)</div>
-                        <div class="item" value="GHC">Ghana Cedis (¢)</div>
-                        <div class="item" value="GIP">Gibraltar Pound (£)</div>
-                        <div class="item" value="GTQ">Guatemala Quetzal (Q)</div>
-                        <div class="item" value="GGP">Guernsey Pound (£)</div>
-                        <div class="item" value="GYD">Guyana Dollar ($)</div>
-                        <div class="item" value="HNL">Honduras Lempira (L)</div>
-                        <div class="item" value="HKD">Hong Kong Dollar ($)</div>
-                        <div class="item" value="HUF">Hungary Forint (Ft)</div>
-                        <div class="item" value="ISK">Iceland Krona (kr)</div>
-                        <div class="item" value="INR" selected="selected">Indian Rupee (₹)</div>
-                        <div class="item" value="IDR">Indonesia Rupiah (Rp)</div>
-                        <div class="item" value="IRR">Iran Rial (﷼)</div>
-                        <div class="item" value="IMP">Isle of Man Pound (£)</div>
-                        <div class="item" value="ILS">Israel Shekel (₪)</div>
-                        <div class="item" value="JMD">Jamaica Dollar (J$)</div>
-                        <div class="item" value="JPY">Japan Yen (¥)</div>
-                        <div class="item" value="JEP">Jersey Pound (£)</div>
-                        <div class="item" value="KZT">Kazakhstan Tenge (лв)</div>
-                        <div class="item" value="KPW">Korea (North) Won (₩)</div>
-                        <div class="item" value="KRW">Korea (South) Won (₩)</div>
-                        <div class="item" value="KGS">Kyrgyzstan Som (лв)</div>
-                        <div class="item" value="LAK">Laos Kip (₭)</div>
-                        <div class="item" value="LVL">Latvia Lat (Ls)</div>
-                        <div class="item" value="LBP">Lebanon Pound (£)</div>
-                        <div class="item" value="LRD">Liberia Dollar ($)</div>
-                        <div class="item" value="LTL">Lithuania Litas (Lt)</div>
-                        <div class="item" value="MKD">Macedonia Denar (ден)</div>
-                        <div class="item" value="MYR">Malaysia Ringgit (RM)</div>
-                        <div class="item" value="MUR">Mauritius Rupee (₨)</div>
-                        <div class="item" value="MXN">Mexico Peso ($)</div>
-                        <div class="item" value="MNT">Mongolia Tughrik (₮)</div>
-                        <div class="item" value="MZN">Mozambique Metical (MT)</div>
-                        <div class="item" value="NAD">Namibia Dollar ($)</div>
-                        <div class="item" value="NPR">Nepal Rupee (₨)</div>
-                        <div class="item" value="ANG">Netherlands Antilles Guilder (ƒ)</div>
-                        <div class="item" value="NZD">New Zealand Dollar ($)</div>
-                        <div class="item" value="NIO">Nicaragua Cordoba (C$)</div>
-                        <div class="item" value="NGN">Nigeria Naira (₦)</div>
-                        <div class="item" value="NOK">Norway Krone (kr)</div>
-                        <div class="item" value="OMR">Oman Rial (﷼)</div>
-                        <div class="item" value="PKR">Pakistan Rupee (₨)</div>
-                        <div class="item" value="PAB">Panama Balboa (B/.)</div>
-                        <div class="item" value="PYG">Paraguay Guarani (Gs)</div>
-                        <div class="item" value="PEN">Peru Nuevo Sol (S/.)</div>
-                        <div class="item" value="PHP">Philippines Peso (₱)</div>
-                        <div class="item" value="PLN">Poland Zloty (zł)</div>
-                        <div class="item" value="QAR">Qatar Riyal (﷼)</div>
-                        <div class="item" value="RON">Romania New Leu (lei)</div>
-                        <div class="item" value="RUB">Russia Ruble (руб)</div>
-                        <div class="item" value="SHP">Saint Helena Pound (£)</div>
-                        <div class="item" value="SAR">Saudi Arabia Riyal (﷼)</div>
-                        <div class="item" value="RSD">Serbia Dinar (Дин.)</div>
-                        <div class="item" value="SCR">Seychelles Rupee (₨)</div>
-                        <div class="item" value="SGD">Singapore Dollar ($)</div>
-                        <div class="item" value="SBD">Solomon Islands Dollar ($)</div>
-                        <div class="item" value="SOS">Somalia Shilling (S)</div>
-                        <div class="item" value="ZAR">South Africa Rand (R)</div>
-                        <div class="item" value="LKR">Sri Lanka Rupee (₨)</div>
-                        <div class="item" value="SEK">Sweden Krona (kr)</div>
-                        <div class="item" value="CHF">Switzerland Franc (CHF)</div>
-                        <div class="item" value="SRD">Suriname Dollar ($)</div>
-                        <div class="item" value="SYP">Syria Pound (£)</div>
-                        <div class="item" value="TWD">Taiwan New Dollar (NT$)</div>
-                        <div class="item" value="THB">Thailand Baht (฿)</div>
-                        <div class="item" value="TTD">Trinidad and Tobago Dollar (TT$)</div>
-                        <div class="item" value="TRY">Turkey Lira (TL)</div>
-                        <div class="item" value="TRL">Turkey Lira (₤)</div>
-                        <div class="item" value="TVD">Tuvalu Dollar ($)</div>
-                        <div class="item" value="UAH">Ukraine Hryvna (₴)</div>
-                        <div class="item" value="GBP">United Kingdom Pound (£)</div>
-                        <div class="item" value="USD">United States Dollar ($)</div>
-                        <div class="item" value="UYU">Uruguay Peso ($U)</div>
-                        <div class="item" value="UZS">Uzbekistan Som (лв)</div>
-                        <div class="item" value="VEF">Venezuela Bolivar Fuerte (Bs)</div>
-                        <div class="item" value="VND">Viet Nam Dong (₫)</div>
-                        <div class="item" value="YER">Yemen Rial (﷼)</div>
-                        <div class="item" value="ZWD">Zimbabwe Dollar (Z$)</div>
+                        <div class="item" data-value="ALL">Albania Lek (Lek)</div>
+                        <div class="item" data-value="AFN">Afghanistan Afghani (؋)</div>
+                        <div class="item" data-value="ARS">Argentina Peso ($)</div>
+                        <div class="item" data-value="AWG">Aruba Guilder (ƒ)</div>
+                        <div class="item" data-value="AUD">Australia Dollar ($)</div>
+                        <div class="item" data-value="AZN">Azerbaijan New Manat (ман)</div>
+                        <div class="item" data-value="BSD">Bahamas Dollar ($)</div>
+                        <div class="item" data-value="BBD">Barbados Dollar ($)</div>
+                        <div class="item" data-value="BYR">Belarus Ruble (p.)</div>
+                        <div class="item" data-value="BZD">Belize Dollar (BZ$)</div>
+                        <div class="item" data-value="BMD">Bermuda Dollar ($)</div>
+                        <div class="item" data-value="BOB">Bolivia Boliviano ($b)</div>
+                        <div class="item" data-value="BAM">Bosnia and Herzegovina Convertible Marka (KM)</div>
+                        <div class="item" data-value="BWP">Botswana Pula (P)</div>
+                        <div class="item" data-value="BGN">Bulgaria Lev (лв)</div>
+                        <div class="item" data-value="BGL">Bulgaria Lev (лв)</div>
+                        <div class="item" data-value="BRL">Brazil Real (R$)</div>
+                        <div class="item" data-value="BND">Brunei Darussalam Dollar ($)</div>
+                        <div class="item" data-value="KHR">Cambodia Riel (៛)</div>
+                        <div class="item" data-value="CAD">Canada Dollar ($)</div>
+                        <div class="item" data-value="KYD">Cayman Islands Dollar ($)</div>
+                        <div class="item" data-value="CLP">Chile Peso ($)</div>
+                        <div class="item" data-value="CNY">China Yuan Renminbi (¥)</div>
+                        <div class="item" data-value="COP">Colombia Peso ($)</div>
+                        <div class="item" data-value="CRC">Costa Rica Colon (₡)</div>
+                        <div class="item" data-value="HRK">Croatia Kuna (kn)</div>
+                        <div class="item" data-value="CUP">Cuba Peso (₱)</div>
+                        <div class="item" data-value="CZK">Czech Republic Koruna (Kč)</div>
+                        <div class="item" data-value="DKK">Denmark Krone (kr)</div>
+                        <div class="item" data-value="DOP">Dominican Republic Peso (RD$)</div>
+                        <div class="item" data-value="XCD">East Caribbean Dollar ($)</div>
+                        <div class="item" data-value="EGP">Egypt Pound (£)</div>
+                        <div class="item" data-value="SVC">El Salvador Colon ($)</div>
+                        <div class="item" data-value="EEK">Estonia Kroon (kr)</div>
+                        <div class="item" data-value="EUR">Euro Member Countries (€)</div>
+                        <div class="item" data-value="FKP">Falkland Islands (Malvinas) Pound (£)</div>
+                        <div class="item" data-value="FJD">Fiji Dollar ($)</div>
+                        <div class="item" data-value="GHC">Ghana Cedis (¢)</div>
+                        <div class="item" data-value="GIP">Gibraltar Pound (£)</div>
+                        <div class="item" data-value="GTQ">Guatemala Quetzal (Q)</div>
+                        <div class="item" data-value="GGP">Guernsey Pound (£)</div>
+                        <div class="item" data-value="GYD">Guyana Dollar ($)</div>
+                        <div class="item" data-value="HNL">Honduras Lempira (L)</div>
+                        <div class="item" data-value="HKD">Hong Kong Dollar ($)</div>
+                        <div class="item" data-value="HUF">Hungary Forint (Ft)</div>
+                        <div class="item" data-value="ISK">Iceland Krona (kr)</div>
+                        <div class="item" data-value="INR" selected="selected">Indian Rupee (₹)</div>
+                        <div class="item" data-value="IDR">Indonesia Rupiah (Rp)</div>
+                        <div class="item" data-value="IRR">Iran Rial (﷼)</div>
+                        <div class="item" data-value="IMP">Isle of Man Pound (£)</div>
+                        <div class="item" data-value="ILS">Israel Shekel (₪)</div>
+                        <div class="item" data-value="JMD">Jamaica Dollar (J$)</div>
+                        <div class="item" data-value="JPY">Japan Yen (¥)</div>
+                        <div class="item" data-value="JEP">Jersey Pound (£)</div>
+                        <div class="item" data-value="KZT">Kazakhstan Tenge (лв)</div>
+                        <div class="item" data-value="KPW">Korea (North) Won (₩)</div>
+                        <div class="item" data-value="KRW">Korea (South) Won (₩)</div>
+                        <div class="item" data-value="KGS">Kyrgyzstan Som (лв)</div>
+                        <div class="item" data-value="LAK">Laos Kip (₭)</div>
+                        <div class="item" data-value="LVL">Latvia Lat (Ls)</div>
+                        <div class="item" data-value="LBP">Lebanon Pound (£)</div>
+                        <div class="item" data-value="LRD">Liberia Dollar ($)</div>
+                        <div class="item" data-value="LTL">Lithuania Litas (Lt)</div>
+                        <div class="item" data-value="MKD">Macedonia Denar (ден)</div>
+                        <div class="item" data-value="MYR">Malaysia Ringgit (RM)</div>
+                        <div class="item" data-value="MUR">Mauritius Rupee (₨)</div>
+                        <div class="item" data-value="MXN">Mexico Peso ($)</div>
+                        <div class="item" data-value="MNT">Mongolia Tughrik (₮)</div>
+                        <div class="item" data-value="MZN">Mozambique Metical (MT)</div>
+                        <div class="item" data-value="NAD">Namibia Dollar ($)</div>
+                        <div class="item" data-value="NPR">Nepal Rupee (₨)</div>
+                        <div class="item" data-value="ANG">Netherlands Antilles Guilder (ƒ)</div>
+                        <div class="item" data-value="NZD">New Zealand Dollar ($)</div>
+                        <div class="item" data-value="NIO">Nicaragua Cordoba (C$)</div>
+                        <div class="item" data-value="NGN">Nigeria Naira (₦)</div>
+                        <div class="item" data-value="NOK">Norway Krone (kr)</div>
+                        <div class="item" data-value="OMR">Oman Rial (﷼)</div>
+                        <div class="item" data-value="PKR">Pakistan Rupee (₨)</div>
+                        <div class="item" data-value="PAB">Panama Balboa (B/.)</div>
+                        <div class="item" data-value="PYG">Paraguay Guarani (Gs)</div>
+                        <div class="item" data-value="PEN">Peru Nuevo Sol (S/.)</div>
+                        <div class="item" data-value="PHP">Philippines Peso (₱)</div>
+                        <div class="item" data-value="PLN">Poland Zloty (zł)</div>
+                        <div class="item" data-value="QAR">Qatar Riyal (﷼)</div>
+                        <div class="item" data-value="RON">Romania New Leu (lei)</div>
+                        <div class="item" data-value="RUB">Russia Ruble (руб)</div>
+                        <div class="item" data-value="SHP">Saint Helena Pound (£)</div>
+                        <div class="item" data-value="SAR">Saudi Arabia Riyal (﷼)</div>
+                        <div class="item" data-value="RSD">Serbia Dinar (Дин.)</div>
+                        <div class="item" data-value="SCR">Seychelles Rupee (₨)</div>
+                        <div class="item" data-value="SGD">Singapore Dollar ($)</div>
+                        <div class="item" data-value="SBD">Solomon Islands Dollar ($)</div>
+                        <div class="item" data-value="SOS">Somalia Shilling (S)</div>
+                        <div class="item" data-value="ZAR">South Africa Rand (R)</div>
+                        <div class="item" data-value="LKR">Sri Lanka Rupee (₨)</div>
+                        <div class="item" data-value="SEK">Sweden Krona (kr)</div>
+                        <div class="item" data-value="CHF">Switzerland Franc (CHF)</div>
+                        <div class="item" data-value="SRD">Suriname Dollar ($)</div>
+                        <div class="item" data-value="SYP">Syria Pound (£)</div>
+                        <div class="item" data-value="TWD">Taiwan New Dollar (NT$)</div>
+                        <div class="item" data-value="THB">Thailand Baht (฿)</div>
+                        <div class="item" data-value="TTD">Trinidad and Tobago Dollar (TT$)</div>
+                        <div class="item" data-value="TRY">Turkey Lira (TL)</div>
+                        <div class="item" data-value="TRL">Turkey Lira (₤)</div>
+                        <div class="item" data-value="TVD">Tuvalu Dollar ($)</div>
+                        <div class="item" data-value="UAH">Ukraine Hryvna (₴)</div>
+                        <div class="item" data-value="GBP">United Kingdom Pound (£)</div>
+                        <div class="item" data-value="USD">United States Dollar ($)</div>
+                        <div class="item" data-value="UYU">Uruguay Peso ($U)</div>
+                        <div class="item" data-value="UZS">Uzbekistan Som (лв)</div>
+                        <div class="item" data-value="VEF">Venezuela Bolivar Fuerte (Bs)</div>
+                        <div class="item" data-value="VND">Viet Nam Dong (₫)</div>
+                        <div class="item" data-value="YER">Yemen Rial (﷼)</div>
+                        <div class="item" data-value="ZWD">Zimbabwe Dollar (Z$)</div>
                     </div>
                 </div>
             </div>
+            <button type="submit" class="button">submit</button>
         </form>
 
     </div>
@@ -347,6 +346,7 @@
         $('.ui.modal').modal();
         $('.ui.dropdown').dropdown();
 
+
         $('#modal-product').modal('attach events', '#add-product', 'show').modal({});
 
         // clear shopping cart after page refresh
@@ -360,7 +360,25 @@
             target: '.navbar-fixed-top',
             offset: 50
         });
-    })
+
+        $("#imgInp").change(function() {
+            console.log('dzialam');
+            readURL(this);
+        });
+    });
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
 
 </script>

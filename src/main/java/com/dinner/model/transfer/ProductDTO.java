@@ -1,6 +1,7 @@
 package com.dinner.model.transfer;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -9,5 +10,5 @@ public class ProductDTO {
     private String description;
     private String currency;
     private BigDecimal price;
-    private byte[] image;
+    private MultipartFile image;
 }
