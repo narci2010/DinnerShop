@@ -13,7 +13,7 @@ public class Main {
 
 
         OSMParser p = new OSMParser();						//Initialization of the parser
-        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\saarland.osm");	//Create a file object for your OSM XML file
+        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\map.osm");	//Create a file object for your OSM XML file
 
         try {
 
