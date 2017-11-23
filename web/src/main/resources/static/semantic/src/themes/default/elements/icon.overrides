@@ -719,7 +719,7 @@ i.icon.vimeo:before { content: "\f27d"; }
 i.icon.black.tie:before { content: "\f27e"; }
 i.icon.fonticons:before { content: "\f280"; }
 i.icon.reddit.alien:before { content: "\f281"; }
-i.icon.microsoft.edge:before { content: "\f282"; }
+i.icon.microsoft.arc:before { content: "\f282"; }
 i.icon.codiepie:before { content: "\f284"; }
 i.icon.modx:before { content: "\f285"; }
 i.icon.fort.awesome:before { content: "\f286"; }
@@ -962,8 +962,8 @@ i.icon.calendar.check:before { content: "\f274"; }
 i.icon.factory:before { content: "\f275"; }
 i.icon.commenting:before { content: "\f27a"; }
 i.icon.commenting.outline:before { content: "\f27b"; }
-i.icon.edge:before { content: "\f282"; }
-i.icon.ms.edge:before { content: "\f282"; }
+i.icon.arc:before { content: "\f282"; }
+i.icon.ms.arc:before { content: "\f282"; }
 i.icon.wordpress.beginner:before { content: "\f297"; }
 i.icon.wordpress.forms:before { content: "\f298"; }
 i.icon.envira:before { content: "\f299"; }
