@@ -1,9 +1,9 @@
 package com.navigation;
 
-import com.graph.Arc;
-import com.graph.Cost;
-import com.graph.Graph;
-import com.graph.Node;
+import com.graph.model.Arc;
+import com.graph.model.Cost;
+import com.graph.model.Graph;
+import com.graph.model.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,17 +17,14 @@ public class RoadNetwork implements Graph {
 
     @Override
     public void addNode(Node node) {
-        addNodeIfNotExist(node);
+        nodes.add(node);
 
     }
 
     @Override
     public void addEdge(Node u, Node v, Cost cost) {
 
-//        addNodeIfNotExist(u);
         addArc(u, v, cost);
-
-//        addNodeIfNotExist(v);
         addArc(v, u, cost);
 
     }
@@ -44,19 +41,25 @@ public class RoadNetwork implements Graph {
 
     }
 
-    private void addNodeIfNotExist(Node node) {
-     /*   if (!nodes.contains(node)) {
-            nodes.add(node);
-            adjacentArcs.add(new ArrayList<>());
-        }*/
-    }
-
     public List<Node> getNodes() {
         return nodes;
     }
 
     public Map<Node, List<Arc>> getAdjacentArcs() {
         return adjacentArcs;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry<Node, List<Arc>> nodeListEntry : adjacentArcs.entrySet()) {
+            stringBuilder.append(nodeListEntry.getKey());
+            stringBuilder.append(" : ");
+            stringBuilder.append(nodeListEntry.getValue());
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 }
 
