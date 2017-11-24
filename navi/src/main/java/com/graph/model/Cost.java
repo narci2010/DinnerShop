@@ -7,6 +7,11 @@ public class Cost {
 
     private int seconds;
 
+    public Cost addCost(Cost cost) {
+        return new Cost(this.seconds + cost.seconds);
+
+    }
+
     @Override
     public String toString() {
         return "Cost{" +
