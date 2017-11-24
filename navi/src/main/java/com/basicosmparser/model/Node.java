@@ -19,8 +19,6 @@
 
 package com.basicosmparser.model;
 
-import com.graph.Cost;
-
 /**
  * A node is an OSM element with coordinates.
  *

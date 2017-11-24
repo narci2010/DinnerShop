@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.graph.Cost;
+import com.graph.model.Cost;
 import com.navigation.RoadNetwork;
 import com.navigation.RoadTypeSpeed;
 import org.xml.sax.Attributes;
@@ -297,7 +297,7 @@ public class OSMParser extends DefaultHandler {
                         Cost cost = new Cost(seconds);
 
 
-                        roadNetwork.addEdge(new com.graph.Node(u.getId(), u.getLat(), u.getLon()), new com.graph.Node(v.getId(), v.getLat(), v.getLon()), cost);
+                        roadNetwork.addEdge(new com.graph.model.Node(u.getId(), u.getLat(), u.getLon()), new com.graph.model.Node(v.getId(), v.getLat(), v.getLon()), cost);
                     }
                 }
 

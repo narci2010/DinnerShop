@@ -1,4 +1,4 @@
-package com.graph;
+package com.graph.model;
 
 public class Node {
 
@@ -37,5 +37,12 @@ public class Node {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id=" + id +
+                '}';
     }
 }

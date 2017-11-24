@@ -1,4 +1,4 @@
-package com.graph;
+package com.graph.model;
 
 public interface Graph {
     void addNode(Node node);
