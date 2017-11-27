@@ -29,9 +29,9 @@ public class DijkstraAlgorithmTest {
 
         DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
 
-        dijkstraAlgorithm.calculateShorthestPath(one, three);
+        dijkstraAlgorithm.calculateShorthestPath(one, null);
 
-        System.out.println(dijkstraAlgorithm);
+        System.out.println(dijkstraAlgorithm.getPath(four));
 
 
 

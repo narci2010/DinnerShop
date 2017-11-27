@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
         OSMParser p = new OSMParser();                        //Initialization of the parser
-        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\saarland_fix.osm");    //Create a file object for your OSM XML file
+        File osmFile = new File("C:\\Users\\Tomek\\IdeaProjects\\DinnerShop\\navi\\src\\main\\resources\\saarland_fix.osm");    //Create a file object for your OSM XML file
 
 
         try {
@@ -26,8 +26,9 @@ public class Main {
 
             Instant end = Instant.now();
 
-            System.out.println("Duration : " + Duration.between(start, end).getSeconds()); // prints PT1M3.553S
+            System.out.println("Duration : " + Duration.between(start, end).getSeconds());
 
+            System.out.println("Nodes : " + roadNetwork.getAdjacentArcs().keySet().size());
         } catch (IOException | SAXException e) {
             e.printStackTrace();                                //Input/output errors management
         }

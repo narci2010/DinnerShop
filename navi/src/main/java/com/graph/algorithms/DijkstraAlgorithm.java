@@ -12,6 +12,7 @@ public class DijkstraAlgorithm {
     private Map<Node, Cost> distance;
     Queue<NodeWithCost> unsettledNodes;
     Set<Node> settledNodes;
+    private Map<Node, Node> predecessors;
 
     Cost totalCost = new Cost(0);
     List<Node> path = new ArrayList<>();
@@ -49,6 +50,7 @@ public class DijkstraAlgorithm {
         settledNodes = new HashSet<>();
         unsettledNodes = new PriorityQueue<>();
         distance = new HashMap<>();
+        predecessors = new HashMap<>();
 
         roadNetwork.getAdjacentArcs().keySet().forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
         distance.replace(startNode, new Cost(0));
@@ -58,7 +60,7 @@ public class DijkstraAlgorithm {
 
         path.add(startNode);
 
-        while (!unsettledNodes.isEmpty()) {
+        while (!unsettledNodes.isEmpty() || settledNodes.contains(endNode)) {
             NodeWithCost poll = unsettledNodes.poll();
             settledNodes.add(poll.getNode());
             findNextNode(poll);
@@ -78,11 +80,12 @@ public class DijkstraAlgorithm {
             Cost costToNode = distance.get(headNode);
             if (costToNode.compareTo(distance.get(nodeWithCost.node).addCost(arc.getCost())) > 0) {
                 distance.replace(headNode, distance.get(nodeWithCost.node).addCost(arc.getCost()));
-                path.add(arc.getHeadNode());
 
+                predecessors.put(arc.getHeadNode(),nodeWithCost.node);
 
-                unsettledNodes.remove(nodeWithCost);
-                unsettledNodes.offer(nodeWithCost);
+                NodeWithCost temp = new NodeWithCost(headNode, distance.get(headNode));
+                unsettledNodes.remove(temp);
+                unsettledNodes.offer(temp);
 
             }
         }
@@ -110,6 +113,23 @@ public class DijkstraAlgorithm {
                 "totalCost=" + totalCost +
                 ", path=" + path +
                 '}';
+    }
+
+    public LinkedList<Node> getPath(Node target) {
+        LinkedList<Node> path = new LinkedList<Node>();
+        Node step = target;
+        // check if a path exists
+        if (predecessors.get(step) == null) {
+            return null;
+        }
+        path.add(step);
+        while (predecessors.get(step) != null) {
+            step = predecessors.get(step);
+            path.add(step);
+        }
+        // Put it into the correct order
+        Collections.reverse(path);
+        return path;
     }
 
 }
