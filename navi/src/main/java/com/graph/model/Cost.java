@@ -1,6 +1,6 @@
 package com.graph.model;
 
-public class Cost {
+public class Cost implements Comparable<Cost> {
     public Cost(int seconds) {
         this.seconds = seconds;
     }
@@ -17,5 +17,10 @@ public class Cost {
         return "Cost{" +
                 "seconds=" + seconds +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Cost o) {
+        return this.seconds - o.seconds;
     }
 }

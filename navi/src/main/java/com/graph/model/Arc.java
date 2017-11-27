@@ -10,6 +10,15 @@ public class Arc {
     private Node headNode;
     private Cost cost;
 
+
+    public Node getHeadNode() {
+        return headNode;
+    }
+
+    public Cost getCost() {
+        return cost;
+    }
+
     @Override
     public String toString() {
         return "Arc{" +
