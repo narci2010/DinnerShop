@@ -1,6 +1,6 @@
 package com.graph.model;
 
-public class Arc {
+public class Arc implements Comparable<Arc>{
 
     public Arc(Node headNode, Cost cost) {
         this.headNode = headNode;
@@ -20,10 +20,16 @@ public class Arc {
     }
 
     @Override
+    public int compareTo(Arc o) {
+        return this.cost.compareTo(o.cost);
+    }
+
+    @Override
     public String toString() {
         return "Arc{" +
                 "headNodeId=" + headNode.getId() +
                 "," + cost +
                 '}';
     }
+
 }

@@ -5,10 +5,7 @@ import com.graph.model.Cost;
 import com.graph.model.Graph;
 import com.graph.model.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RoadNetwork implements Graph {
 
@@ -18,7 +15,6 @@ public class RoadNetwork implements Graph {
     @Override
     public void addNode(Node node) {
         nodes.add(node);
-
     }
 
     @Override
@@ -27,6 +23,11 @@ public class RoadNetwork implements Graph {
         addArc(u, v, cost);
         addArc(v, u, cost);
 
+    }
+
+
+    public Map<Node, List<Arc>> getAdjacentArcs() {
+        return Collections.unmodifiableMap(adjacentArcs);
     }
 
     private void addArc(Node tailNode, Node headNode, Cost cost) {
@@ -39,14 +40,6 @@ public class RoadNetwork implements Graph {
             adjacentArcs.put(tailNode, arcs);
         }
 
-    }
-
-    public List<Node> getNodes() {
-        return nodes;
-    }
-
-    public Map<Node, List<Arc>> getAdjacentArcs() {
-        return adjacentArcs;
     }
 
     @Override
