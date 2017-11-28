@@ -11,50 +11,63 @@ public class DijkstraAlgorithm {
     private RoadNetwork roadNetwork;
     private Map<Node, Cost> distance;
     private Queue<Arc> unsettledNodes;
-    private Set<Node> settledNodes;
     private Map<Node, Node> predecessors;
+    private Set<Node> settledNodes;
 
     public DijkstraAlgorithm(RoadNetwork roadNetwork) {
         this.roadNetwork = roadNetwork;
     }
 
-    public ShortestPath calculateShorthestPath(Node startNode, Node endNode) {
-        ShortestPath shortestPath = new ShortestPath();
+    public void calculateShortestPathsFromSource(Node sourceNode) {
+        calculateShortestPath(sourceNode, null);
+    }
 
+    public ShortestPath calculateShortestPath(Node startNode, Node endNode) {
+
+        initializeInternalData();
+        setMaxDistanceToAllNodes();
+
+        //set startNode distance cost to zero
+        distance.replace(startNode, new Cost(0));
+
+        //add first node as unsettled
+        unsettledNodes.add(new Arc(startNode, new Cost(0)));
+
+        while (!unsettledNodes.isEmpty() && !settledNodes.contains(endNode)) {
+            Node nodeWithLowestDistanceFromSourceNode = unsettledNodes.poll().getHeadNode();
+            settledNodes.add(nodeWithLowestDistanceFromSourceNode);
+            calculateDistancesAndAddUnsettledNodes(nodeWithLowestDistanceFromSourceNode);
+
+        }
+        return getPath(endNode);
+    }
+
+    private void setMaxDistanceToAllNodes() {
+        roadNetwork.getAdjacentArcs().keySet().forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
+    }
+
+    private void initializeInternalData() {
         settledNodes = new HashSet<>();
         unsettledNodes = new PriorityQueue<>();
         distance = new HashMap<>();
         predecessors = new HashMap<>();
-
-        roadNetwork.getAdjacentArcs().keySet().forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
-        distance.replace(startNode, new Cost(0));
-
-
-        unsettledNodes.add(new Arc(startNode,new Cost(0)));
-
-
-        while (!unsettledNodes.isEmpty() && !settledNodes.contains(endNode)) {
-            Arc poll = unsettledNodes.poll();
-            settledNodes.add(poll.getHeadNode());
-            findNextNode(poll);
-
-        }
-
-
-        return shortestPath;
     }
 
-    private void findNextNode(Arc nodeWithCost) {
+    private void calculateDistancesAndAddUnsettledNodes(Node currentNode) {
 
-        List<Arc> arcs = roadNetwork.getAdjacentArcs().get(nodeWithCost.getHeadNode());
+        List<Arc> arcs = roadNetwork.getAdjacentArcs().get(currentNode);
 
         for (Arc arc : arcs) {
             Node headNode = arc.getHeadNode();
             Cost costToNode = distance.get(headNode);
-            if (costToNode.compareTo(distance.get(nodeWithCost.getHeadNode()).addCost(arc.getCost())) > 0) {
-                distance.replace(headNode, distance.get(nodeWithCost.getHeadNode()).addCost(arc.getCost()));
+            Cost actualCost = distance.get(currentNode).addCost(arc.getCost());
 
-                predecessors.put(arc.getHeadNode(),nodeWithCost.getHeadNode());
+            if (costToNode.gratherThan(actualCost)) {
+                //found shorter path
+
+                distance.replace(headNode, distance.get(currentNode).addCost(arc.getCost()));
+
+                predecessors.put(arc.getHeadNode(), currentNode);
 
                 unsettledNodes.remove(arc);
                 unsettledNodes.offer(arc);
@@ -64,22 +77,26 @@ public class DijkstraAlgorithm {
     }
 
 
+    public ShortestPath getPath(Node target) {
+        Deque<Node> path = new LinkedList<>();
 
-    public LinkedList<Node> getPath(Node target) {
-        LinkedList<Node> path = new LinkedList<Node>();
+        Cost totalCost = new Cost(0);
+
         Node step = target;
         // check if a path exists
         if (predecessors.get(step) == null) {
             return null;
         }
-        path.add(step);
+        path.push(step);
+        totalCost = totalCost.addCost(distance.get(target));
+
         while (predecessors.get(step) != null) {
             step = predecessors.get(step);
-            path.add(step);
+            path.push(step);
         }
-        // Put it into the correct order
-        Collections.reverse(path);
-        return path;
+
+
+        return new ShortestPath(path,totalCost);
     }
 
 }

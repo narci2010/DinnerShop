@@ -12,6 +12,10 @@ public class Cost implements Comparable<Cost> {
 
     }
 
+    public boolean gratherThan(Cost cost) {
+        return this.compareTo(cost) > 0;
+    }
+
     @Override
     public String toString() {
         return "Cost{" +
