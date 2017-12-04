@@ -12,8 +12,17 @@ public class Cost implements Comparable<Cost> {
 
     }
 
-    public boolean gratherThan(Cost cost) {
+    public boolean greaterThan(Cost cost) {
         return this.compareTo(cost) > 0;
+    }
+
+    public Cost subtract(Cost cost) {
+        return new Cost(this.seconds - cost.seconds);
+    }
+
+    public static Cost abs(Cost cost) {
+        int abs = Math.abs(cost.seconds);
+        return new Cost(abs);
     }
 
     @Override

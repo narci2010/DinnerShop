@@ -18,6 +18,10 @@ public class ShortestPath {
         nodes.push(node);
     }
 
+    public Cost getCost() {
+        return cost;
+    }
+
     @Override
     public String toString() {
         return "ShortestPath{" +

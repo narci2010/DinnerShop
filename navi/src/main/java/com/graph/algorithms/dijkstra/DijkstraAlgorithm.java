@@ -1,5 +1,6 @@
-package com.graph.algorithms;
+package com.graph.algorithms.dijkstra;
 
+import com.graph.algorithms.ShortestPath;
 import com.graph.model.Arc;
 import com.graph.model.Cost;
 import com.graph.model.Node;
@@ -10,9 +11,10 @@ import java.util.*;
 public class DijkstraAlgorithm {
     private RoadNetwork roadNetwork;
     private Map<Node, Cost> distance;
-    private Queue<Arc> unsettledNodes;
+    protected Queue<Arc> unsettledNodes;
     private Map<Node, Node> predecessors;
     private Set<Node> settledNodes;
+    protected Node targetNode;
 
     public DijkstraAlgorithm(RoadNetwork roadNetwork) {
         this.roadNetwork = roadNetwork;
@@ -23,6 +25,7 @@ public class DijkstraAlgorithm {
     }
 
     public ShortestPath calculateShortestPath(Node startNode, Node endNode) {
+        targetNode = endNode;
 
         initializeInternalData();
         setMaxDistanceToAllNodes();
@@ -40,6 +43,29 @@ public class DijkstraAlgorithm {
 
         }
         return getPath(endNode);
+    }
+
+
+    public ShortestPath getPath(Node target) {
+        Deque<Node> path = new LinkedList<>();
+
+        Cost totalCost = new Cost(0);
+
+        Node step = target;
+        // check if a path exists
+        if (predecessors.get(step) == null) {
+            return new ShortestPath(new LinkedList<>(), new Cost(0));
+        }
+        path.push(step);
+        totalCost = totalCost.addCost(distance.get(target));
+
+        while (predecessors.get(step) != null) {
+            step = predecessors.get(step);
+            path.push(step);
+        }
+
+
+        return new ShortestPath(path, totalCost);
     }
 
     private void setMaxDistanceToAllNodes() {
@@ -60,43 +86,28 @@ public class DijkstraAlgorithm {
         for (Arc arc : arcs) {
             Node headNode = arc.getHeadNode();
             Cost costToNode = distance.get(headNode);
-            Cost actualCost = distance.get(currentNode).addCost(arc.getCost());
+            Cost actualCost = getActualCost(currentNode, arc);
 
-            if (costToNode.gratherThan(actualCost)) {
+            if (costToNode.greaterThan(actualCost)) {
                 //found shorter path
 
-                distance.replace(headNode, distance.get(currentNode).addCost(arc.getCost()));
+                distance.replace(headNode, actualCost);
 
                 predecessors.put(arc.getHeadNode(), currentNode);
 
-                unsettledNodes.remove(arc);
-                unsettledNodes.offer(arc);
+                addToUnsettledNodes(arc);
 
             }
         }
     }
 
+    protected void addToUnsettledNodes(Arc arc) {
+        unsettledNodes.remove(arc);
+        unsettledNodes.offer(arc);
+    }
 
-    public ShortestPath getPath(Node target) {
-        Deque<Node> path = new LinkedList<>();
-
-        Cost totalCost = new Cost(0);
-
-        Node step = target;
-        // check if a path exists
-        if (predecessors.get(step) == null) {
-            return null;
-        }
-        path.push(step);
-        totalCost = totalCost.addCost(distance.get(target));
-
-        while (predecessors.get(step) != null) {
-            step = predecessors.get(step);
-            path.push(step);
-        }
-
-
-        return new ShortestPath(path,totalCost);
+    protected Cost getActualCost(Node currentNode, Arc arc) {
+        return distance.get(currentNode).addCost(arc.getCost());
     }
 
 }
