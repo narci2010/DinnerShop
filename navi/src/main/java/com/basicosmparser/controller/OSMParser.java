@@ -282,7 +282,9 @@ public class OSMParser extends DefaultHandler {
 
     public static RoadNetwork buildRoadNetwork(Map<String, Element> elements) {
         RoadNetwork roadNetwork = new RoadNetwork();
-            int id = 0;
+        Map<String, Integer> nodePosition = new HashMap<>();
+
+        int id = 0;
 
 
         for (Element e : elements.values()) {
@@ -297,13 +299,20 @@ public class OSMParser extends DefaultHandler {
                         double distance = u.distance(v);
 
                         int seconds = (int) ((distance / RoadTypeSpeed.valueOf(roadType).getVelocity()) * 3600);
-                        if(seconds == 0){
+                        if (seconds == 0) {
                             seconds++;
                         }
                         Cost cost = new Cost(seconds);
 
-                        com.graph.model.Node nodeU = new com.graph.model.Node(u.getId(), u.getLat(), u.getLon());
-                        com.graph.model.Node nodeV = new com.graph.model.Node(v.getId(), v.getLat(), v.getLon());
+                        if (!nodePosition.containsKey(u.getId())) {
+                            nodePosition.put(u.getId(), id++);
+                        }
+                        if (!nodePosition.containsKey(v.getId())) {
+                            nodePosition.put(v.getId(), id++);
+                        }
+
+                        com.graph.model.Node nodeU = new com.graph.model.Node(nodePosition.get(u.getId()), u.getLat(), u.getLon());
+                        com.graph.model.Node nodeV = new com.graph.model.Node(nodePosition.get(v.getId()), v.getLat(), v.getLon());
 
                         roadNetwork.addNode(nodeU);
                         roadNetwork.addNode(nodeV);

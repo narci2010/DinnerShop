@@ -4,17 +4,18 @@ import com.graph.algorithms.ShortestPath;
 import com.graph.model.Arc;
 import com.graph.model.Cost;
 import com.graph.model.Node;
+import com.graph.model.SPEntry;
 import com.navigation.RoadNetwork;
 
 import java.util.*;
 
 public class DijkstraAlgorithm {
     private RoadNetwork roadNetwork;
-    private Map<Node, Cost> distance;
-    protected Queue<Arc> unsettledNodes;
+    private SPEntry[] distances;
+    private Queue<SPEntry> unsettledNodes;
     private Map<Node, Node> predecessors;
-    private Set<Node> settledNodes;
-    protected Node targetNode;
+    private Set<SPEntry> settledNodes;
+    protected SPEntry targetNode;
 
     public DijkstraAlgorithm(RoadNetwork roadNetwork) {
         this.roadNetwork = roadNetwork;
@@ -25,21 +26,23 @@ public class DijkstraAlgorithm {
     }
 
     public ShortestPath calculateShortestPath(Node startNode, Node endNode) {
-        targetNode = endNode;
+        targetNode = new SPEntry();
+        targetNode.setNodeId(endNode.getId());
 
         initializeInternalData();
         setMaxDistanceToAllNodes();
 
         //set startNode distance cost to zero
-        distance.replace(startNode, new Cost(0));
+        SPEntry spEntry = distances[startNode.getId()];
+        spEntry.setCost(new Cost(0));
 
         //add first node as unsettled
-//        unsettledNodes.add(new Arc(startNode, tailNode, new Cost(0)));
+        unsettledNodes.add(distances[startNode.getId()]);
 
-        while (!unsettledNodes.isEmpty() && !settledNodes.contains(endNode)) {
-            Node nodeWithLowestDistanceFromSourceNode = unsettledNodes.poll().getHeadNode();
-            settledNodes.add(nodeWithLowestDistanceFromSourceNode);
-            calculateDistancesAndAddUnsettledNodes(nodeWithLowestDistanceFromSourceNode);
+        while (!unsettledNodes.isEmpty() && !settledNodes.contains(targetNode)) {
+            SPEntry spEntryWithLowestDistanceFromSource = unsettledNodes.poll();
+            settledNodes.add(spEntryWithLowestDistanceFromSource);
+            calculateDistancesAndAddUnsettledNodes(spEntryWithLowestDistanceFromSource);
 
         }
         return getPath(endNode);
@@ -69,6 +72,21 @@ public class DijkstraAlgorithm {
     }
 
     private void setMaxDistanceToAllNodes() {
+
+        List<SPEntry> spEntries = new ArrayList<>(30000);
+        roadNetwork.forEach(node -> {
+            SPEntry spEntry = new SPEntry();
+            spEntry.setCost(new Cost(Integer.MAX_VALUE));
+            spEntry.setNodeId(node.getId());
+            spEntry.setParent(null);
+            spEntries.add(spEntry);
+        });
+
+        distances = spEntries.toArray(new SPEntry[spEntries.size()]);
+
+
+        roadNetwork.forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
+
 //        roadNetwork.getAdjacentArcs().keySet().forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
     }
 
@@ -81,9 +99,10 @@ public class DijkstraAlgorithm {
 
     private void calculateDistancesAndAddUnsettledNodes(Node currentNode) {
 
-//        List<Arc> arcs = roadNetwork.getAdjacentArcs().get(currentNode);
 
-/*        for (Arc arc : arcs) {
+ /*       List<Arc> arcs = roadNetwork.getAdjacentArcs().get(currentNode);
+
+        for (Arc arc : arcs) {
             Node headNode = arc.getHeadNode();
             Cost costToNode = distance.get(headNode);
             Cost actualCost = getActualCost(currentNode, arc);
