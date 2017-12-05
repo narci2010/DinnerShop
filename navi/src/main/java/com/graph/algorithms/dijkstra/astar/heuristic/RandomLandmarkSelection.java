@@ -19,7 +19,7 @@ public class RandomLandmarkSelection {
 
     public Map<Node, Map<Node, Cost>> precomputeDistances(Integer numberOfLandmarks) {
         Map<Node, Map<Node, Cost>> distanceFromLandmarkToNodes = new HashMap<>();
-
+/*
         Map<Node, List<Arc>> adjacentArcs = roadNetwork.getAdjacentArcs();
         //helper List to use index
         List<Node> nodes = new ArrayList<>(adjacentArcs.keySet());
@@ -50,7 +50,7 @@ public class RandomLandmarkSelection {
 
 
         }
-
+*/
         return distanceFromLandmarkToNodes;
     }
 }

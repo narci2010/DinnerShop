@@ -26,7 +26,7 @@ public class AStar extends DijkstraAlgorithm {
     @Override
     protected void addToUnsettledNodes(Arc arc) {
 
-        unsettledNodes.offer(new Arc(arc.getHeadNode(), arc.getCost().addCost(calculateHeuristic(arc.getHeadNode()))));
+//        unsettledNodes.offer(new Arc(arc.getHeadNode(), tailNode, arc.getCost().addCost(calculateHeuristic(arc.getHeadNode()))));
     }
 
 

@@ -23,6 +23,7 @@ public class RoadNetworkTest {
         Node tailNode = new Node(2, 3.0, 3.0);
 
         Graph graph = new RoadNetwork();
+
         graph.addEdge(headNode, tailNode, new Cost(2));
 
         Assert.assertEquals("Node{id=1} : [Arc{headNodeId=2,Cost{seconds=2}}]\n" +
@@ -37,6 +38,11 @@ public class RoadNetworkTest {
         Node thirdNode = new Node(3, 4.0, 4.0);
 
         Graph graph = new RoadNetwork();
+
+        graph.addNode(tailNode);
+        graph.addNode(headNode);
+        graph.addNode(thirdNode);
+
         graph.addEdge(tailNode, headNode, new Cost(2));
         graph.addEdge(tailNode, thirdNode, new Cost(2));
 

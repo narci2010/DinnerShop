@@ -1,6 +1,16 @@
 package com.graph.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Node {
+
+    private Integer id;
+    private Double latitude;
+    private Double longitude;
+
+    private List<Arc> incomingArcs = new ArrayList<>();
+    private List<Arc> outgoingArcs = new ArrayList<>();
 
     public Node(Integer id, Double latitude, Double longitude) {
         this.id = id;
@@ -8,14 +18,18 @@ public class Node {
         this.longitude = longitude;
     }
 
-    private Integer id;
-    private Double latitude;
-    private Double longitude;
-
     public Node(String id, double lat, double lon) {
         this.id = Integer.valueOf(id.substring(1));
-        this.latitude =  lat;
-        this.longitude =  lon;
+        this.latitude = lat;
+        this.longitude = lon;
+    }
+
+    public void addIncomingArcs(Arc arc) {
+        incomingArcs.add(arc);
+    }
+
+    public void addOutgoingArcs(Arc arc) {
+        outgoingArcs.add(arc);
     }
 
 
@@ -39,10 +53,13 @@ public class Node {
         return id != null ? id.hashCode() : 0;
     }
 
+
     @Override
     public String toString() {
         return "Node{" +
                 "id=" + id +
-                '}';
+                "} : " + outgoingArcs
+                ;
+
     }
 }

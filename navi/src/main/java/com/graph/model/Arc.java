@@ -2,13 +2,13 @@ package com.graph.model;
 
 public class Arc implements Comparable<Arc>{
 
+    private Node headNode;
+    private Cost cost;
+
     public Arc(Node headNode, Cost cost) {
         this.headNode = headNode;
         this.cost = cost;
     }
-
-    private Node headNode;
-    private Cost cost;
 
 
     public Node getHeadNode() {

@@ -6,53 +6,58 @@ import com.graph.model.Graph;
 import com.graph.model.Node;
 
 import java.util.*;
+import java.util.function.Consumer;
 
-public class RoadNetwork implements Graph {
+public class RoadNetwork implements Graph<Node>, Iterable<Node> {
 
-    private List<Node> nodes = new ArrayList<>();
-    private Map<Node, List<Arc>> adjacentArcs = new HashMap<>();
+    private List<Node> nodes = new ArrayList<>(300000);
+    private Map<Integer, Integer> nodePosition = new HashMap<>();
+
 
     @Override
     public void addNode(Node node) {
-        nodes.add(node);
+        if (!nodePosition.containsKey(node.getId())) {
+            nodes.add(node);
+            nodePosition.put(node.getId(), nodes.size() - 1);
+        }
+
     }
 
     @Override
     public void addEdge(Node u, Node v, Cost cost) {
 
-        addArc(u, v, cost);
-        addArc(v, u, cost);
 
-    }
+        nodes.get(nodePosition.get(u.getId())).addOutgoingArcs(new Arc(v, cost));
+        nodes.get(nodePosition.get(v.getId())).addOutgoingArcs(new Arc(u, cost));
 
-
-    public Map<Node, List<Arc>> getAdjacentArcs() {
-        return Collections.unmodifiableMap(adjacentArcs);
-    }
-
-    private void addArc(Node tailNode, Node headNode, Cost cost) {
-
-        if (adjacentArcs.containsKey(tailNode)) {
-            adjacentArcs.get(tailNode).add(new Arc(headNode, cost));
-        } else {
-            List<Arc> arcs = new ArrayList<>();
-            arcs.add(new Arc(headNode, cost));
-            adjacentArcs.put(tailNode, arcs);
-        }
 
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Map.Entry<Node, List<Arc>> nodeListEntry : adjacentArcs.entrySet()) {
-            stringBuilder.append(nodeListEntry.getKey());
-            stringBuilder.append(" : ");
-            stringBuilder.append(nodeListEntry.getValue());
+        for (Node node : nodes) {
+            stringBuilder.append(node);
             stringBuilder.append("\n");
         }
 
         return stringBuilder.toString();
+    }
+
+
+    @Override
+    public Iterator<Node> iterator() {
+        return nodes.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super Node> action) {
+        nodes.forEach(action);
+    }
+
+    @Override
+    public Spliterator<Node> spliterator() {
+        return nodes.spliterator();
     }
 }
 

@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -281,6 +282,8 @@ public class OSMParser extends DefaultHandler {
 
     public static RoadNetwork buildRoadNetwork(Map<String, Element> elements) {
         RoadNetwork roadNetwork = new RoadNetwork();
+            int id = 0;
+
 
         for (Element e : elements.values()) {
             if (e instanceof Way) {
@@ -288,16 +291,23 @@ public class OSMParser extends DefaultHandler {
                 List<Node> nodes = ((Way) e).getNodes();
                 if (nodes.size() > 1) {
                     for (int i = 0; i < nodes.size() - 1; i++) {
-                        Node u = nodes.get(0);
+                        Node u = nodes.get(i);
                         Node v = nodes.get(i + 1);
 
                         double distance = u.distance(v);
 
                         int seconds = (int) ((distance / RoadTypeSpeed.valueOf(roadType).getVelocity()) * 3600);
+                        if(seconds == 0){
+                            seconds++;
+                        }
                         Cost cost = new Cost(seconds);
 
+                        com.graph.model.Node nodeU = new com.graph.model.Node(u.getId(), u.getLat(), u.getLon());
+                        com.graph.model.Node nodeV = new com.graph.model.Node(v.getId(), v.getLat(), v.getLon());
 
-                        roadNetwork.addEdge(new com.graph.model.Node(u.getId(), u.getLat(), u.getLon()), new com.graph.model.Node(v.getId(), v.getLat(), v.getLon()), cost);
+                        roadNetwork.addNode(nodeU);
+                        roadNetwork.addNode(nodeV);
+                        roadNetwork.addEdge(nodeU, nodeV, cost);
                     }
                 }
 

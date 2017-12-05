@@ -34,7 +34,7 @@ public class DijkstraAlgorithm {
         distance.replace(startNode, new Cost(0));
 
         //add first node as unsettled
-        unsettledNodes.add(new Arc(startNode, new Cost(0)));
+//        unsettledNodes.add(new Arc(startNode, tailNode, new Cost(0)));
 
         while (!unsettledNodes.isEmpty() && !settledNodes.contains(endNode)) {
             Node nodeWithLowestDistanceFromSourceNode = unsettledNodes.poll().getHeadNode();
@@ -69,7 +69,7 @@ public class DijkstraAlgorithm {
     }
 
     private void setMaxDistanceToAllNodes() {
-        roadNetwork.getAdjacentArcs().keySet().forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
+//        roadNetwork.getAdjacentArcs().keySet().forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
     }
 
     private void initializeInternalData() {
@@ -81,9 +81,9 @@ public class DijkstraAlgorithm {
 
     private void calculateDistancesAndAddUnsettledNodes(Node currentNode) {
 
-        List<Arc> arcs = roadNetwork.getAdjacentArcs().get(currentNode);
+//        List<Arc> arcs = roadNetwork.getAdjacentArcs().get(currentNode);
 
-        for (Arc arc : arcs) {
+/*        for (Arc arc : arcs) {
             Node headNode = arc.getHeadNode();
             Cost costToNode = distance.get(headNode);
             Cost actualCost = getActualCost(currentNode, arc);
@@ -98,7 +98,7 @@ public class DijkstraAlgorithm {
                 addToUnsettledNodes(arc);
 
             }
-        }
+        }*/
     }
 
     protected void addToUnsettledNodes(Arc arc) {
@@ -106,7 +106,7 @@ public class DijkstraAlgorithm {
         unsettledNodes.offer(arc);
     }
 
-    protected Cost getActualCost(Node currentNode, Arc arc) {
+    private Cost getActualCost(Node currentNode, Arc arc) {
         return distance.get(currentNode).addCost(arc.getCost());
     }
 
