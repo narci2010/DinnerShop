@@ -6,9 +6,9 @@ import com.graph.model.*;
 import java.util.*;
 
 public class DijkstraAlgorithm {
-    private List<Node> roadNetworkNodes = new ArrayList<>();
+    protected List<Node> roadNetworkNodes = new ArrayList<>();
     private SPEntry[] distances;
-    private Queue<SPEntry> unsettledNodes;
+    protected Queue<SPEntry> unsettledNodes;
     private Set<SPEntry> settledNodes;
     protected SPEntry targetNode;
 
@@ -65,20 +65,20 @@ public class DijkstraAlgorithm {
 
     }
 
-    public ShortestPath getPath(Integer targetNodeId){
+    public ShortestPath getPath(Integer targetNodeId) {
         if (Optional.ofNullable(targetNodeId).isPresent()) {
             Deque<Node> path = new LinkedList<>();
 
             SPEntry spEntry = distances[targetNodeId];
             Cost totalCost = spEntry.getCost();
-            while (spEntry.getParent()!=null) {
+            while (spEntry.getParent() != null) {
                 path.push(roadNetworkNodes.get(spEntry.getParent().getNodeId()));
                 spEntry = spEntry.getParent();
             }
 
-            return new ShortestPath(path,totalCost);
+            return new ShortestPath(path, totalCost);
         }
-        return new ShortestPath(new ArrayDeque<>(),new Cost(0));
+        return new ShortestPath(new ArrayDeque<>(), new Cost(0));
     }
 
 

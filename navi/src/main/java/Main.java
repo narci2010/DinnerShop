@@ -33,38 +33,24 @@ public class Main {
 
             RoadNetwork roadNetwork = OSMParser.buildRoadNetwork(result);
 
-            /*System.out.println("Duration : " + Duration.between(startRoadNetworkBuild, endRoadNetworkBuild).getSeconds());
+            System.out.println("Duration : " + Duration.between(startRoadNetworkBuild, endRoadNetworkBuild).getSeconds());
 
             DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(roadNetwork);
 
             Instant start = Instant.now();
 
-            ShortestPath shortestPath1 = dijkstraAlgorithm.calculateShortestPath(1, 12311);
+            ShortestPath shortestPath1 = dijkstraAlgorithm.calculateShortestPath(1, 52489);
 
             Instant end = Instant.now();
             System.out.println("Duration : " + Duration.between(start, end).getSeconds());
-            System.out.println("Dijkstra SP : " + shortestPath1);*/
+            System.out.println("Dijkstra SP : " + shortestPath1);
 
 
-
-            RandomLandmarkSelection landmarkSelection = new RandomLandmarkSelection(roadNetwork);
-            Instant startLandmark = Instant.now();
-            landmarkSelection.precomputeDistances(10);
-            Instant endLandmark = Instant.now();
-
-            System.out.println("Duration : " + Duration.between(startLandmark, endLandmark).getSeconds());
-
-
-   /*         Node[] nodes = roadNetwork.getAdjacentArcs().keySet().toArray(new Node[roadNetwork.getAdjacentArcs().keySet().size()]);
-
-
-
-
-            AStar aStar = new AStar(roadNetwork, new RandomLandmarkSelection(roadNetwork));
+/*            AStar aStar = new AStar(roadNetwork, new RandomLandmarkSelection(roadNetwork));
             aStar.precomputeDistances(2);
 
             Instant startAStar = Instant.now();
-            ShortestPath shortestPath = aStar.calculateShortestPath(nodes[0], nodes[12311]);
+            ShortestPath shortestPath = aStar.calculateShortestPath(1, 12311);
             Instant endAStar = Instant.now();
 
             System.out.println("Duration : " + Duration.between(startAStar, endAStar).getSeconds());

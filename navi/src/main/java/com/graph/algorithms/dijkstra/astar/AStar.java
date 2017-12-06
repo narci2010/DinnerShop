@@ -5,10 +5,13 @@ import com.graph.algorithms.dijkstra.astar.heuristic.RandomLandmarkSelection;
 import com.graph.model.Arc;
 import com.graph.model.Cost;
 import com.graph.model.Node;
+import com.graph.model.SPEntry;
 import com.navigation.RoadNetwork;
 
 import java.util.*;
 
+
+//Not ready
 public class AStar extends DijkstraAlgorithm {
 
     private Map<Node, Map<Node, Cost>> distanceFromLandmarkToNodes = new HashMap<>();
@@ -23,18 +26,23 @@ public class AStar extends DijkstraAlgorithm {
         distanceFromLandmarkToNodes = landmarkSelection.precomputeDistances(numberOfLandmarks);
     }
 
-    protected void addToUnsettledNodes(Arc arc) {
+    @Override
+    protected void addToUnsettledNodes(SPEntry spEntry) {
+        SPEntry aStarEntry = new SPEntry(spEntry.getNodeId(), spEntry.getCost().addCost(calculateHeuristic(roadNetworkNodes.get(spEntry.getNodeId())))
+                , spEntry.getParent());
 
-//        unsettledNodes.offer(new Arc(arc.getHeadNode(), tailNode, arc.getCost().addCost(calculateHeuristic(arc.getHeadNode()))));
+        unsettledNodes.remove(aStarEntry);
+        unsettledNodes.offer(aStarEntry);
+
+
     }
-
 
     private Cost calculateHeuristic(Node currentNode) {
         Cost maxCost = new Cost(0);
         for (Node landmark : distanceFromLandmarkToNodes.keySet()) {
             Map<Node, Cost> nodeCostMap = distanceFromLandmarkToNodes.get(landmark);
             Cost distanceFromLandmarkToCurrentNode = nodeCostMap.get(currentNode);
-            Cost distanceFromLandmarkToTargetNode = nodeCostMap.get(targetNode);
+            Cost distanceFromLandmarkToTargetNode = nodeCostMap.get(roadNetworkNodes.get(targetNode.getNodeId()));
 
             Cost absCost = Cost.abs(distanceFromLandmarkToCurrentNode.subtract(distanceFromLandmarkToTargetNode));
 

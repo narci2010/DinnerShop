@@ -12,16 +12,23 @@ import org.junit.Test;
 public class AStarTest {
     @Test
     public void AStarShortestPath() {
-        Node one = new Node(1, 2.0, 2.0);
-        Node two = new Node(2, 3.0, 3.0);
-        Node three = new Node(3, 4.0, 4.0);
-        Node four = new Node(4, 4.0, 4.0);
-        Node five = new Node(5, 4.0, 4.0);
-        Node six = new Node(6, 4.0, 4.0);
-        Node seven = new Node(7, 4.0, 4.0);
-
-
         RoadNetwork graph = new RoadNetwork();
+        Node one = new Node(0, 2.0, 2.0);
+        graph.addNode(one);
+        Node two = new Node(1, 3.0, 3.0);
+        graph.addNode(two);
+        Node three = new Node(2, 4.0, 4.0);
+        graph.addNode(three);
+        Node four = new Node(3, 4.0, 4.0);
+        graph.addNode(four);
+        Node five = new Node(4, 4.0, 4.0);
+        graph.addNode(five);
+        Node six = new Node(5, 4.0, 4.0);
+        graph.addNode(six);
+        Node seven = new Node(6, 4.0, 4.0);
+        graph.addNode(seven);
+
+
         graph.addEdge(one, two, new Cost(2));
         graph.addEdge(two, three, new Cost(2));
         graph.addEdge(three, four, new Cost(2));
