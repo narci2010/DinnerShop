@@ -1,6 +1,7 @@
 package com.graph.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Node {
@@ -8,8 +9,6 @@ public class Node {
     private Integer id;
     private Double latitude;
     private Double longitude;
-
-    private List<Arc> incomingArcs = new ArrayList<>();
     private List<Arc> outgoingArcs = new ArrayList<>();
 
     public Node(Integer id, Double latitude, Double longitude) {
@@ -24,14 +23,13 @@ public class Node {
         this.longitude = lon;
     }
 
-    public void addIncomingArcs(Arc arc) {
-        incomingArcs.add(arc);
-    }
-
     public void addOutgoingArcs(Arc arc) {
         outgoingArcs.add(arc);
     }
 
+    public List<Arc> getOutgoingArcs() {
+        return Collections.unmodifiableList(outgoingArcs);
+    }
 
     //own id if this suppose to have sens
     public Integer getId() {

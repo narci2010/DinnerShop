@@ -1,43 +1,55 @@
 package com.graph.algorithms.dijkstra;
 
 import com.graph.algorithms.ShortestPath;
-import com.graph.model.Arc;
-import com.graph.model.Cost;
-import com.graph.model.Node;
-import com.graph.model.SPEntry;
-import com.navigation.RoadNetwork;
+import com.graph.model.*;
 
 import java.util.*;
 
 public class DijkstraAlgorithm {
-    private RoadNetwork roadNetwork;
+    private List<Node> roadNetworkNodes = new ArrayList<>();
     private SPEntry[] distances;
     private Queue<SPEntry> unsettledNodes;
-    private Map<Node, Node> predecessors;
     private Set<SPEntry> settledNodes;
     protected SPEntry targetNode;
 
-    public DijkstraAlgorithm(RoadNetwork roadNetwork) {
-        this.roadNetwork = roadNetwork;
+    public DijkstraAlgorithm(Graph<Node> roadNetwork) {
+        List<SPEntry> spEntries = new ArrayList<>(30000);
+
+        for (Node node : roadNetwork) {
+            roadNetworkNodes.add(node);
+            SPEntry spEntry = createSPEntry(node);
+            spEntries.add(spEntry);
+        }
+
+        distances = spEntries.toArray(new SPEntry[spEntries.size()]);
+
+
     }
 
     public void calculateShortestPathsFromSource(Node sourceNode) {
-        calculateShortestPath(sourceNode, null);
+        calculateShortestPath(sourceNode.getId(), null);
     }
 
     public ShortestPath calculateShortestPath(Node startNode, Node endNode) {
-        targetNode = new SPEntry();
-        targetNode.setNodeId(endNode.getId());
+
+        return calculateShortestPath(startNode.getId(), endNode.getId());
+    }
+
+    public ShortestPath calculateShortestPath(Integer startNodeId, Integer endNodeId) {
+        Optional.ofNullable(endNodeId).ifPresent(nodeId -> {
+            targetNode = new SPEntry();
+            targetNode.setNodeId(nodeId);
+        });
+
 
         initializeInternalData();
-        setMaxDistanceToAllNodes();
 
         //set startNode distance cost to zero
-        SPEntry spEntry = distances[startNode.getId()];
+        SPEntry spEntry = distances[startNodeId];
         spEntry.setCost(new Cost(0));
 
         //add first node as unsettled
-        unsettledNodes.add(distances[startNode.getId()]);
+        unsettledNodes.add(distances[startNodeId]);
 
         while (!unsettledNodes.isEmpty() && !settledNodes.contains(targetNode)) {
             SPEntry spEntryWithLowestDistanceFromSource = unsettledNodes.poll();
@@ -45,88 +57,77 @@ public class DijkstraAlgorithm {
             calculateDistancesAndAddUnsettledNodes(spEntryWithLowestDistanceFromSource);
 
         }
-        return getPath(endNode);
+        return getPath(endNodeId);
+    }
+
+    public ShortestPath getPath(Node targetNode) {
+        return getPath(targetNode.getId());
+
+    }
+
+    public ShortestPath getPath(Integer targetNodeId){
+        if (Optional.ofNullable(targetNodeId).isPresent()) {
+            Deque<Node> path = new LinkedList<>();
+
+            SPEntry spEntry = distances[targetNodeId];
+            Cost totalCost = spEntry.getCost();
+            while (spEntry.getParent()!=null) {
+                path.push(roadNetworkNodes.get(spEntry.getParent().getNodeId()));
+                spEntry = spEntry.getParent();
+            }
+
+            return new ShortestPath(path,totalCost);
+        }
+        return new ShortestPath(new ArrayDeque<>(),new Cost(0));
     }
 
 
-    public ShortestPath getPath(Node target) {
-        Deque<Node> path = new LinkedList<>();
-
-        Cost totalCost = new Cost(0);
-
-        Node step = target;
-        // check if a path exists
-        if (predecessors.get(step) == null) {
-            return new ShortestPath(new LinkedList<>(), new Cost(0));
-        }
-        path.push(step);
-        totalCost = totalCost.addCost(distance.get(target));
-
-        while (predecessors.get(step) != null) {
-            step = predecessors.get(step);
-            path.push(step);
-        }
-
-
-        return new ShortestPath(path, totalCost);
-    }
-
-    private void setMaxDistanceToAllNodes() {
-
-        List<SPEntry> spEntries = new ArrayList<>(30000);
-        roadNetwork.forEach(node -> {
-            SPEntry spEntry = new SPEntry();
-            spEntry.setCost(new Cost(Integer.MAX_VALUE));
-            spEntry.setNodeId(node.getId());
-            spEntry.setParent(null);
-            spEntries.add(spEntry);
-        });
-
-        distances = spEntries.toArray(new SPEntry[spEntries.size()]);
-
-
-        roadNetwork.forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
-
-//        roadNetwork.getAdjacentArcs().keySet().forEach(node -> distance.put(node, new Cost(Integer.MAX_VALUE)));
+    private SPEntry createSPEntry(Node node) {
+        SPEntry spEntry = new SPEntry();
+        spEntry.setCost(new Cost(Integer.MAX_VALUE));
+        spEntry.setNodeId(node.getId());
+        spEntry.setParent(null);
+        return spEntry;
     }
 
     private void initializeInternalData() {
         settledNodes = new HashSet<>();
         unsettledNodes = new PriorityQueue<>();
-        distance = new HashMap<>();
-        predecessors = new HashMap<>();
+        for (SPEntry distance : distances) {
+            distance.setParent(null);
+            distance.setCost(new Cost(Integer.MAX_VALUE));
+        }
+
     }
 
-    private void calculateDistancesAndAddUnsettledNodes(Node currentNode) {
-
-
- /*       List<Arc> arcs = roadNetwork.getAdjacentArcs().get(currentNode);
+    private void calculateDistancesAndAddUnsettledNodes(SPEntry currentSPEntry) {
+        List<Arc> arcs = roadNetworkNodes.get(currentSPEntry.getNodeId()).getOutgoingArcs();
 
         for (Arc arc : arcs) {
             Node headNode = arc.getHeadNode();
-            Cost costToNode = distance.get(headNode);
-            Cost actualCost = getActualCost(currentNode, arc);
+            Cost costToNode = distances[headNode.getId()].getCost();
+            Cost actualCost = getActualCost(currentSPEntry, arc);
 
             if (costToNode.greaterThan(actualCost)) {
                 //found shorter path
 
-                distance.replace(headNode, actualCost);
+                SPEntry spEntry = distances[headNode.getId()];
+                spEntry.setCost(actualCost);
+                spEntry.setParent(currentSPEntry);
 
-                predecessors.put(arc.getHeadNode(), currentNode);
-
-                addToUnsettledNodes(arc);
+                addToUnsettledNodes(spEntry);
 
             }
-        }*/
+        }
     }
 
-    protected void addToUnsettledNodes(Arc arc) {
-        unsettledNodes.remove(arc);
-        unsettledNodes.offer(arc);
+    protected void addToUnsettledNodes(SPEntry spEntry) {
+        unsettledNodes.remove(spEntry);
+        unsettledNodes.offer(spEntry);
     }
 
-    private Cost getActualCost(Node currentNode, Arc arc) {
-        return distance.get(currentNode).addCost(arc.getCost());
+    private Cost getActualCost(SPEntry currentSPEntry, Arc arc) {
+        return distances[currentSPEntry.getNodeId()].getCost().addCost(arc.getCost());
     }
 
 }

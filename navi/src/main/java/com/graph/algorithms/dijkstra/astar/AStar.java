@@ -23,7 +23,6 @@ public class AStar extends DijkstraAlgorithm {
         distanceFromLandmarkToNodes = landmarkSelection.precomputeDistances(numberOfLandmarks);
     }
 
-    @Override
     protected void addToUnsettledNodes(Arc arc) {
 
 //        unsettledNodes.offer(new Arc(arc.getHeadNode(), tailNode, arc.getCost().addCost(calculateHeuristic(arc.getHeadNode()))));

@@ -10,6 +10,7 @@ public class SPEntry implements Comparable<SPEntry> {
     private Cost cost;
     private SPEntry parent;
 
+
     public int compareTo(SPEntry o) {
         return cost.compareTo(o.cost);
     }

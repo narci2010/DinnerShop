@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
 
         OSMParser p = new OSMParser();
-        File osmFile = new File("C:\\Users\\Tomek\\IdeaProjects\\DinnerShop\\navi\\src\\main\\resources\\saarland_fix.osm");    //Create a file object for your OSM XML file
+        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\saarland_fix.osm");    //Create a file object for your OSM XML file
 
 
         try {
@@ -33,20 +33,31 @@ public class Main {
 
             RoadNetwork roadNetwork = OSMParser.buildRoadNetwork(result);
 
-            System.out.println("Duration : " + Duration.between(startRoadNetworkBuild, endRoadNetworkBuild).getSeconds());
-            System.out.println(roadNetwork);
-
-   /*         Node[] nodes = roadNetwork.getAdjacentArcs().keySet().toArray(new Node[roadNetwork.getAdjacentArcs().keySet().size()]);
+            /*System.out.println("Duration : " + Duration.between(startRoadNetworkBuild, endRoadNetworkBuild).getSeconds());
 
             DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(roadNetwork);
 
             Instant start = Instant.now();
 
-            ShortestPath shortestPath1 = dijkstraAlgorithm.calculateShortestPath(nodes[0], nodes[12311]);
+            ShortestPath shortestPath1 = dijkstraAlgorithm.calculateShortestPath(1, 12311);
 
             Instant end = Instant.now();
             System.out.println("Duration : " + Duration.between(start, end).getSeconds());
-            System.out.println("Dijkstra SP : " + shortestPath1);
+            System.out.println("Dijkstra SP : " + shortestPath1);*/
+
+
+
+            RandomLandmarkSelection landmarkSelection = new RandomLandmarkSelection(roadNetwork);
+            Instant startLandmark = Instant.now();
+            landmarkSelection.precomputeDistances(10);
+            Instant endLandmark = Instant.now();
+
+            System.out.println("Duration : " + Duration.between(startLandmark, endLandmark).getSeconds());
+
+
+   /*         Node[] nodes = roadNetwork.getAdjacentArcs().keySet().toArray(new Node[roadNetwork.getAdjacentArcs().keySet().size()]);
+
+
 
 
             AStar aStar = new AStar(roadNetwork, new RandomLandmarkSelection(roadNetwork));
@@ -58,8 +69,6 @@ public class Main {
 
             System.out.println("Duration : " + Duration.between(startAStar, endAStar).getSeconds());
             System.out.println("AStar SP : " + shortestPath);*/
-
-
 
 
         } catch (IOException | SAXException e) {

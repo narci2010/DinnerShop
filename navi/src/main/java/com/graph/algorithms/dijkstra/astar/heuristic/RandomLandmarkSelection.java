@@ -8,33 +8,35 @@ import com.graph.model.Node;
 import com.navigation.RoadNetwork;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class RandomLandmarkSelection {
+    private List<Node> roadNetworkNodes = new ArrayList<>();
     private RoadNetwork roadNetwork;
 
 
     public RandomLandmarkSelection(RoadNetwork roadNetwork) {
         this.roadNetwork = roadNetwork;
+        for (Node node : roadNetwork) {
+            roadNetworkNodes.add(node);
+        }
+
     }
 
     public Map<Node, Map<Node, Cost>> precomputeDistances(Integer numberOfLandmarks) {
         Map<Node, Map<Node, Cost>> distanceFromLandmarkToNodes = new HashMap<>();
-/*
-        Map<Node, List<Arc>> adjacentArcs = roadNetwork.getAdjacentArcs();
-        //helper List to use index
-        List<Node> nodes = new ArrayList<>(adjacentArcs.keySet());
 
-        DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(roadNetwork);
+        final int[] indexOfNodesInArray = new Random().ints(0, roadNetworkNodes.size() - 1).distinct().limit(numberOfLandmarks).toArray();
 
-
-        final int[] indexOfNodesInArray = new Random().ints(0, nodes.size()-1).distinct().limit(numberOfLandmarks).toArray();
 
         for (int i : indexOfNodesInArray) {
-            Node landmark = nodes.get(i);
+            DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(roadNetwork);
+            Node landmark = roadNetworkNodes.get(i);
             dijkstraAlgorithm.calculateShortestPathsFromSource(landmark);
 
-            for (Node node : nodes) {
-                ShortestPath path = dijkstraAlgorithm.getPath(node);
+            for (Node node : roadNetworkNodes) {
+                ShortestPath path = dijkstraAlgorithm.getPath(node.getId());
 
                 if (!distanceFromLandmarkToNodes.containsKey(landmark)) {
                     Map<Node, Cost> costs = new HashMap<>();
@@ -50,7 +52,7 @@ public class RandomLandmarkSelection {
 
 
         }
-*/
         return distanceFromLandmarkToNodes;
     }
+
 }

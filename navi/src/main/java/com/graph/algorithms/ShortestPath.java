@@ -24,9 +24,18 @@ public class ShortestPath {
 
     @Override
     public String toString() {
-        return "ShortestPath{" +
-                "cost=" + cost +
-                ", nodes=" + nodes +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+         stringBuilder.append("ShortestPath{" + "cost=").append(cost).append(", nodes=[");
+        for (Node node : nodes) {
+            stringBuilder.append("Node{id=");
+            stringBuilder.append(node.getId());
+            stringBuilder.append("}, ");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+
+        stringBuilder.append("]}");
+
+        return stringBuilder.toString();
     }
 }
