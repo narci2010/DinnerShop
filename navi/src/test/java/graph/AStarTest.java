@@ -1,6 +1,7 @@
 package graph;
 
 import com.graph.algorithms.ShortestPath;
+import com.graph.algorithms.dijkstra.DijkstraAlgorithm;
 import com.graph.algorithms.dijkstra.astar.AStar;
 import com.graph.algorithms.dijkstra.astar.heuristic.RandomLandmarkSelection;
 import com.graph.model.Cost;
@@ -23,29 +24,29 @@ public class AStarTest {
         graph.addNode(four);
         Node five = new Node(4, 4.0, 4.0);
         graph.addNode(five);
-        Node six = new Node(5, 4.0, 4.0);
-        graph.addNode(six);
-        Node seven = new Node(6, 4.0, 4.0);
-        graph.addNode(seven);
+
+
 
 
         graph.addEdge(one, two, new Cost(2));
         graph.addEdge(two, three, new Cost(2));
         graph.addEdge(three, four, new Cost(2));
-        graph.addEdge(four, five, new Cost(2));
 
-        graph.addEdge(one, six, new Cost(1));
-        graph.addEdge(six, seven, new Cost(1));
-        graph.addEdge(seven, five, new Cost(7));
+        graph.addEdge(one, five, new Cost(1));
+        graph.addEdge(five, four, new Cost(10));
 
 
         RandomLandmarkSelection randomLandmarkSelection = new RandomLandmarkSelection(graph);
         AStar aStar = new AStar(graph, randomLandmarkSelection);
 
         aStar.precomputeDistances(2);
-        ShortestPath shortestPath = aStar.calculateShortestPath(one, five);
 
-        Assert.assertEquals("ShortestPath{cost=Cost{seconds=8}, nodes=[Node{id=1}, Node{id=2}, Node{id=3}, Node{id=4}, Node{id=5}]}", shortestPath.toString());
+        ShortestPath shortestPath = aStar.calculateShortestPath(one, four);
+/*
+        DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
+        ShortestPath shortestPath = dijkstraAlgorithm.calculateShortestPath(one, four);*/
+
+        Assert.assertEquals("ShortestPath{cost=Cost{seconds=6}, nodes=[Node{id=0}, Node{id=1}, Node{id=2}, Node{id=3}]}", shortestPath.toString());
 
         System.out.println(shortestPath);
     }

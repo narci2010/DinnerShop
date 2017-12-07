@@ -26,9 +26,6 @@ public class SPEntry implements Comparable<SPEntry> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
         SPEntry spEntry = (SPEntry) o;
 
         return nodeId == spEntry.nodeId;

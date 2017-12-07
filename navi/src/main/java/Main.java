@@ -39,22 +39,22 @@ public class Main {
 
             Instant start = Instant.now();
 
-            ShortestPath shortestPath1 = dijkstraAlgorithm.calculateShortestPath(1, 52489);
+            ShortestPath shortestPath1 = dijkstraAlgorithm.calculateShortestPath(12, 112654);
 
             Instant end = Instant.now();
             System.out.println("Duration : " + Duration.between(start, end).getSeconds());
             System.out.println("Dijkstra SP : " + shortestPath1);
 
 
-/*            AStar aStar = new AStar(roadNetwork, new RandomLandmarkSelection(roadNetwork));
-            aStar.precomputeDistances(2);
-
+            AStar aStar = new AStar(roadNetwork, new RandomLandmarkSelection(roadNetwork));
             Instant startAStar = Instant.now();
-            ShortestPath shortestPath = aStar.calculateShortestPath(1, 12311);
+            aStar.precomputeDistances(8);
             Instant endAStar = Instant.now();
 
+            ShortestPath shortestPath = aStar.calculateShortestPath(12, 112654);
+
             System.out.println("Duration : " + Duration.between(startAStar, endAStar).getSeconds());
-            System.out.println("AStar SP : " + shortestPath);*/
+            System.out.println("AStar SP : " + shortestPath);
 
 
         } catch (IOException | SAXException e) {

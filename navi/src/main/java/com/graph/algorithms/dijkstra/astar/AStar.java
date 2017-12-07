@@ -1,5 +1,6 @@
 package com.graph.algorithms.dijkstra.astar;
 
+import com.graph.algorithms.dijkstra.AbstractDijkstraAlgorithm;
 import com.graph.algorithms.dijkstra.DijkstraAlgorithm;
 import com.graph.algorithms.dijkstra.astar.heuristic.RandomLandmarkSelection;
 import com.graph.model.Arc;
@@ -12,14 +13,16 @@ import java.util.*;
 
 
 //Not ready
-public class AStar extends DijkstraAlgorithm {
+public class AStar extends AbstractDijkstraAlgorithm {
 
-    private Map<Node, Map<Node, Cost>> distanceFromLandmarkToNodes = new HashMap<>();
+    private List<List<Cost>> distanceFromLandmarkToNodes;
     private RandomLandmarkSelection landmarkSelection;
+    private SPEntry[] heuristic;
 
     public AStar(RoadNetwork roadNetwork, RandomLandmarkSelection landmarkSelection) {
         super(roadNetwork);
         this.landmarkSelection = landmarkSelection;
+        heuristic = new SPEntry[roadNetworkNodes.size()];
     }
 
     public void precomputeDistances(Integer numberOfLandmarks) {
@@ -27,23 +30,41 @@ public class AStar extends DijkstraAlgorithm {
     }
 
     @Override
-    protected void addToUnsettledNodes(SPEntry spEntry) {
-        SPEntry aStarEntry = new SPEntry(spEntry.getNodeId(), spEntry.getCost().addCost(calculateHeuristic(roadNetworkNodes.get(spEntry.getNodeId())))
-                , spEntry.getParent());
+    protected void exploreNeighbours(int currentNodeId) {
+        List<Arc> arcs = roadNetworkNodes.get(currentNodeId).getOutgoingArcs();
 
-        unsettledNodes.remove(aStarEntry);
-        unsettledNodes.offer(aStarEntry);
+        for (Arc arc : arcs) {
+            int headNodeId = arc.getHeadNode().getId();
 
+            Cost costToNode = distances[headNodeId].getCost();
+            Cost actualCost = distances[currentNodeId].getCost().addCost(arc.getCost());
+            Cost costWithHeuristic = actualCost.addCost((calculateHeuristic(headNodeId)));
+            SPEntry heuristicEntry = new SPEntry(headNodeId, costWithHeuristic, null);
+
+
+            if (costToNode.greaterThan(costWithHeuristic)) {
+                //found shorter path
+
+                SPEntry spEntry = distances[headNodeId];
+                spEntry.setCost(actualCost);
+                //Not sure is it true
+                spEntry.setParent(distances[currentNodeId]);
+
+
+                unsettledNodes.remove(heuristicEntry);
+                unsettledNodes.offer(heuristicEntry);
+
+            }
+        }
 
     }
 
-    private Cost calculateHeuristic(Node currentNode) {
+    private Cost calculateHeuristic(int currentNodeId) {
         Cost maxCost = new Cost(0);
-        for (Node landmark : distanceFromLandmarkToNodes.keySet()) {
-            Map<Node, Cost> nodeCostMap = distanceFromLandmarkToNodes.get(landmark);
-            Cost distanceFromLandmarkToCurrentNode = nodeCostMap.get(currentNode);
-            Cost distanceFromLandmarkToTargetNode = nodeCostMap.get(roadNetworkNodes.get(targetNode.getNodeId()));
 
+        for (List<Cost> costs : distanceFromLandmarkToNodes) {
+            Cost distanceFromLandmarkToCurrentNode = costs.get(currentNodeId);
+            Cost distanceFromLandmarkToTargetNode = costs.get(targetNode.getNodeId());
             Cost absCost = Cost.abs(distanceFromLandmarkToCurrentNode.subtract(distanceFromLandmarkToTargetNode));
 
             if (absCost.greaterThan(maxCost)) {
