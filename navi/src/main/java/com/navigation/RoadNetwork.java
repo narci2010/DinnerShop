@@ -1,9 +1,6 @@
 package com.navigation;
 
-import com.graph.model.Arc;
-import com.graph.model.Cost;
-import com.graph.model.Graph;
-import com.graph.model.Node;
+import com.graph.model.*;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -44,6 +41,22 @@ public class RoadNetwork implements Graph<Node>, Iterable<Node> {
         return stringBuilder.toString();
     }
 
+    @Override
+    public Node findClosestNode(Coordinate coordinate) {
+        double minDist = Double.MAX_VALUE;
+        Node minNode = nodes.get(0);
+        for (Node node : nodes) {
+            double tempDist = node.distance(coordinate);
+            if (tempDist < minDist) {
+                minDist = tempDist;
+                minNode = node;
+            }
+        }
+
+        return minNode;
+
+
+    }
 
     @Override
     public Iterator<Node> iterator() {

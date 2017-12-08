@@ -14,7 +14,7 @@ public class ShortestPath {
         this.cost = cost;
     }
 
-    public void addNodeToShortestPath(Node node){
+    public void addNodeToShortestPath(Node node) {
         nodes.push(node);
     }
 
@@ -22,17 +22,31 @@ public class ShortestPath {
         return cost;
     }
 
+
+    public String toGooglePath() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Node node : nodes) {
+            stringBuilder.append(node.toCoordinateString());
+            stringBuilder.append(",");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        return stringBuilder.toString();
+
+
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-         stringBuilder.append("ShortestPath{" + "cost=").append(cost).append(", nodes=[");
+        stringBuilder.append("ShortestPath{" + "cost=").append(cost).append(", nodes=[");
         for (Node node : nodes) {
             stringBuilder.append("Node{id=");
             stringBuilder.append(node.getId());
             stringBuilder.append("}, ");
         }
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 
         stringBuilder.append("]}");
 

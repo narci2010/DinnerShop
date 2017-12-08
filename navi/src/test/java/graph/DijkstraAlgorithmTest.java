@@ -61,6 +61,7 @@ public class DijkstraAlgorithmTest {
         Assert.assertEquals("ShortestPath{cost=Cost{seconds=5}, nodes=[Node{id=0}, Node{id=4}, Node{id=5}, Node{id=6}, Node{id=7}, Node{id=3}]}",
                 dijkstraAlgorithm.getPath(four).toString());
 
+        System.out.println(dijkstraAlgorithm.getPath(four).toGooglePath());
 
     }
 
@@ -112,6 +113,7 @@ public class DijkstraAlgorithmTest {
         dijkstraAlgorithm.calculateShortestPath(ten, eleven);
         Assert.assertEquals("ShortestPath{cost=Cost{seconds=0}, nodes]}",
                 dijkstraAlgorithm.getPath(zero).toString());
+
     }
 
 

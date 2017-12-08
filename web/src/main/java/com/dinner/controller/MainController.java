@@ -42,4 +42,9 @@ public class MainController {
         // Message body required though ignored
         return "Still surviving.";
     }
+
+    @RequestMapping(value = "/map")
+    public String map(){
+        return "map";
+    }
 }

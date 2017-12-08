@@ -7,20 +7,19 @@ import java.util.List;
 public class Node {
 
     private Integer id;
-    private Double latitude;
-    private Double longitude;
+    private Coordinate coordinate;
     private List<Arc> outgoingArcs = new ArrayList<>();
 
     public Node(Integer id, Double latitude, Double longitude) {
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.coordinate = new Coordinate(latitude, longitude);
+
     }
 
     public Node(String id, double lat, double lon) {
         this.id = Integer.valueOf(id.substring(1));
-        this.latitude = lat;
-        this.longitude = lon;
+        this.coordinate = new Coordinate(lat, lon);
+
     }
 
     public void addOutgoingArcs(Arc arc) {
@@ -34,6 +33,18 @@ public class Node {
     //own id if this suppose to have sens
     public Integer getId() {
         return id;
+    }
+
+    public double distance(Node node) {
+        return 0.0;
+    }
+
+    public double distance(Coordinate coordinate){
+        return this.coordinate.distance(coordinate);
+    }
+
+    public String toCoordinateString(){
+        return coordinate.toString();
     }
 
     @Override
