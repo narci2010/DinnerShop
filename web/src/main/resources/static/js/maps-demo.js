@@ -9,7 +9,7 @@ var line;
 $(document).ready(function(){
   // An object holding a position on the map.
   // See http://tinyurl.com/7mry4xl#LatLng.
-  var latlng = new google.maps.LatLng(48.012653, 7.835194);
+  var latlng = new google.maps.LatLng(52.412594, 16.928440);
   // An associative array containing options for our initial maps view.
   // See http://tinyurl.com/7mry4xl#MapOptions.
   var mapOptions = {
@@ -25,9 +25,9 @@ $(document).ready(function(){
   // Two objects representing markers on the map.
   // See http://tinyurl.com/7mry4xl#Marker.
   source = new google.maps.Marker({map: map, draggable: true,
-    position: new google.maps.LatLng(48.012653,7.835194)});
+    position: new google.maps.LatLng(52.429878, 16.920938)});
   target = new google.maps.Marker({map : map, draggable: true,
-    position: new google.maps.LatLng(48.010683,7.817760)});
+    position: new google.maps.LatLng(52.393221, 16.897779)});
 
   // A Polyline object drawing this path on the map.
   // See http://tinyurl.com/7mry4xl#Polyline.

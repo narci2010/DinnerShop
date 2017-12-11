@@ -1,14 +1,21 @@
 package com.graph.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.export.CoordinateExporter;
+import com.export.Exportable;
+import com.export.Exporter;
 
-public class Node {
+import java.util.*;
+
+public class Node implements Distanceable<Node>, Exportable {
 
     private Integer id;
     private Coordinate coordinate;
     private List<Arc> outgoingArcs = new ArrayList<>();
+
+    public Node(Integer id, Coordinate coordinate) {
+        this.id = id;
+        this.coordinate = coordinate;
+    }
 
     public Node(Integer id, Double latitude, Double longitude) {
         this.id = id;
@@ -21,6 +28,7 @@ public class Node {
         this.coordinate = new Coordinate(lat, lon);
 
     }
+
 
     public void addOutgoingArcs(Arc arc) {
         outgoingArcs.add(arc);
@@ -35,17 +43,21 @@ public class Node {
         return id;
     }
 
+    @Override
+    public String export(Exporter exporter) {
+        Map<String, String> propertiesMap = new HashMap<>();
+        propertiesMap.put("coordinate", coordinate.export(new CoordinateExporter()));
+        propertiesMap.put("id", String.valueOf(id));
+        propertiesMap.put("outgoingArcs", outgoingArcs.toString());
+
+        return exporter.export(propertiesMap);
+    }
+
+    @Override
     public double distance(Node node) {
-        return 0.0;
+        return this.coordinate.distance(node.coordinate);
     }
 
-    public double distance(Coordinate coordinate){
-        return this.coordinate.distance(coordinate);
-    }
-
-    public String toCoordinateString(){
-        return coordinate.toString();
-    }
 
     @Override
     public boolean equals(Object o) {

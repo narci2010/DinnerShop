@@ -42,14 +42,14 @@ public class RoadNetwork implements Graph<Node>, Iterable<Node> {
     }
 
     @Override
-    public Node findClosestNode(Coordinate coordinate) {
+    public Node findClosestNode(Node node) {
         double minDist = Double.MAX_VALUE;
         Node minNode = nodes.get(0);
-        for (Node node : nodes) {
-            double tempDist = node.distance(coordinate);
+        for (Node u : nodes) {
+            double tempDist = u.distance(node);
             if (tempDist < minDist) {
                 minDist = tempDist;
-                minNode = node;
+                minNode = u;
             }
         }
 

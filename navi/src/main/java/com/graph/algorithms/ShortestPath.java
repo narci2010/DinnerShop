@@ -1,11 +1,17 @@
 package com.graph.algorithms;
 
+import com.export.CoordinateExporter;
+import com.export.Exportable;
+import com.export.Exporter;
+import com.export.NodeExporter;
 import com.graph.model.Cost;
 import com.graph.model.Node;
 
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ShortestPath {
+public class ShortestPath implements Exportable {
     private Deque<Node> nodes;
     private Cost cost = new Cost(0);
 
@@ -23,18 +29,22 @@ public class ShortestPath {
     }
 
 
-    public String toGooglePath() {
-        StringBuilder stringBuilder = new StringBuilder();
+    @Override
+    public String export(Exporter exporter) {
+        Map<String, String> propertiesMap = new HashMap<>();
+        StringBuilder stringBuilder = new StringBuilder(nodes.size()*4);
+
+        propertiesMap.put("Cost", String.valueOf(cost));
 
         for (Node node : nodes) {
-            stringBuilder.append(node.toCoordinateString());
+            stringBuilder.append(node.export(new NodeExporter()));
             stringBuilder.append(",");
         }
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        return stringBuilder.toString();
 
 
+        return exporter.toString();
     }
+
 
     @Override
     public String toString() {

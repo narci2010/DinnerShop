@@ -29,10 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.graph.model.Cost;
 import com.navigation.RoadNetwork;
@@ -289,7 +286,7 @@ public class OSMParser extends DefaultHandler {
 
         for (Element e : elements.values()) {
             if (e instanceof Way) {
-                String roadType = e.getTags().get("highway");
+                String roadType = Optional.ofNullable(e.getTags().get("highway")).orElse("service");
                 List<Node> nodes = ((Way) e).getNodes();
                 if (nodes.size() > 1) {
                     for (int i = 0; i < nodes.size() - 1; i++) {

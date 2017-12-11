@@ -6,7 +6,9 @@ import com.graph.model.Cost;
 import com.graph.model.Node;
 import com.navigation.RoadNetwork;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class RandomLandmarkSelection {
     private List<Node> roadNetworkNodes = new ArrayList<>();

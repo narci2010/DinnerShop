@@ -106,7 +106,7 @@ public abstract class AbstractDijkstraAlgorithm {
         //set startNode distance cost to zero
         distance.setCost(new Cost(0));
 
-        //add first node as unsettled
+        //export first node as unsettled
         unsettledNodes.add(distance);
     }
 

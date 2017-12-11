@@ -23,7 +23,7 @@ public class Main {
 
 
         OSMParser p = new OSMParser();
-        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\saarland_fix.osm");    //Create a file object for your OSM XML file
+        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\wlkp.osm");    //Create a file object for your OSM XML file
 
 
         try {
@@ -96,7 +96,7 @@ public class Main {
                 double targetLng = Double.parseDouble(parts[3]);
 
                 Coordinate coordinate = new Coordinate(targetLat, targetLng);
-                Node closestNode = roadNetwork.findClosestNode(coordinate);
+                Node closestNode = roadNetwork.findClosestNode(new Node(Integer.MAX_VALUE, coordinate));
                 ShortestPath path = dijkstraAlgorithm.getPath(closestNode);
 
 

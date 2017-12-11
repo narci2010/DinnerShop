@@ -53,7 +53,7 @@ public class Way extends Element {
 	
 	/**
 	 * Constructor without nodes, not safe to use !
-	 * Don't forget to add at least two nodes
+	 * Don't forget to export at least two nodes
 	 * @param id The object ID
 	 */
 	public Way(long id) {
@@ -76,7 +76,7 @@ public class Way extends Element {
 
 //MODIFIERS
 	/**
-	 * @param n The node to add at the end of the way
+	 * @param n The node to export at the end of the way
 	 */
 	public void addNode(Node n) {
 		nodes.add(n);
