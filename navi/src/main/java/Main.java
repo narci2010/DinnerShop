@@ -1,11 +1,9 @@
 import com.basicosmparser.controller.OSMParser;
 import com.basicosmparser.model.Element;
+import com.export.impl.SimplePathExporter;
 import com.graph.algorithms.ShortestPath;
 import com.graph.algorithms.dijkstra.DijkstraAlgorithm;
-import com.graph.algorithms.dijkstra.astar.AStar;
-import com.graph.algorithms.dijkstra.astar.heuristic.RandomLandmarkSelection;
 import com.graph.model.Coordinate;
-import com.graph.model.Graph;
 import com.graph.model.Node;
 import com.navigation.RoadNetwork;
 import org.xml.sax.SAXException;
@@ -15,7 +13,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Main {
@@ -23,7 +20,7 @@ public class Main {
 
 
         OSMParser p = new OSMParser();
-        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\wlkp.osm");    //Create a file object for your OSM XML file
+        File osmFile = new File("C:\\Users\\Tomek\\IdeaProjects\\DinnerShop\\navi\\src\\main\\resources\\wlkp.osm");    //Create a file object for your OSM XML file
 
 
         try {
@@ -102,7 +99,7 @@ public class Main {
 
                 // Send JSONP results string back to client.
                 String jsonp = "redrawLineServerCallback({\n" +
-                        "  path: [" + path.toGooglePath() + "]\n" + "})\n";
+                        "  path: [" + path.export(new SimplePathExporter())+ "]\n" + "})\n";
                 String answer = "HTTP/1.0 200 OK\r\n"
                         + "Content-Length: " + jsonp.length() + "\r\n"
                         + "Content-Type: application/javascript" + "\r\n"
@@ -120,7 +117,6 @@ public class Main {
         } catch (IOException | SAXException e) {
             e.printStackTrace();                                //Input/output errors management
         }
+
     }
-
-
 }

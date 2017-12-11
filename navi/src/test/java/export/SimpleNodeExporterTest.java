@@ -1,6 +1,6 @@
 package export;
 
-import com.export.NodeExporter;
+import com.export.impl.SimpleNodeExporter;
 import com.graph.model.Arc;
 import com.graph.model.Coordinate;
 import com.graph.model.Cost;
@@ -8,7 +8,7 @@ import com.graph.model.Node;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class NodeExporterTest {
+public class SimpleNodeExporterTest {
     @Test
     public void shouldExportNodeAsCoordinateString() {
         Coordinate coordinate = new Coordinate(10.11, 12.22);
@@ -20,9 +20,7 @@ public class NodeExporterTest {
         node.addOutgoingArcs(arc1);
         node.addOutgoingArcs(arc2);
 
-        String export = node.export(new NodeExporter());
-        Assert.assertEquals("Node{coordinate=10.11,12.22\n" +
-                "id=1\n" +
-                "} : [Arc{headNodeId=2,Cost{seconds=2}}, Arc{headNodeId=3,Cost{seconds=3}}]", export);
+        String export = node.export(new SimpleNodeExporter());
+        Assert.assertEquals("10.11,12.22", export);
     }
 }

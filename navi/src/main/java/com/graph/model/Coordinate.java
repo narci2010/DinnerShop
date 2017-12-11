@@ -1,12 +1,9 @@
 package com.graph.model;
 
-import com.export.Exportable;
-import com.export.Exporter;
+import com.export.interfaces.CoordinateExporter;
+import com.export.interfaces.Exportable;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Coordinate implements Distanceable<Coordinate>, Exportable {
+public class Coordinate implements Distanceable<Coordinate>, Exportable<CoordinateExporter> {
     private Double latitude;
     private Double longitude;
 
@@ -31,19 +28,16 @@ public class Coordinate implements Distanceable<Coordinate>, Exportable {
                 + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c ; // convert to km
+        double distance = R * c; // convert to km
 
-        return distance/1000;
+        return distance / 1000;
     }
 
     @Override
-    public String export(Exporter exporter) {
-        Map<String, String> propertiesMap = new HashMap<>();
-        propertiesMap.put("latitude", String.valueOf(latitude));
-        propertiesMap.put("longitude", String.valueOf(longitude));
-
-       return exporter.export(propertiesMap);
-
+    public String export(CoordinateExporter exporter) {
+        exporter.fetchLan(this.latitude);
+        exporter.fetchLon(this.longitude);
+        return exporter.export();
     }
 
     @Override

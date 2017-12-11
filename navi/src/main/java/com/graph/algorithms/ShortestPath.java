@@ -1,17 +1,13 @@
 package com.graph.algorithms;
 
-import com.export.CoordinateExporter;
-import com.export.Exportable;
-import com.export.Exporter;
-import com.export.NodeExporter;
+import com.export.interfaces.Exportable;
+import com.export.interfaces.PathExporter;
 import com.graph.model.Cost;
 import com.graph.model.Node;
 
 import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
 
-public class ShortestPath implements Exportable {
+public class ShortestPath implements Exportable<PathExporter> {
     private Deque<Node> nodes;
     private Cost cost = new Cost(0);
 
@@ -30,21 +26,11 @@ public class ShortestPath implements Exportable {
 
 
     @Override
-    public String export(Exporter exporter) {
-        Map<String, String> propertiesMap = new HashMap<>();
-        StringBuilder stringBuilder = new StringBuilder(nodes.size()*4);
-
-        propertiesMap.put("Cost", String.valueOf(cost));
-
-        for (Node node : nodes) {
-            stringBuilder.append(node.export(new NodeExporter()));
-            stringBuilder.append(",");
-        }
-
-
-        return exporter.toString();
+    public String export(PathExporter exporter) {
+        exporter.fetchCost(this.cost);
+        exporter.fetchNodes(this.nodes);
+        return exporter.export();
     }
-
 
     @Override
     public String toString() {

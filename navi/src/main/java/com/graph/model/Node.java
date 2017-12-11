@@ -1,12 +1,11 @@
 package com.graph.model;
 
-import com.export.CoordinateExporter;
-import com.export.Exportable;
-import com.export.Exporter;
+import com.export.interfaces.Exportable;
+import com.export.interfaces.NodeExporter;
 
 import java.util.*;
 
-public class Node implements Distanceable<Node>, Exportable {
+public class Node implements Distanceable<Node>, Exportable<NodeExporter> {
 
     private Integer id;
     private Coordinate coordinate;
@@ -44,13 +43,11 @@ public class Node implements Distanceable<Node>, Exportable {
     }
 
     @Override
-    public String export(Exporter exporter) {
-        Map<String, String> propertiesMap = new HashMap<>();
-        propertiesMap.put("coordinate", coordinate.export(new CoordinateExporter()));
-        propertiesMap.put("id", String.valueOf(id));
-        propertiesMap.put("outgoingArcs", outgoingArcs.toString());
-
-        return exporter.export(propertiesMap);
+    public String export(NodeExporter exporter) {
+        exporter.fetchId(id);
+        exporter.fetchArcs(outgoingArcs);
+        exporter.fetchCoordinate(coordinate);
+        return exporter.export();
     }
 
     @Override
