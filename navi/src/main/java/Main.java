@@ -20,7 +20,7 @@ public class Main {
 
 
         OSMParser p = new OSMParser();
-        File osmFile = new File("C:\\Users\\Tomek\\IdeaProjects\\DinnerShop\\navi\\src\\main\\resources\\wlkp.osm");    //Create a file object for your OSM XML file
+        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\wlkp.osm");    //Create a file object for your OSM XML file
 
 
         try {

@@ -1,5 +1,6 @@
 package graph;
 
+import com.export.impl.DebugPathExporter;
 import com.graph.algorithms.dijkstra.DijkstraAlgorithm;
 import com.graph.model.Cost;
 import com.graph.model.Graph;
@@ -10,13 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DijkstraAlgorithmTest {
-
-
-    @Before
-    public void init(){
-
-
-    }
 
     @Test
     public void shouldReturnShortestPath(){
@@ -59,10 +53,7 @@ public class DijkstraAlgorithmTest {
         dijkstraAlgorithm.calculateShortestPathsFromSource(one);
 
         Assert.assertEquals("ShortestPath{cost=Cost{seconds=5}, nodes=[Node{id=0}, Node{id=4}, Node{id=5}, Node{id=6}, Node{id=7}, Node{id=3}]}",
-                dijkstraAlgorithm.getPath(four).toString());
-
-//        System.out.println(dijkstraAlgorithm.getPath(four).toGooglePath());
-
+                dijkstraAlgorithm.getPath(four).export(new DebugPathExporter()));
     }
 
     @Test
@@ -111,9 +102,8 @@ public class DijkstraAlgorithmTest {
 
         DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
         dijkstraAlgorithm.calculateShortestPath(ten, eleven);
-        Assert.assertEquals("ShortestPath{cost=Cost{seconds=0}, nodes]}",
-                dijkstraAlgorithm.getPath(zero).toString());
-
+        Assert.assertEquals("ShortestPath{cost=Cost{seconds=0}, nodes=[]}",
+                dijkstraAlgorithm.getPath(zero).export(new DebugPathExporter()));
     }
 
 
