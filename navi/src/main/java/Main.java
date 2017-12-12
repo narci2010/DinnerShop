@@ -16,11 +16,11 @@ import java.time.Instant;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
 
         OSMParser p = new OSMParser();
-        File osmFile = new File("C:\\Users\\TomaszZielichowski\\Documents\\Projects\\DinnerShop\\navi\\src\\main\\resources\\wlkp.osm");    //Create a file object for your OSM XML file
+        File osmFile = new File(Main.class.getClassLoader().getResource("wlkp.osm").getFile());    //Create a file object for your OSM XML file
 
 
         try {
@@ -43,18 +43,6 @@ public class Main {
 
             Instant end = Instant.now();
             System.out.println("Duration : " + Duration.between(start, end).getSeconds());
-
-/*
-            AStar aStar = new AStar(roadNetwork, new RandomLandmarkSelection(roadNetwork));
-            Instant startAStar = Instant.now();
-            aStar.precomputeDistances(2);
-            Instant endAStar = Instant.now();
-
-            ShortestPath shortestPath = aStar.calculateShortestPath(12, 112654);
-
-            System.out.println("Duration : " + Duration.between(startAStar, endAStar).getSeconds());
-            System.out.println("AStar SP : " + shortestPath);*/
-
 
             /**
              * @param args
@@ -99,7 +87,7 @@ public class Main {
 
                 // Send JSONP results string back to client.
                 String jsonp = "redrawLineServerCallback({\n" +
-                        "  path: [" + path.export(new SimplePathExporter())+ "]\n" + "})\n";
+                        "  path: [" + path.export(new SimplePathExporter()) + "]\n" + "})\n";
                 String answer = "HTTP/1.0 200 OK\r\n"
                         + "Content-Length: " + jsonp.length() + "\r\n"
                         + "Content-Type: application/javascript" + "\r\n"

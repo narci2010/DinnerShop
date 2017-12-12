@@ -66,7 +66,7 @@ function redrawLineServer() {
 
 // Function that is called when the server has sent its answer.
 function redrawLineServerCallback(json) {
-   //alert(json.path);
+   alert(json.path);
     var path = [];
     for (var i = 0; i <json.path.length; i=i+2) {
       path.push(new google.maps.LatLng(json.path[i], json.path[i+1]))
