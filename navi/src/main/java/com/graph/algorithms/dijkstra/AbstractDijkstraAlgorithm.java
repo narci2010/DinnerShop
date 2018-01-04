@@ -1,11 +1,13 @@
 package com.graph.algorithms.dijkstra;
 
+import com.graph.algorithms.DijkstraAlgorithm;
 import com.graph.algorithms.ShortestPath;
+import com.graph.weighting.Weighting;
 import com.graph.model.*;
 
 import java.util.*;
 
-public abstract class AbstractDijkstraAlgorithm {
+public abstract class AbstractDijkstraAlgorithm implements DijkstraAlgorithm {
     protected List<Node> roadNetworkNodes = new ArrayList<>();
     protected SPEntry[] distances;
     protected Queue<SPEntry> unsettledNodes;
@@ -25,20 +27,22 @@ public abstract class AbstractDijkstraAlgorithm {
 
     }
 
-    public void calculateShortestPathsFromSource(int sourceNodeId) {
-        calculateShortestPath(sourceNodeId, null);
+    @Override
+    public ShortestPath calculateShortestPath(Node sourceNode, Node targetNode, Weighting weighting) {
+        return calculateShortestPath(sourceNode.getId(), targetNode.getId(), weighting);
     }
 
-    public void calculateShortestPathsFromSource(Node sourceNode) {
-        calculateShortestPath(sourceNode.getId(), null);
+    @Override
+    public void calculateShortestPathsFromSource(Node sourceNode, Weighting weighting) {
+        calculateShortestPath(sourceNode.getId(), null, weighting);
     }
 
-    public ShortestPath calculateShortestPath(Node startNode, Node endNode) {
-
-        return calculateShortestPath(startNode.getId(), endNode.getId());
+    public void calculateShortestPathsFromSource(int sourceNodeId, Weighting weighting) {
+        calculateShortestPath(sourceNodeId, null, weighting);
     }
 
-    public ShortestPath calculateShortestPath(Integer startNodeId, Integer endNodeId) {
+
+    public ShortestPath calculateShortestPath(Integer startNodeId, Integer endNodeId, Weighting weighting) {
         Optional.ofNullable(endNodeId).ifPresent(nodeId -> {
             targetNode = new SPEntry();
             targetNode.setNodeId(nodeId);
@@ -56,21 +60,22 @@ public abstract class AbstractDijkstraAlgorithm {
 
             int currentNodeId = spEntryWithLowestDistanceFromSource.getNodeId();
 
-            exploreNeighbours(currentNodeId);
+            exploreNeighbours(currentNodeId, weighting);
 
         }
-        return getPath(endNodeId);
+        return readPathTo(endNodeId);
     }
 
-    protected abstract void exploreNeighbours(int currentNodeId);
+    protected abstract void exploreNeighbours(int currentNodeId, Weighting weighting);
 
 
-    public ShortestPath getPath(Node targetNode) {
-        return getPath(targetNode.getId());
+    @Override
+    public ShortestPath readPathTo(Node targetNode) {
+        return readPathTo(targetNode.getId());
 
     }
 
-    public ShortestPath getPath(Integer targetNodeId) {
+    public ShortestPath readPathTo(Integer targetNodeId) {
         if (Optional.ofNullable(targetNodeId).isPresent()) {
             Deque<Node> path = new LinkedList<>();
 
@@ -87,7 +92,7 @@ public abstract class AbstractDijkstraAlgorithm {
                 return new ShortestPath(path, totalCost);
             }
         }
-            return new ShortestPath(new ArrayDeque<>(), new Cost(0));
+        return new ShortestPath(new ArrayDeque<>(), new Cost(0));
 
     }
 
@@ -99,7 +104,6 @@ public abstract class AbstractDijkstraAlgorithm {
         spEntry.setParent(null);
         return spEntry;
     }
-
 
 
     protected void initializeFirstEntry(SPEntry distance) {
@@ -119,5 +123,6 @@ public abstract class AbstractDijkstraAlgorithm {
         }
 
     }
+
 
 }

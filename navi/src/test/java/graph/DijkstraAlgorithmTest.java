@@ -5,9 +5,9 @@ import com.graph.algorithms.dijkstra.DijkstraAlgorithm;
 import com.graph.model.Cost;
 import com.graph.model.Graph;
 import com.graph.model.Node;
+import com.graph.weighting.SimpleWeighing;
 import com.navigation.RoadNetwork;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class DijkstraAlgorithmTest {
@@ -50,10 +50,10 @@ public class DijkstraAlgorithmTest {
         graph.addEdge(eight, four, new Cost(1));
 
         DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-        dijkstraAlgorithm.calculateShortestPathsFromSource(one);
+        dijkstraAlgorithm.calculateShortestPathsFromSource(one, new SimpleWeighing());
 
         Assert.assertEquals("ShortestPath{cost=Cost{seconds=5}, nodes=[Node{id=0}, Node{id=4}, Node{id=5}, Node{id=6}, Node{id=7}, Node{id=3}]}",
-                dijkstraAlgorithm.getPath(four).export(new DebugPathExporter()));
+                dijkstraAlgorithm.readPathTo(four).export(new DebugPathExporter()));
     }
 
     @Test
@@ -101,9 +101,9 @@ public class DijkstraAlgorithmTest {
 
 
         DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-        dijkstraAlgorithm.calculateShortestPath(ten, eleven);
+        dijkstraAlgorithm.calculateShortestPath(ten, eleven, new SimpleWeighing());
         Assert.assertEquals("ShortestPath{cost=Cost{seconds=0}, nodes=[]}",
-                dijkstraAlgorithm.getPath(zero).export(new DebugPathExporter()));
+                dijkstraAlgorithm.readPathTo(zero).export(new DebugPathExporter()));
     }
 
 

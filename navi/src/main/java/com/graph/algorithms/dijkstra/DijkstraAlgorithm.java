@@ -1,6 +1,7 @@
 package com.graph.algorithms.dijkstra;
 
 import com.graph.model.*;
+import com.graph.weighting.Weighting;
 
 import java.util.List;
 
@@ -10,14 +11,14 @@ public class DijkstraAlgorithm extends AbstractDijkstraAlgorithm {
     }
 
     @Override
-    protected void exploreNeighbours(int currentNodeId) {
+    protected void exploreNeighbours(int currentNodeId, Weighting weighting) {
         List<Arc> arcs = roadNetworkNodes.get(currentNodeId).getOutgoingArcs();
 
         for (Arc arc : arcs) {
             int headNodeId = arc.getHeadNode().getId();
 
             Cost costToNode = distances[headNodeId].getCost();
-            Cost actualCost = distances[currentNodeId].getCost().addCost(arc.getCost());
+            Cost actualCost = distances[currentNodeId].getCost().addCost(weighting.calculateWeight(arc));
 
 
             if (costToNode.greaterThan(actualCost)) {

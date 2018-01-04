@@ -4,6 +4,8 @@ import com.graph.algorithms.ShortestPath;
 import com.graph.algorithms.dijkstra.DijkstraAlgorithm;
 import com.graph.model.Cost;
 import com.graph.model.Node;
+import com.graph.weighting.SimpleWeighing;
+import com.graph.weighting.Weighting;
 import com.navigation.RoadNetwork;
 
 import java.util.ArrayList;
@@ -29,14 +31,15 @@ public class RandomLandmarkSelection {
 
         List<List<Cost>> distancesFromLandToNodes = new ArrayList<>();
 
+        Weighting weighting = new SimpleWeighing();
         for (int i : indexOfNodesInArray) {
             DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(roadNetwork);
-            dijkstraAlgorithm.calculateShortestPathsFromSource(i);
+            dijkstraAlgorithm.calculateShortestPathsFromSource(i, weighting);
 
             List<Cost> costs = new ArrayList<>(roadNetworkNodes.size());
 
             for (Node node : roadNetworkNodes) {
-                ShortestPath path = dijkstraAlgorithm.getPath(node.getId());
+                ShortestPath path = dijkstraAlgorithm.readPathTo(node.getId());
                 costs.add(path.getCost());
             }
             distancesFromLandToNodes.add(costs);

@@ -5,6 +5,7 @@ import com.graph.algorithms.ShortestPath;
 import com.graph.algorithms.dijkstra.DijkstraAlgorithm;
 import com.graph.model.Coordinate;
 import com.graph.model.Node;
+import com.graph.weighting.SimpleWeighing;
 import com.navigation.RoadNetwork;
 import org.xml.sax.SAXException;
 
@@ -39,7 +40,7 @@ public class Main {
 
             Instant start = Instant.now();
 
-            dijkstraAlgorithm.calculateShortestPathsFromSource(12);
+            dijkstraAlgorithm.calculateShortestPathsFromSource(12, new SimpleWeighing());
 
             Instant end = Instant.now();
             System.out.println("Duration : " + Duration.between(start, end).getSeconds());
@@ -82,7 +83,7 @@ public class Main {
 
                 Coordinate coordinate = new Coordinate(targetLat, targetLng);
                 Node closestNode = roadNetwork.findClosestNode(new Node(Integer.MAX_VALUE, coordinate));
-                ShortestPath path = dijkstraAlgorithm.getPath(closestNode);
+                ShortestPath path = dijkstraAlgorithm.readPathTo(closestNode);
 
 
                 // Send JSONP results string back to client.

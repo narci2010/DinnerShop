@@ -9,7 +9,7 @@ import java.util.Deque;
 
 public class ShortestPath implements Exportable<PathExporter> {
     private Deque<Node> nodes;
-    private Cost cost = new Cost(0);
+    private Cost cost ;
 
     public ShortestPath(Deque<Node> nodes, Cost cost) {
         this.nodes = nodes;

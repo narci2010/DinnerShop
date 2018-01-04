@@ -13,6 +13,7 @@ import java.util.*;
 
 
 //Not ready
+/*
 public class AStar extends AbstractDijkstraAlgorithm {
 
     private List<List<Cost>> distanceFromLandmarkToNodes;
@@ -75,3 +76,4 @@ public class AStar extends AbstractDijkstraAlgorithm {
         return maxCost;
     }
 }
+*/
